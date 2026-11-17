@@ -1,39 +1,68 @@
 # Hora de Aventura e Neurociência
 
-Projeto individual desenvolvido no primeiro semestre de Análise e Desenvolvimento de Sistemas na SPTech.
+Nome provisório do Projeto Individual de **Patrick Scaglia Rodrigues**, desenvolvido no primeiro semestre de Análise e Desenvolvimento de Sistemas da **SPTech**, em 2026.2.
 
 ## Sobre o projeto
 
-O projeto tem como tema Hora de Aventura e suas possíveis conexões com o autoconhecimento e a neurociência, explorando conceitos como memória, emoções e aprendizagem.
+Hora de Aventura fez parte da minha infância e continua me proporcionando novas formas de enxergar situações, sentimentos e relacionamentos. Este projeto nasce desse vínculo pessoal com o desenho e da curiosidade por compreender aspectos da memória, da aprendizagem e do comportamento.
 
-O recorte do tema e as funcionalidades estão em definição.
+A proposta é desenvolver um site com personagens, episódios, frases e reflexões, aproximando situações da série de conceitos de autoconhecimento e neurociência. Quero que o visitante encontre algum aprendizado e perceba outras possibilidades de leitura por trás das aventuras.
 
-## Objetivo
+O projeto não tem um nicho específico: sua motivação é pessoal, mas qualquer pessoa poderá explorar o conteúdo. Relatos pessoais detalhados não fazem parte do escopo inicial.
 
-Desenvolver um website educativo que utilize situações da animação como ponto de partida para apresentar conceitos científicos, distinguindo a ficção das explicações sobre o funcionamento do cérebro.
+## Estado atual
 
-## Tecnologias previstas
+Em fase inicial, com estrutura de pastas e parte da documentação preparadas, conforme o planejamento registrado em 17/11/2026. Páginas, integração, banco de dados e funcionalidades ainda precisam ser desenvolvidos. Não há versão funcional declarada.
 
-- HTML
-- CSS
-- JavaScript
-- Node.js
-- MySQL
+## Escopo e decisões
 
-## Etapa atual
+| Item | Situação |
+| --- | --- |
+| Conteúdo sobre personagens, episódios, frases e reflexões | Planejado |
+| Cadastro com validações e login | Previsto nas entregas acadêmicas |
+| Integração da API com MySQL | Obrigatória |
+| Dashboard com indicadores de dados do sistema | Obrigatório; indicadores a definir |
+| Jogo da memória com personagens | Proposta em avaliação |
+| Quiz de afinidade com personagens | Proposta anterior, sem confirmação |
+| Nome definitivo e seleção final de conteúdos | A definir |
 
-Planejamento e organização inicial do repositório.
+A ideia do jogo da memória é embaralhar cartas com imagens dos personagens. Ao encontrar um par, o visitante poderá ler uma frase ou reflexão relacionada àquele personagem. Quantidade de cartas, regras, formato das mensagens e dados registrados ainda serão definidos.
 
-## Organização das pastas
+Tempo de partida, tentativas e partidas concluídas são possibilidades para o dashboard, não requisitos aprovados. Os resultados descreverão a atividade no site, sem representar uma avaliação científica da memória do visitante.
 
-- `banco-de-dados/`: espaço para os modelos conceitual e lógico e os scripts SQL. Por enquanto, `script.sql` contém apenas um comentário.
-- `prototipo/`: espaço para futuras imagens dos protótipos, separado em `cadastro/`, `login/`, `landing-page/` e `dashboard/`.
-- `ti/`: espaço para o backlog de requisitos e a documentação acadêmica.
-- `docs/`: planejamento e registros do desenvolvimento, incluindo `planejamento.md` e `diario-de-prompts.md`.
-- `web-data-viz/`: espaço da aplicação, com os arquivos públicos em `public/` e a estrutura do futuro backend em `src/`.
+## Tecnologias
 
-As pastas vazias usam `.gitkeep` para serem registradas pelo Git. Esta organização apenas prepara os espaços para o desenvolvimento gradual, sem implementar novas funcionalidades.
+- HTML e CSS para estrutura e apresentação.
+- JavaScript para interação, validações e lógica.
+- Node.js para a API.
+- MySQL para persistência de dados.
+- Web Data Viz/AquaTech da faculdade como base de arquitetura.
+- VM Linux dedicada ao banco, conforme a exigência acadêmica.
 
-## Autoria
+## Organização planejada
 
-Patrick Scaglia.
+Os caminhos devem ser conferidos no repositório antes de qualquer alteração; esta lista descreve a organização pretendida.
+
+| Caminho | Finalidade |
+| --- | --- |
+| `banco-de-dados/` | Modelagem e scripts SQL |
+| `prototipo/` | Protótipos das telas |
+| `ti/` | Documentação acadêmica e requisitos |
+| `docs/` | Planejamento e diário de prompts |
+| `web-data-viz/public/` | Arquivos do frontend |
+| `web-data-viz/src/` | Backend, seguindo o material da turma |
+| `AGENTS.md` | Orientações para assistentes de programação |
+
+## Requisitos acadêmicos
+
+Aplicar variáveis, funções, operações matemáticas, condicionais, repetições e vetores; desenvolver modelo lógico e relacionamentos; demonstrar o fluxo entre frontend, API e banco; manter documentação, Trello e histórico no Git público. Preparar apresentação de dez minutos, incluindo motivação pessoal, valores, dificuldades e superação.
+
+## Uso de IA e conteúdo
+
+A IA será utilizada como apoio ao aprendizado. Os pedidos, assistentes utilizados, resultados aproveitados e alterações devem ser registrados em `docs/diario-de-prompts.md`. O autor precisa compreender e explicar o código entregue.
+
+Frases do desenho devem ter sua origem identificada. Reflexões autorais e interpretações das cenas devem ser diferenciadas de afirmações científicas, que precisam de fontes verificadas.
+
+## Execução
+
+As instruções de instalação e execução serão acrescentadas após conferir e configurar a base fornecida pela turma. Ainda não há comandos, portas ou credenciais de execução confirmados neste README.
