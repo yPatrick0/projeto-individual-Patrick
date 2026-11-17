@@ -12,7 +12,7 @@ O projeto não tem um nicho específico: sua motivação é pessoal, mas qualque
 
 ## Estado atual
 
-Em fase inicial, com estrutura de pastas e parte da documentação preparadas, conforme o planejamento registrado em 17/11/2026. Páginas, integração, banco de dados e funcionalidades ainda precisam ser desenvolvidos. Não há versão funcional declarada.
+Base Web Data Viz/AquaTech incorporada em 17/11/2026. O servidor entrega páginas simples de início, cadastro e login, com links entre elas. Cadastro e login são somente telas de preparação: não enviam dados nem autenticam usuários. Integração, adaptação do banco e demais funcionalidades continuam pendentes.
 
 ## Escopo e decisões
 
@@ -39,19 +39,23 @@ Tempo de partida, tentativas e partidas concluídas são possibilidades para o d
 - Web Data Viz/AquaTech da faculdade como base de arquitetura.
 - VM Linux dedicada ao banco, conforme a exigência acadêmica.
 
-## Organização planejada
+## Organização atual
 
-Os caminhos devem ser conferidos no repositório antes de qualquer alteração; esta lista descreve a organização pretendida.
+A aplicação está na pasta já reservada `web-data-viz/`, sem outra aplicação aninhada.
 
 | Caminho | Finalidade |
 | --- | --- |
 | `banco-de-dados/` | Modelagem e scripts SQL |
-| `prototipo/` | Protótipos das telas |
 | `ti/` | Documentação acadêmica e requisitos |
 | `docs/` | Planejamento e diário de prompts |
-| `web-data-viz/public/` | Arquivos do frontend |
+| `web-data-viz/public/` | Páginas `index.html`, `cadastro.html` e `login.html` |
+| `web-data-viz/public/css/` e `web-data-viz/public/js/` | Estilos e JavaScript do frontend |
+| `web-data-viz/public/assets/img/` | Pasta reservada para imagens, atualmente apenas com `.gitkeep` |
 | `web-data-viz/src/` | Backend, seguindo o material da turma |
-| `AGENTS.md` | Orientações para assistentes de programação |
+| `web-data-viz/src/database/` | Configuração MySQL e SQL original AquaTech, ainda não adaptado nem executado |
+| `web-data-viz/app.js` | Inicialização do servidor |
+| `AGENTS.md` | Orientações para assistentes de programação para todo o projeto |
+| `README.md` | Apresentação, organização e execução do projeto |
 
 ## Requisitos acadêmicos
 
@@ -65,4 +69,31 @@ Frases do desenho devem ter sua origem identificada. Reflexões autorais e inter
 
 ## Execução
 
-As instruções de instalação e execução serão acrescentadas após conferir e configurar a base fornecida pela turma. Ainda não há comandos, portas ou credenciais de execução confirmados neste README.
+No terminal, a partir da raiz do projeto:
+
+```bash
+cd web-data-viz
+npm install
+```
+
+Na primeira configuração, copie `.env.example` para `.env.dev` nessa mesma pasta. No PowerShell, use `Copy-Item .env.example .env.dev`; no Git Bash, `cp .env.example .env.dev`. Não substitua uma configuração local que já tenha preenchido. Nesta preparação, `.env.dev` já foi criado sem credenciais.
+
+Depois, dentro de `web-data-viz/`:
+
+```bash
+npm start
+```
+
+Abra <http://localhost:3333/>. As outras páginas são `/cadastro.html` e `/login.html`. Para encerrar, pressione `Ctrl+C` no terminal.
+
+O `app.js` original carrega `.env.dev` no modo desenvolvimento. O `.env.example` contém a porta 3333 e campos de banco sem usuário ou senha. Não é necessário conectar ao MySQL para acessar as páginas. Não versione `.env`, `.env.dev` nem `node_modules/`; o `.gitignore` existente já os protege e permite `.env.example`.
+
+O fluxo da base foi preservado: **rotas → controllers → models → database**. Os arquivos do servidor, dependências e SQL da turma foram mantidos; as telas AquaTech de dashboard e simulador não foram importadas. O backend ainda é o exemplo AquaTech, não uma API adaptada ou pronta para publicação.
+
+### Verificações desta etapa
+
+- Dependências instaladas e `npm start` executado; início, cadastro, login e CSS responderam HTTP 200.
+- Na revisão da organização, `npm start` e `npm run dev` foram verificados novamente: ambos entregaram as três páginas e o CSS com HTTP 200.
+- Links, título e bloqueio de envio dos formulários conferidos no HTML; aparência e interação em navegador não foram testadas manualmente.
+- MySQL, cadastro e autenticação não foram testados. Nenhum SQL foi executado.
+- `npm audit` apontou 7 vulnerabilidades de severidade alta na cadeia do `nodemon`. Nenhuma correção automática foi aplicada para não alterar a base sem revisão.

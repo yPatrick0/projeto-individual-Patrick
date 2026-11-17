@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hora de Aventura — Projeto Individual</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Hora de Aventura — Projeto Individual</h1>
+        <nav aria-label="Navegação principal">
+            <a href="index.html">Início</a>
+            <a href="cadastro.html">Cadastro</a>
+            <a href="login.html" aria-current="page">Login</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Login</h2>
+        <p class="aviso" id="aviso-login">
+            Integração pendente: esta tela ainda não autentica usuários.
+            O login está desabilitado. Não preencha dados reais nesta etapa.
+        </p>
+        <!-- Sem envio: nenhuma sessão de usuário é criada nesta etapa. -->
+        <form aria-describedby="aviso-login" onsubmit="return false;">
+            <label for="email">E-mail</label>
+            <input id="email" type="email" autocomplete="email">
+
+            <label for="senha">Senha</label>
+            <input id="senha" type="password" autocomplete="current-password">
+
+            <button type="submit" disabled>Entrar (em breve)</button>
+        </form>
+        <p>Ainda não tem uma conta? <a href="cadastro.html">Ir para o cadastro</a>.</p>
+    </main>
+    <footer>
+        <p>Projeto individual de Patrick Scaglia — SPTech.</p>
+    </footer>
+</body>
+</html>
