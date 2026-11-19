@@ -3,43 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hora de Aventura — Projeto Individual</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Cadastro | Hora de Aventura — Projeto Individual</title>
+    <link rel="stylesheet" href="./css/cadastro-login.css">
 </head>
 <body>
-    <header>
-        <h1>Hora de Aventura — Projeto Individual</h1>
+    <header class="wrap bar">
+        <a class="brand" href="./index.html">Terra de Ooo</a>
         <nav aria-label="Navegação principal">
             <a href="index.html">Início</a>
             <a href="cadastro.html" aria-current="page">Cadastro</a>
-            <a href="login.html">Login</a>
+            <a class="button secondary" href="login.html">Entrar</a>
         </nav>
     </header>
-    <main>
-        <h2>Cadastro</h2>
-        <p class="aviso" id="aviso-cadastro">
-            Integração pendente: esta tela ainda não envia nem salva dados.
-            O cadastro está desabilitado. Não preencha dados reais nesta etapa.
-        </p>
-        <!-- Sem envio: os campos são apenas a preparação visual do cadastro. -->
-        <form aria-describedby="aviso-cadastro" onsubmit="return false;">
-            <label for="nome">Nome</label>
-            <input id="nome" type="text" autocomplete="name">
+    <main class="wrap auth-layout">
+        <section class="auth-intro" aria-labelledby="titulo-ooo">
+            <p class="eyebrow">Hora de Aventura — Projeto Individual</p>
+            <h2 id="titulo-ooo">Sua próxima parada é Ooo.</h2>
+            <p>Personagens, memória e reflexões para explorar uma aventura por outro olhar.</p>
+            <img src="./assets/imgs/destaque.webp" alt="Finn e Jake juntos em uma aventura" width="512" height="512">
+        </section>
+        <section class="auth-card" aria-labelledby="titulo-cadastro">
+            <a class="back-link" href="./index.html">← Voltar ao início</a>
+            <h1 id="titulo-cadastro">Cadastro</h1>
+            <p class="aviso" id="aviso-cadastro">
+                Integração pendente: esta tela ainda não envia nem salva dados.
+                O cadastro está desabilitado. Não preencha dados reais nesta etapa.
+            </p>
+            <!-- Sem envio: os campos são apenas a preparação visual do cadastro. -->
+            <form aria-describedby="aviso-cadastro" onsubmit="return false;">
+                <label for="nome">Nome</label>
+                <input id="nome" type="text" autocomplete="name">
 
-            <label for="email">E-mail</label>
-            <input id="email" type="email" autocomplete="email">
+                <label for="email">E-mail</label>
+                <input id="email" type="email" autocomplete="email">
 
-            <label for="senha">Senha</label>
-            <input id="senha" type="password" autocomplete="new-password">
+                <label for="senha">Senha</label>
+                <input id="senha" type="password" autocomplete="new-password">
 
-            <label for="confirmacao-senha">Confirme a senha</label>
-            <input id="confirmacao-senha" type="password" autocomplete="new-password">
+                <label for="confirmacao-senha">Confirme a senha</label>
+                <input id="confirmacao-senha" type="password" autocomplete="new-password">
 
-            <button type="submit" disabled>Cadastrar (em breve)</button>
-        </form>
-        <p>Já tem uma conta? <a href="login.html">Ir para o login</a>.</p>
+                <button class="button" type="submit" disabled>Cadastrar (em breve)</button>
+            </form>
+            <p class="auth-switch">Já tem uma conta? <a href="login.html">Ir para o login</a>.</p>
+        </section>
     </main>
-    <footer>
+    <footer class="wrap">
         <p>Projeto individual de Patrick Scaglia — SPTech.</p>
     </footer>
 </body>

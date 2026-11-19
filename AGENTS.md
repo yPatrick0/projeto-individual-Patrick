@@ -14,6 +14,21 @@ O tema reúne Hora de Aventura, autoconhecimento e neurociência. O nome é prov
 - Priorize código simples, nomes claros e conceitos do primeiro semestre. Mantenha o padrão dos arquivos existentes e evite abstrações desnecessárias.
 - Use variáveis, funções, cálculos, condicionais, repetições e vetores quando a tarefa exigir. Não introduza recursos apenas para aparentar complexidade.
 
+### Organização do frontend
+
+- Mantenha `index.html`, `cadastro.html` e `login.html` em `web-data-viz/public/`; `index.html` é a página principal.
+- Use `public/css/estilo.css` para a página inicial e `public/css/cadastro-login.css` como folha compartilhada de cadastro e login. Carregue-os com `<link rel="stylesheet">` no `head`, por caminhos relativos ao HTML.
+- Use o projeto da Jolyne como referência somente para a divisão dos arquivos, sem copiar aparência, textos, imagens ou regras de negócio.
+- Mantenha o JavaScript próprio em `public/js/` e as imagens em arquivos locais em `public/assets/`, sem imagens Base64 no HTML. Separe estilos fixos e blocos `style` do HTML; formate CSS com uma propriedade por linha. O CSS pode utilizar técnicas além das presentes no AquaTech.
+- Antes de alterar ou mover um CSS, confira todas as páginas que dependem dele e corrija os caminhos afetados. Preserve a cópia `Prototipo_Hora_de_Aventura.html` da raiz como referência histórica; seu `css/prototipo.css` foi mantido para não quebrá-la.
+
+### Referências autorizadas para JavaScript
+
+- São autorizados comandos, métodos e estruturas presentes em pelo menos uma destas referências: exercícios do estudante, apostilas da turma ou Web Data Viz/AquaTech. Consulte os materiais disponíveis antes de escolher recursos; se algum estiver inacessível, informe a limitação e avance com os padrões explicitamente confirmados pelo usuário.
+- Prefira nomes claros em português, funções nomeadas, `if/else`, vetores, `push`, acesso por índice e laços `for` ou `while` quando fizer sentido. `onclick`, `Math.random()` e `document.getElementById()` estão autorizados; este último também aparece em `public/js/sessao.js` do AquaTech.
+- Verifique o respaldo de `forEach`, desestruturação e encadeamento opcional antes de mantê-los ou introduzi-los. Mesmo quando houver respaldo, prefira uma solução simples com os recursos estudados. Se um recurso fora das referências for indispensável, explique sua finalidade e consulte o usuário sobre ele; continue os ajustes independentes.
+- Ao reorganizar, preserve as regras atuais do jogo, campos, validações e funcionamento de cadastro/login. Não transforme telas demonstrativas em integração. Onde já existir integração, preserve o fluxo página → rota → controlador → modelo → banco do AquaTech.
+
 ## Como executar as tarefas
 
 1. Examine a estrutura real e o estado do Git antes de editar. A estrutura descrita no README é planejada e não comprova que uma pasta exista.
