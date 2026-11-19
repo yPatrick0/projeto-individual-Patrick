@@ -1,0 +1,223 @@
+/* Sequência de Ooo - estilos do minijogo.
+   Folha exclusiva de jogo-aventura.html; classes com prefixo "av-".
+   Para combinar com as outras páginas, ajuste as cores nas variáveis abaixo. */
+:root {
+    --fundo: #12303f;
+    --painel: #1b4457;
+    --texto: #f4fbff;
+    --destaque: #ffd447;
+    --cor-finn: #3fb6f0;
+    --cor-jake: #f2b632;
+    --cor-marceline: #9b6bd1;
+    --cor-bmo: #52c9a4;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--fundo);
+    color: var(--texto);
+    font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+    line-height: 1.5;
+}
+
+.av-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+}
+
+.av-marca {
+    color: var(--destaque);
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.av-link-voltar {
+    color: var(--texto);
+}
+
+.av-principal {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 8px 16px 40px;
+}
+
+.av-painel {
+    background: var(--painel);
+    border-radius: 18px;
+    padding: 24px 20px;
+    text-align: center;
+}
+.av-painel[hidden], .av-frase[hidden] {
+    display: none;
+}
+
+h1, h2 {
+    margin: 0 0 12px;
+    color: var(--destaque);
+}
+
+.av-instrucoes {
+    text-align: left;
+    max-width: 420px;
+    margin: 16px auto 24px;
+    padding-left: 22px;
+}
+
+.av-instrucoes li {
+    margin-bottom: 6px;
+}
+
+.av-placar {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.av-mensagem {
+    min-height: 1.6em;
+    margin: 12px 0;
+    font-size: 1.1rem;
+}
+
+.av-tabuleiro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 0 auto 16px;
+}
+
+.av-personagem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 140px;
+    padding: 10px;
+    border: 4px solid transparent;
+    border-radius: 16px;
+    color: #10202a;
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0.55;
+    transition: opacity 0.15s, transform 0.15s;
+}
+.av-personagem img {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+}
+
+.av-finn {
+    background: var(--cor-finn);
+}
+
+.av-jake {
+    background: var(--cor-jake);
+}
+
+.av-marceline {
+    background: var(--cor-marceline);
+}
+
+.av-bmo {
+    background: var(--cor-bmo);
+}
+
+/* Personagem aceso (durante a sequência ou no clique) */
+.av-personagem.av-aceso {
+    opacity: 1;
+    transform: scale(1.06);
+    border-color: #fff;
+}
+
+.av-botao {
+    display: inline-block;
+    padding: 12px 26px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--destaque);
+    color: #10202a;
+    font: inherit;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+.av-secundario {
+    background: transparent;
+    color: var(--texto);
+    border: 2px solid var(--texto);
+}
+
+.av-frase {
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    border-left: 5px solid var(--destaque);
+    background: rgba(0, 0, 0, 0.2);
+    text-align: left;
+}
+
+.av-frase p {
+    margin: 0 0 4px;
+    font-style: italic;
+}
+
+.av-frase small {
+    opacity: 0.75;
+}
+
+.av-resultado {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+    font-size: 1.1rem;
+}
+
+.av-aviso {
+    font-size: 0.85rem;
+    opacity: 0.85;
+}
+
+.av-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+button:focus-visible, a:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+}
+
+@media (max-width: 420px) {
+    .av-personagem {
+        min-height: 120px;
+    }
+
+    .av-personagem img {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .av-personagem {
+        transition: none;
+    }
+
+    .av-personagem.av-aceso {
+        transform: none;
+    }
+}
