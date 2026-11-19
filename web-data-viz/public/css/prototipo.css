@@ -1,0 +1,320 @@
+:root {
+    --ink: #20352a;
+    --paper: #f8f4e7;
+    --green: #dce8cf;
+    --yellow: #ffd363;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 16px/1.6 'Trebuchet MS',sans-serif;
+}
+
+a {
+    color: inherit;
+}
+
+img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+}
+
+h1,h2,h3,p {
+    margin: 0;
+}
+
+h1,h2 {
+    font-family: Georgia,serif;
+    line-height: 1.04;
+    letter-spacing: -.045em;
+}
+
+h1 {
+    font-size: clamp(3.1rem,6.1vw,6rem);
+    max-width: 9ch;
+}
+
+h2 {
+    font-size: clamp(2.6rem,4vw,4.1rem);
+}
+
+p {
+    max-width: 54ch;
+}
+
+button,input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: default;
+}
+
+:focus-visible {
+    outline: 3px solid #b3416a;
+    outline-offset: 4px;
+}
+
+.wrap {
+    width: min(1160px,calc(100% - 48px));
+    margin: auto;
+}
+
+.bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 78px;
+    flex-wrap: wrap;
+}
+
+.brand {
+    font-weight: 900;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.bar nav {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.bar a {
+    text-decoration: none;
+}
+
+.button {
+    display: inline-block;
+    border: 1px solid var(--ink);
+    background: var(--yellow);
+    color: var(--ink);
+    padding: 10px 20px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.secondary {
+    background: transparent;
+}
+
+.hero {
+    background: #c1e0ed;
+    border-block: 1px solid var(--ink);
+    padding: 68px 0;
+}
+
+.hero .wrap,.split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 54px;
+    align-items: center;
+}
+
+.hero img {
+    aspect-ratio: 1.16;
+    border-radius: 44% 44% 22px 22px;
+    border: 2px solid var(--ink);
+    box-shadow: 9px 9px var(--ink);
+}
+
+.hero p,.split p {
+    margin: 20px 0;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.band {
+    padding: 76px 0;
+}
+
+.about {
+    background: var(--green);
+}
+
+.about img {
+    aspect-ratio: 1.6;
+    border-radius: 20px;
+}
+
+.story p {
+    font-size: 1.2rem;
+}
+
+.game {
+    background: #253e31;
+    color: var(--paper);
+}
+
+.game p {
+    margin: 16px 0;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 9px;
+}
+
+.card {
+    border: 1px solid #94aa89;
+    border-radius: 12px;
+    background: #365647;
+    color: #fff5cb;
+    min-height: 68px;
+    font-size: 1.85rem;
+}
+
+.card.open,.card.done {
+    background: #f7e9af;
+    color: #20352a;
+}
+
+.card.done {
+    background: #c4e3ad;
+}
+
+.stats {
+    font-size: .9rem;
+    margin-top: 10px;
+    min-height: 1.6em;
+}
+
+.roster {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 16px;
+    margin-top: 28px;
+}
+
+.person {
+    background: #fffdf4;
+    border: 1px solid #746e59;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.person img {
+    height: 156px;
+}
+
+.person div {
+    padding: 14px 17px 17px;
+}
+
+.person p {
+    font-size: .94rem;
+}
+
+footer {
+    border-top: 1px solid #a6a48f;
+    padding: 26px 0;
+    font-size: .88rem;
+}
+
+footer .wrap {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+dialog {
+    border: 1px solid var(--ink);
+    border-radius: 22px;
+    background: var(--paper);
+    color: var(--ink);
+    width: min(440px,calc(100% - 30px));
+    padding: 28px;
+}
+
+dialog::backdrop {
+    background: #162c24ba;
+}
+
+dialog h2 {
+    font-size: 2.6rem;
+}
+
+dialog label {
+    display: block;
+    margin-top: 13px;
+}
+
+dialog input {
+    display: block;
+    width: 100%;
+    padding: 7px;
+    border: 1px solid #878873;
+    border-radius: 7px;
+    margin-top: 4px;
+    background: #fffdf4;
+}
+
+dialog p {
+    margin: 12px 0;
+}
+
+.close {
+    float: right;
+    background: transparent;
+    border: 1px solid #878873;
+    border-radius: 50%;
+    width: 33px;
+    height: 33px;
+}
+
+@media(max-width:780px) {
+    .hero .wrap,.split {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .bar {
+        padding-block: 12px;
+    }
+
+    .bar nav {
+        gap: 12px;
+    }
+
+    .roster {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .band,.hero {
+        padding: 44px 0;
+    }
+}
+
+@media(max-width:420px) {
+    .roster {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        min-height: 53px;
+    }
+}

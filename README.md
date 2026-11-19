@@ -12,17 +12,19 @@ O projeto não tem um nicho específico: sua motivação é pessoal, mas qualque
 
 ## Estado atual
 
-Base Web Data Viz/AquaTech incorporada em 17/11/2026. O servidor entrega páginas simples de início, cadastro e login, com links entre elas. Cadastro e login são somente telas de preparação: não enviam dados nem autenticam usuários. Integração, adaptação do banco e demais funcionalidades continuam pendentes.
+Base Web Data Viz/AquaTech incorporada em 17/11/2026. Em 18/11/2026, a página inicial recebeu o visual, conteúdo e imagens locais do protótipo editável, com links para as páginas existentes de cadastro e login. Essas duas telas continuam sendo somente preparação: não enviam dados nem autenticam usuários. Integração, adaptação do banco e demais funcionalidades continuam pendentes.
+
+O jogo da memória está disponível como demonstração local com seis pares de símbolos e contador de tentativas, conforme o protótipo. Não salva resultados, não usa o banco e não é um teste científico. Conteúdo pessoal e atribuições das imagens importados do protótipo aguardam revisão do autor.
 
 ## Escopo e decisões
 
 | Item | Situação |
 | --- | --- |
-| Conteúdo sobre personagens, episódios, frases e reflexões | Planejado |
+| Conteúdo sobre personagens, episódios, frases e reflexões | Apresentação de personagens incorporada; demais conteúdos planejados |
 | Cadastro com validações e login | Previsto nas entregas acadêmicas |
 | Integração da API com MySQL | Obrigatória |
 | Dashboard com indicadores de dados do sistema | Obrigatório; indicadores a definir |
-| Jogo da memória com personagens | Proposta em avaliação |
+| Jogo da memória com personagens | Demonstração com símbolos disponível; versão com personagens em avaliação |
 | Quiz de afinidade com personagens | Proposta anterior, sem confirmação |
 | Nome definitivo e seleção final de conteúdos | A definir |
 
@@ -49,8 +51,9 @@ A aplicação está na pasta já reservada `web-data-viz/`, sem outra aplicaçã
 | `ti/` | Documentação acadêmica e requisitos |
 | `docs/` | Planejamento e diário de prompts |
 | `web-data-viz/public/` | Páginas `index.html`, `cadastro.html` e `login.html` |
-| `web-data-viz/public/css/` e `web-data-viz/public/js/` | Estilos e JavaScript do frontend |
+| `web-data-viz/public/css/` e `web-data-viz/public/js/` | `prototipo.css` compartilhado pela página inicial e pelo `Prototipo_Hora_de_Aventura.html` da raiz; `prototipo.js` da página inicial; `style.css` preservado para cadastro e login; `script.js` original preservado |
 | `web-data-viz/public/assets/img/` | Pasta reservada para imagens, atualmente apenas com `.gitkeep` |
+| `web-data-viz/public/assets/imgs/` | Oito imagens WebP locais importadas do protótipo |
 | `web-data-viz/src/` | Backend, seguindo o material da turma |
 | `web-data-viz/src/database/` | Configuração MySQL e SQL original AquaTech, ainda não adaptado nem executado |
 | `web-data-viz/app.js` | Inicialização do servidor |
@@ -92,6 +95,7 @@ O fluxo da base foi preservado: **rotas → controllers → models → database*
 
 ### Verificações desta etapa
 
+- Na incorporação do protótipo (18/11/2026), `npm start` entregou início, cadastro, login, ambos os CSS, JavaScript do jogo e as oito imagens com HTTP 200 e conteúdo igual aos arquivos locais. Links e fragmentos internos conferidos; sintaxe JavaScript e lógica do jogo verificadas em DOM simulado. Aparência e interação em navegador continuam pendentes.
 - Dependências instaladas e `npm start` executado; início, cadastro, login e CSS responderam HTTP 200.
 - Na revisão da organização, `npm start` e `npm run dev` foram verificados novamente: ambos entregaram as três páginas e o CSS com HTTP 200.
 - Links, título e bloqueio de envio dos formulários conferidos no HTML; aparência e interação em navegador não foram testadas manualmente.

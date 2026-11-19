@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+            Autoconhecimento com Hora de Aventura
+        </title>
+        <link rel="stylesheet" href="web-data-viz/public/css/prototipo.css">
+    </head>
+    <body>
+        <header class="wrap bar">
+            <a class="brand" href="#">
+                Terra de Ooo
+            </a>
+            <nav aria-label="Menu principal">
+                <a href="#sobre">
+                    Sobre
+                </a>
+                <a href="#historia">
+                    Minha história
+                </a>
+                <a href="#personagens">
+                    Personagens
+                </a>
+                <a href="#jogo">
+                    Jogo
+                </a>
+                <button class="button secondary" data-open="login">
+                    Entrar
+                </button>
+                <button class="button" data-open="cadastro">
+                    Criar conta
+                </button>
+            </nav>
+        </header>
+        <main>
+            <section class="hero">
+                <div class="wrap">
+                    <div>
+                        <h1>
+                            Autoconhecimento com Hora de Aventura
+                        </h1>
+                        <p>
+                            Uma visita à Terra de Ooo para revisitar histórias que me acompanharam enquanto eu crescia e conversar sobre memória, emoções e mudanças.
+                        </p>
+                        <div class="actions">
+                            <a class="button" href="#jogo">
+                                Jogar memória
+                            </a>
+                            <a class="button secondary" href="#sobre">
+                                Conhecer o projeto
+                            </a>
+                        </div>
+                    </div>
+                    <img src="web-data-viz/public/assets/imgs/destaque.webp" alt="Imagem da série Hora de Aventura">
+                </div>
+            </section>
+            <section class="band about" id="sobre">
+                <div class="wrap split">
+                    <img loading="lazy" src="web-data-viz/public/assets/imgs/marceline-rei-gelado.webp" alt="Marceline e o Rei Gelado juntos">
+                    <div>
+                        <h2>
+                            O que fica de uma aventura?
+                        </h2>
+                        <p>
+                            Uma música, uma amizade ou uma cena que ganha outro sentido quando a gente cresce. Revisito momentos da série e uso essas histórias para levantar perguntas sobre o que sentimos e lembramos.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section class="band story" id="historia">
+                <div class="wrap split">
+                    <h2>
+                        Minha história com Ooo
+                    </h2>
+                    <p>
+                        Comecei a assistir a Hora de Aventura por volta dos dez anos, no Cartoon Network. Era diversão e, com o tempo, virou também uma fonte de conforto. Hoje, ao voltar a esses episódios, percebo detalhes que me fazem pensar nas minhas experiências pessoais relacionadas a mudanças e relacionamentos.
+                    </p>
+                </div>
+            </section>
+            <section class="band game" id="jogo">
+                <div class="wrap split">
+                    <div>
+                        <h2>
+                            Jogo da memória
+                        </h2>
+                        <p>
+                            Vire duas cartas de cada vez e encontre os seis pares. Repare em como você se lembra da posição das cartas à medida que joga.
+                        </p>
+                        <button class="button" id="reset">
+                            Embaralhar cartas
+                        </button>
+                    </div>
+                    <div>
+                        <div class="board" id="board" aria-label="Tabuleiro">
+                        </div>
+                        <p class="stats" id="stats" role="status">
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section class="band wrap" id="personagens">
+                <h2>
+                    Personagens de Ooo
+                </h2>
+                <div class="roster">
+                    <article class="person">
+                        <img loading="lazy" src="web-data-viz/public/assets/imgs/finn.webp" alt="">
+                        <div>
+                            <h3>
+                                Finn
+                            </h3>
+                            <p>
+                                Entra de cabeça nas aventuras e aprende a mudar de estratégia.
+                            </p>
+                        </div>
+                    </article>
+                    <article class="person">
+                        <img loading="lazy" src="web-data-viz/public/assets/imgs/jake.webp" alt="">
+                        <div>
+                            <h3>
+                                Jake
+                            </h3>
+                            <p>
+                                Companheiro de Finn, capaz de mudar de forma e de ritmo.
+                            </p>
+                        </div>
+                    </article>
+                    <article class="person">
+                        <img loading="lazy" src="web-data-viz/public/assets/imgs/marceline.webp" alt="">
+                        <div>
+                            <h3>
+                                Marceline
+                            </h3>
+                            <p>
+                                Usa a música para expressar o que ficou guardado.
+                            </p>
+                        </div>
+                    </article>
+                    <article class="person">
+                        <img loading="lazy" src="web-data-viz/public/assets/imgs/bmo.webp" alt="">
+                        <div>
+                            <h3>
+                                BMO
+                            </h3>
+                            <p>
+                                Transforma situações do dia a dia em histórias e brincadeiras.
+                            </p>
+                        </div>
+                    </article>
+                    <article class="person">
+                        <img loading="lazy" src="web-data-viz/public/assets/imgs/rei-gelado.webp" alt="">
+                        <div>
+                            <h3>
+                                Rei Gelado
+                            </h3>
+                            <p>
+                                Sua história com Marceline abre uma conversa sobre lembranças e vínculos.
+                            </p>
+                        </div>
+                    </article>
+                    <article class="person">
+                        <img loading="lazy" src="web-data-viz/public/assets/imgs/princesa-jujuba.webp" alt="">
+                        <div>
+                            <h3>
+                                Princesa Jujuba
+                            </h3>
+                            <p>
+                                Cientista e governante do Reino Doce, resolve problemas inventando soluções.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <div class="wrap">
+                <span>
+                    Patrick Scaglia Rodrigues · Projeto Individual · SPTech
+                </span>
+                <a href="https://tv.apple.com/br/show/hora-de-aventura/umc.cmc.379m2it2q2g5zi6dwqi84cwpw">
+                    Imagens da série · Apple TV
+                </a>
+            </div>
+        </footer>
+        <dialog id="login">
+            <form method="dialog">
+                <button class="close" aria-label="Fechar">
+                    ×
+                </button>
+            </form>
+            <h2>
+                Entrar
+            </h2>
+            <label>
+                E-mail
+                <input type="email" autocomplete="off">
+            </label>
+            <label>
+                Senha
+                <input type="password" autocomplete="off">
+            </label>
+            <p>
+                Tela de demonstração. A conexão com o servidor fica para a implementação.
+            </p>
+            <button class="button secondary" data-open="cadastro">
+                Ir para cadastro
+            </button>
+        </dialog>
+        <dialog id="cadastro">
+            <form method="dialog">
+                <button class="close" aria-label="Fechar">
+                    ×
+                </button>
+            </form>
+            <h2>
+                Criar conta
+            </h2>
+            <label>
+                Nome
+                <input type="text" autocomplete="off">
+            </label>
+            <label>
+                E-mail
+                <input type="email" autocomplete="off">
+            </label>
+            <label>
+                Senha
+                <input type="password" autocomplete="off">
+            </label>
+            <label>
+                Confirmar senha
+                <input type="password" autocomplete="off">
+            </label>
+            <p>
+                Tela de demonstração. A conexão com o servidor fica para a implementação.
+            </p>
+            <button class="button secondary" data-open="login">
+                Ir para login
+            </button>
+        </dialog>
+        <script>
+
+const pairs = [['☀','sol'],['☾','lua'],['★','estrela'],['◆','diamante'],['▲','triângulo'],['♥','coração']];
+const board = document.querySelector('#board');
+const stats = document.querySelector('#stats');
+let first, moves, matches, pending;
+function showStats() {
+  stats.textContent = (matches === pairs.length ? 'Você encontrou todos os pares! ' : '') + matches + ' de 6 pares · ' + moves + ' tentativas';
+}
+function start() {
+  clearTimeout(pending);
+  pending = null;
+  first = null;
+  moves = 0;
+  matches = 0;
+  const cards = pairs.concat(pairs);
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cards[i], cards[j]] = [cards[j], cards[i]];
+  }
+  board.replaceChildren();
+  cards.forEach(([symbol, name], index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'card';2
+    const hiddenName = 'Virar carta ' + (index + 1);
+    function hide() {
+      button.textContent = '✦';
+      button.setAttribute('aria-label', hiddenName);
+      button.classList.remove('open');
+    }
+    hide();
+    button.addEventListener('click', () => {
+      if (pending || first?.button === button || button.disabled) return;
+      button.textContent = symbol;
+      button.setAttribute('aria-label', name);
+      button.classList.add('open');
+      if (!first) {
+        first = {button, symbol, hide};
+        return;
+      }
+      moves++;
+      const previous = first;
+      first = null;
+      if (previous.symbol === symbol) {
+        matches++;
+        for (const matched of [previous.button, button]) {
+          matched.disabled = true;
+          matched.classList.add('done');
+        }
+      } else {
+        pending = setTimeout(() => {
+          previous.hide();
+          hide();
+          pending = null;
+        }, 750);
+      }
+      showStats();
+    });
+    board.append(button);
+  });
+  showStats();
+}
+document.querySelector('#reset').addEventListener('click', start);
+document.querySelectorAll('[data-open]').forEach(button => {
+  button.addEventListener('click', () => {
+    document.querySelector('dialog[open]')?.close();
+    document.getElementById(button.dataset.open).showModal();
+  });
+});
+start();
+
+        </script>
+    </body>
+</html>

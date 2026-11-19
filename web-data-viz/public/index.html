@@ -1,33 +1,194 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hora de Aventura — Projeto Individual</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/script.js" defer></script>
-</head>
-<body>
-    <header>
-        <h1>Hora de Aventura — Projeto Individual</h1>
-        <nav aria-label="Navegação principal">
-            <a href="index.html" aria-current="page">Início</a>
-            <a href="cadastro.html">Cadastro</a>
-            <a href="login.html">Login</a>
-        </nav>
-    </header>
-
-    <main>
-        <h2>Sobre o projeto</h2>
-        <p>
-            Um projeto sobre Hora de Aventura, autoconhecimento e neurociência,
-            com interesse em memória, emoções e aprendizagem.
-        </p>
-        <p>Projeto em desenvolvimento.</p>
-    </main>
-
-    <footer>
-        <p>Projeto individual de Patrick Scaglia — SPTech.</p>
-    </footer>
-</body>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+            Autoconhecimento com Hora de Aventura
+        </title>
+        <link rel="stylesheet" href="css/prototipo.css">
+    </head>
+    <body>
+        <header class="wrap bar">
+            <a class="brand" href="index.html">
+                Terra de Ooo
+            </a>
+            <nav aria-label="Menu principal">
+                <a href="#sobre">
+                    Sobre
+                </a>
+                <a href="#historia">
+                    Minha história
+                </a>
+                <a href="#personagens">
+                    Personagens
+                </a>
+                <a href="#jogo">
+                    Jogo
+                </a>
+                <a class="button secondary" href="login.html">
+                    Entrar
+                </a>
+                <a class="button" href="cadastro.html">
+                    Criar conta
+                </a>
+            </nav>
+        </header>
+        <main>
+            <section class="hero">
+                <div class="wrap">
+                    <div>
+                        <h1>
+                            Autoconhecimento com Hora de Aventura
+                        </h1>
+                        <p>
+                            Uma visita à Terra de Ooo para revisitar histórias que me acompanharam enquanto eu crescia e conversar sobre memória, emoções e mudanças.
+                        </p>
+                        <div class="actions">
+                            <a class="button" href="#jogo">
+                                Jogar memória
+                            </a>
+                            <a class="button secondary" href="#sobre">
+                                Conhecer o projeto
+                            </a>
+                        </div>
+                    </div>
+                    <img src="assets/imgs/destaque.webp" alt="Imagem da série Hora de Aventura">
+                </div>
+            </section>
+            <section class="band about" id="sobre">
+                <div class="wrap split">
+                    <img loading="lazy" src="assets/imgs/marceline-rei-gelado.webp" alt="Marceline e o Rei Gelado juntos">
+                    <div>
+                        <h2>
+                            O que fica de uma aventura?
+                        </h2>
+                        <p>
+                            Uma música, uma amizade ou uma cena que ganha outro sentido quando a gente cresce. Revisito momentos da série e uso essas histórias para levantar perguntas sobre o que sentimos e lembramos.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section class="band story" id="historia">
+                <div class="wrap split">
+                    <h2>
+                        Minha história com Ooo
+                    </h2>
+                    <p>
+                        Comecei a assistir a Hora de Aventura por volta dos dez anos, no Cartoon Network. Era diversão e, com o tempo, virou também uma fonte de conforto. Hoje, ao voltar a esses episódios, percebo detalhes que me fazem pensar nas minhas experiências pessoais relacionadas a mudanças e relacionamentos.
+                    </p>
+                </div>
+            </section>
+            <section class="band game" id="jogo">
+                <div class="wrap split">
+                    <div>
+                        <h2>
+                            Jogo da memória
+                        </h2>
+                        <p>
+                            Vire duas cartas de cada vez e encontre os seis pares. Repare em como você se lembra da posição das cartas à medida que joga.
+                        </p>
+                        <p>
+                            Demonstração local com símbolos: tentativas e pares não são salvos
+                            nem enviados ao banco. Não é um teste científico de memória.
+                        </p>
+                        <button class="button" id="reset">
+                            Embaralhar cartas
+                        </button>
+                    </div>
+                    <div>
+                        <div class="board" id="board" aria-label="Tabuleiro">
+                        </div>
+                        <p class="stats" id="stats" role="status">
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section class="band wrap" id="personagens">
+                <h2>
+                    Personagens de Ooo
+                </h2>
+                <div class="roster">
+                    <article class="person">
+                        <img loading="lazy" src="assets/imgs/finn.webp" alt="">
+                        <div>
+                            <h3>
+                                Finn
+                            </h3>
+                            <p>
+                                Entra de cabeça nas aventuras e aprende a mudar de estratégia.
+                            </p>
+                        </div>
+                    </article>
+                    <article class="person">
+                        <img loading="lazy" src="assets/imgs/jake.webp" alt="">
+                        <div>
+                            <h3>
+                                Jake
+                            </h3>
+                            <p>
+                                Companheiro de Finn, capaz de mudar de forma e de ritmo.
+                            </p>
+                        </div>
+                    </article>
+                    <article class="person">
+                        <img loading="lazy" src="assets/imgs/marceline.webp" alt="">
+                        <div>
+                            <h3>
+                                Marceline
+                            </h3>
+                            <p>
+                                Usa a música para expressar o que ficou guardado.
+                            </p>
+                        </div>
+                    </article>
+                    <article class="person">
+                        <img loading="lazy" src="assets/imgs/bmo.webp" alt="">
+                        <div>
+                            <h3>
+                                BMO
+                            </h3>
+                            <p>
+                                Transforma situações do dia a dia em histórias e brincadeiras.
+                            </p>
+                        </div>
+                    </article>
+                    <article class="person">
+                        <img loading="lazy" src="assets/imgs/rei-gelado.webp" alt="">
+                        <div>
+                            <h3>
+                                Rei Gelado
+                            </h3>
+                            <p>
+                                Sua história com Marceline abre uma conversa sobre lembranças e vínculos.
+                            </p>
+                        </div>
+                    </article>
+                    <article class="person">
+                        <img loading="lazy" src="assets/imgs/princesa-jujuba.webp" alt="">
+                        <div>
+                            <h3>
+                                Princesa Jujuba
+                            </h3>
+                            <p>
+                                Cientista e governante do Reino Doce, resolve problemas inventando soluções.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <div class="wrap">
+                <span>
+                    Patrick Scaglia Rodrigues · Projeto Individual · SPTech
+                </span>
+                <a href="https://tv.apple.com/br/show/hora-de-aventura/umc.cmc.379m2it2q2g5zi6dwqi84cwpw">
+                    Imagens da série · Apple TV
+                </a>
+            </div>
+        </footer>
+        <script src="js/prototipo.js" defer>
+        </script>
+    </body>
 </html>
