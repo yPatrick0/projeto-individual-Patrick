@@ -277,34 +277,62 @@ button:disabled {
     border-bottom: 1px solid #d9d4c2;
 }
 
-/* Cada retrato já tem recorte próprio; contain preserva chapéus e coroas. */
+/* As fotos compartilham a mesma moldura; posições destacam os rostos
+   e preservam chapéus e coroas. */
+.person img.portrait-finn,
+.person img.portrait-jake,
+.person img.portrait-marceline,
+.person img.portrait-bmo,
+.person img.portrait-rei-gelado,
+.person img.portrait-princesa-jujuba {
+    object-fit: cover;
+}
+
+.person img.portrait-finn,.card img.portrait-finn {
+    object-position: 55% 35%;
+}
+
+.person img.portrait-jake,.card img.portrait-jake {
+    object-position: 50% 20%;
+}
+
+.person img.portrait-marceline,.card img.portrait-marceline {
+    object-position: 50% 20%;
+}
+
+.person img.portrait-bmo,.card img.portrait-bmo {
+    object-position: 45% 30%;
+}
+
+.person img.portrait-rei-gelado,.card img.portrait-rei-gelado {
+    object-position: 45% 20%;
+}
+
+.person img.portrait-princesa-jujuba,.card img.portrait-princesa-jujuba {
+    object-position: 50% 15%;
+}
+
 .portrait-finn {
-    object-position: center 35%;
     background: #e4f1f7;
 }
 
 .portrait-jake {
-    object-position: center 40%;
     background: #fff0c7;
 }
 
 .portrait-marceline {
-    object-position: center 35%;
     background: #eee1f0;
 }
 
 .portrait-bmo {
-    object-position: center;
     background: #dbeee4;
 }
 
 .portrait-rei-gelado {
-    object-position: center top;
     background: #e0eafa;
 }
 
 .portrait-princesa-jujuba {
-    object-position: center top;
     background: #fbe3ef;
 }
 

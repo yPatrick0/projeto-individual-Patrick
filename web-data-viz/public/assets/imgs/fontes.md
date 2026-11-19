@@ -5,7 +5,37 @@ Os arquivos são locais; o site não depende dos servidores de origem para exibi
 Personagens e imagens da série pertencem aos respectivos titulares de direitos.
 Listar uma fonte não equivale a obter licença: revisar permissões antes de publicar o projeto.
 
-## Retratos utilizados nos cartões e no jogo
+## Fotos atuais fornecidas pelo autor em ZIP (19/11/2026)
+
+Os cinco JPEGs abaixo foram copiados sem recorte, conversão ou alteração dos bytes
+do ZIP `imgs personagens.zip` fornecido pelo autor. O enquadramento é feito no CSS
+com `object-fit: cover` e posições por personagem, mantendo chapéu e coroas visíveis.
+Origem anterior ao ZIP e permissão de publicação não foram informadas.
+
+| Arquivo local | Arquivo no ZIP | Personagem |
+| --- | --- | --- |
+| `finn.jpeg` | `IMG_4275.jpeg` | Finn |
+| `jake.jpeg` | `IMG_4276.jpeg` | Jake |
+| `bmo.jpeg` | `IMG_4277.jpeg` | BMO |
+| `princesa-jujuba.jpeg` | `IMG_4278.jpeg` | Princesa Jujuba |
+| `rei-gelado.jpeg` | `IMG_4279.jpeg` | Rei Gelado |
+
+Cartões da inicial e cartas reveladas usam os mesmos arquivos. Sequência de Ooo
+reutiliza `finn.jpeg`, `jake.jpeg` e `bmo.jpeg`; não possui botões de Jujuba ou Rei
+Gelado. Naquela substituição, Marceline foi preservada e `IMG_4280.jpeg`, também
+presente no ZIP, não foi utilizado porque não fazia parte da correspondência
+solicitada. Cenários, destaque principal e verso foram preservados.
+
+### Atualização da Marceline pelo ZIP específico (19/11/2026)
+
+`marceline.jpeg` é a cópia integral de `IMG_4280.jpeg` (896 × 945px), recebido no ZIP
+`foto marceline.zip` fornecido pelo autor. SHA256 conferido: bytes iguais ao original.
+O cartão, as duas cartas do par e o botão da Sequência de Ooo usam esse mesmo arquivo.
+O CSS utiliza `object-fit: cover` e `object-position: 50% 20%`, sem distorcer a foto,
+mantendo o rosto, o chapéu e parte do baixo visíveis. A imagem antiga foi preservada.
+Origem anterior ao ZIP e permissão de publicação não foram informadas.
+
+## Retratos WebP anteriores preservados
 
 Todos os arquivos `*-rosto.webp` têm 480 × 480 pixels. Cada imagem foi examinada e
 recortada individualmente; as duas cartas de cada par referenciam exatamente o mesmo
@@ -39,3 +69,7 @@ continuam sendo usados nas seções de apresentação da página principal.
 `verso-ooo.svg`: composição geométrica criada em código pelo assistente OpenCode
 (GPT-6.1 Sol), com losango, estrelas e o nome do cenário “Ooo”. Não foi baixada de
 terceiros e não é uma reprodução de logotipo oficial.
+
+Em 19/11/2026, na adoção do nome **Memórias de Aventura**, somente o texto visível
+do verso foi atualizado para a marca em duas linhas. Nome técnico do arquivo,
+cores e composição geométrica foram preservados.

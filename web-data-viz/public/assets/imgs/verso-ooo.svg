@@ -2,5 +2,8 @@
     <rect x="3" y="3" width="154" height="154" rx="14" fill="#365647" stroke="#94aa89" stroke-width="2"/>
     <path d="M80 17 132 80 80 143 28 80Z" fill="#253e31" stroke="#ffd363" stroke-width="2"/>
     <path d="m80 30 4 10 10 4-10 4-4 10-4-10-10-4 10-4Zm0 72 4 10 10 4-10 4-4 10-4-10-10-4 10-4Z" fill="#ffd363"/>
-    <text x="80" y="91" text-anchor="middle" fill="#fff5cb" font-family="Georgia, serif" font-weight="bold" font-size="34">Ooo</text>
+    <text text-anchor="middle" fill="#fff5cb" font-family="Georgia, serif" font-weight="bold" font-size="14">
+        <tspan x="80" y="77">Memórias</tspan>
+        <tspan x="80" y="95">de Aventura</tspan>
+    </text>
 </svg>

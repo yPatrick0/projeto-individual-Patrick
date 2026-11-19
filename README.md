@@ -1,6 +1,8 @@
-# Hora de Aventura e Neurociência
+# Memórias de Aventura
 
-Nome provisório do Projeto Individual de **Patrick Scaglia Rodrigues**, desenvolvido no primeiro semestre de Análise e Desenvolvimento de Sistemas da **SPTech**, em 2026.2.
+Site do Projeto Individual de **Patrick Scaglia Rodrigues**, desenvolvido no primeiro semestre de Análise e Desenvolvimento de Sistemas da **SPTech**, em 2026.2, sobre Hora de Aventura, autoconhecimento e neurociência.
+
+Nome curto escolhido: **Memórias de Aventura**. Na interface, a animação é chamada de **Hora de Aventura**, com os títulos **Personagens de Hora de Aventura** e **Sequência de Hora de Aventura**. Referências narrativas usam “universo de Hora de Aventura”. Nomes técnicos, registros históricos, protótipo e documentos acadêmicos foram preservados; materiais antigos podem mencionar os nomes anteriores, para revisão posterior.
 
 ## Sobre o projeto
 
@@ -18,9 +20,13 @@ Cadastro e login agora compartilham a identidade visual da inicial: paleta, font
 
 O jogo da memória está disponível como demonstração local com seis pares de personagens (12 cartas), verso comum e contador de tentativas. Não salva resultados, não usa o banco e não é um teste científico. As regras de comparação, conclusão e reinício foram preservadas. O título e as seções foram ajustados para computador e celular; os cartões e o jogo usam retratos individuais.
 
-Em 19/11/2026 foi integrado o minijogo **Sequência de Ooo**, entregue pelo Claude, com botão na inicial: repita a sequência de Finn, Jake, Marceline e BMO, em 6 rodadas e com 3 vidas. Os quatro retratos locais foram reaproveitados. As frases fornecidas por IA continuam provisórias, pendentes de revisão pelo autor, e não são citações da série. Resultados e histórico ficam apenas em memória e são perdidos ao recarregar, sem API ou banco. Não é um teste científico. Regras e detalhes em [`docs/jogo-sequencia-de-ooo.md`](docs/jogo-sequencia-de-ooo.md); indicadores ali sugeridos não foram implementados nem aprovados nesta integração.
+Em 19/11/2026 foi integrado o minijogo **Sequência de Hora de Aventura** (nome anterior: Sequência de Ooo), entregue pelo Claude, com botão na inicial: repita a sequência de Finn, Jake, Marceline e BMO, em 6 rodadas e com 3 vidas. Os quatro retratos locais foram reaproveitados. As frases fornecidas por IA continuam provisórias, pendentes de revisão pelo autor, e não são citações da série. Resultados e histórico ficam apenas em memória e são perdidos ao recarregar, sem API ou banco. Não é um teste científico. Regras e detalhes em [`docs/jogo-sequencia-de-ooo.md`](docs/jogo-sequencia-de-ooo.md); indicadores ali sugeridos não foram implementados nem aprovados nesta integração.
 
 As fontes e os recortes estão em [`public/assets/imgs/fontes.md`](web-data-viz/public/assets/imgs/fontes.md). Conteúdo pessoal e permissões de uso das imagens precisam de revisão pelo autor antes de publicação.
+
+Em 19/11/2026, cinco fotos fornecidas pelo autor no ZIP `imgs personagens.zip` passaram a ser usadas nos cartões e nos jogos, como `finn.jpeg`, `jake.jpeg`, `bmo.jpeg`, `princesa-jujuba.jpeg` e `rei-gelado.jpeg`. Cada personagem reutiliza o mesmo arquivo onde aparece; Marceline, cenários, destaque principal e verso foram preservados. O enquadramento é feito no CSS, sem modificar os JPEGs originais.
+
+Na atualização seguinte, também em 19/11/2026, `foto marceline.zip` forneceu `marceline.jpeg`, reutilizada no cartão e nos dois jogos, com enquadramento próprio no CSS. A imagem anterior continua preservada. Carregamento e associação da personagem verificados no Chrome em 320, 390 e 1280px.
 
 A página principal é `web-data-viz/public/index.html`. O código foi reorganizado com CSS separado para início e autenticação e o jogo em JavaScript com funções nomeadas em português. A cópia `Prototipo_Hora_de_Aventura.html` da raiz foi preservada como referência histórica, sem substituir a página principal.
 
@@ -33,9 +39,10 @@ A página principal é `web-data-viz/public/index.html`. O código foi reorganiz
 | Integração da API com MySQL | Obrigatória |
 | Dashboard com indicadores de dados do sistema | Obrigatório; indicadores a definir |
 | Jogo da memória com personagens | Demonstração local disponível: seis pares, 12 cartas, tentativas e reinício |
-| Minijogo Sequência de Ooo | Integrado à inicial; 6 rodadas, 3 vidas e resultados somente em memória |
+| Minijogo Sequência de Hora de Aventura | Integrado à inicial; 6 rodadas, 3 vidas e resultados somente em memória |
 | Quiz de afinidade com personagens | Proposta anterior, sem confirmação |
-| Nome definitivo e seleção final de conteúdos | A definir |
+| Nome do site | Memórias de Aventura |
+| Seleção final de conteúdos | A definir |
 
 O jogo embaralha 12 cartas com retratos de Finn, Jake, Marceline, BMO, Rei Gelado e Princesa Jujuba. Uma tentativa corresponde à escolha de duas cartas diferentes; os pares corretos permanecem revelados e os incorretos fecham após 750 ms. O reinício embaralha e zera a partida, inclusive qualquer comparação pendente. Frases ou reflexões por par e dados registrados permanecem em avaliação, sem implementação.
 
@@ -63,10 +70,10 @@ A aplicação está na pasta já reservada `web-data-viz/`, sem outra aplicaçã
 | `web-data-viz/public/css/estilo.css` | Estilos da página inicial |
 | `web-data-viz/public/css/cadastro-login.css` | Estilos compartilhados por cadastro e login |
 | `web-data-viz/public/js/jogo-memoria.js` | Lógica local do jogo; `js/script.js` original preservado, sem uso nas páginas |
-| `web-data-viz/public/jogo-aventura.html`, `public/css/jogo-aventura.css` e `public/js/jogo-aventura.js` | Página, estilos exclusivos e lógica do minijogo Sequência de Ooo |
+| `web-data-viz/public/jogo-aventura.html`, `public/css/jogo-aventura.css` e `public/js/jogo-aventura.js` | Página, estilos exclusivos e lógica do minijogo Sequência de Hora de Aventura |
 | `Prototipo_Hora_de_Aventura.html` e `web-data-viz/public/css/prototipo.css` | Referência histórica preservada; não são a página principal nem o CSS ativo dela |
 | `web-data-viz/public/assets/img/` | Pasta reservada para imagens, atualmente apenas com `.gitkeep` |
-| `web-data-viz/public/assets/imgs/` | Oito WebP originais preservados, seis retratos `*-rosto.webp`, verso `verso-ooo.svg` e registro de fontes em `fontes.md` |
+| `web-data-viz/public/assets/imgs/` | Seis fotos JPEG atuais; oito WebP originais e seis retratos `*-rosto.webp` preservados, verso `verso-ooo.svg` e registro de fontes em `fontes.md` |
 | `web-data-viz/src/` | Backend, seguindo o material da turma |
 | `web-data-viz/src/database/` | Configuração MySQL e SQL original AquaTech, ainda não adaptado nem executado |
 | `web-data-viz/app.js` | Inicialização do servidor |
@@ -102,13 +109,17 @@ npm start
 
 Abra <http://localhost:3333/>. As outras páginas são `/cadastro.html` e `/login.html`. Para encerrar, pressione `Ctrl+C` no terminal.
 
-Para o novo minijogo, abra <http://localhost:3333/jogo-aventura.html> ou use **Jogar Sequência de Ooo** no destaque inicial ou na seção de jogos (`#jogo`). A inicial é <http://localhost:3333/> (também acessível por `/index.html`); **Voltar ao início** retorna a `/index.html`. Se o PowerShell bloquear `npm.ps1`, use `npm.cmd start` dentro de `web-data-viz/`, sem alterar a política de scripts.
+Para o novo minijogo, abra <http://localhost:3333/jogo-aventura.html> ou use **Jogar Sequência de Hora de Aventura** no destaque inicial ou na seção de jogos (`#jogo`). A inicial é <http://localhost:3333/> (também acessível por `/index.html`); **Voltar ao início** retorna a `/index.html`. Se o PowerShell bloquear `npm.ps1`, use `npm.cmd start` dentro de `web-data-viz/`, sem alterar a política de scripts.
 
 O `app.js` original carrega `.env.dev` no modo desenvolvimento. O `.env.example` contém a porta 3333 e campos de banco sem usuário ou senha. Não é necessário conectar ao MySQL para acessar as páginas. Não versione `.env`, `.env.dev` nem `node_modules/`; o `.gitignore` existente já os protege e permite `.env.example`.
 
 O fluxo da base foi preservado: **rotas → controllers → models → database**. Os arquivos do servidor, dependências e SQL da turma foram mantidos; as telas AquaTech de dashboard e simulador não foram importadas. O backend ainda é o exemplo AquaTech, não uma API adaptada ou pronta para publicação.
 
 ### Verificações desta etapa
+
+- Na atualização do nome (19/11/2026), Chrome automatizado aprovou marca, títulos de abas, seções, textos narrativos e rodapés nas quatro páginas ativas, sem “Ooo” no conteúdo apresentado. Conferida a navegação para cadastro/login, alternância, retornos e acesso ao minijogo, além da conclusão da memória e início/interação da sequência em 320, 390 e 1280px. Verso das cartas exibe Memórias de Aventura; arquivos e identificadores técnicos preservados. Sem exceções JavaScript ou transbordamento; permanece apenas o 404 preexistente do favicon.
+
+- Na substituição das fotos (19/11/2026), Chrome automatizado aprovou carregamento, seis pares com fotos idênticas às dos cartões, conclusão do jogo da memória, associação dos quatro botões da Sequência de Ooo e destaque real da sequência, em 320, 390 e 1280px. Capturas dos cartões e dos dois jogos inspecionadas em computador e celular; chapéu e coroas visíveis, dimensões consistentes, sem transbordamento. JPEGs responderam HTTP 200; nenhuma exceção JavaScript, somente o 404 preexistente de `/favicon.ico`.
 
 - Na revisão da navegação (19/11/2026), aplicação iniciada com `npm.cmd start`; Chrome automatizado aprovou inicial → botão na seção de jogos → jogo → começar partida → voltar à inicial em 320, 390 e 1280px. Botão visível com o estilo existente, sem transbordamento horizontal. Páginas, CSS, JavaScript e quatro retratos responderam HTTP 200; nenhuma exceção JavaScript. Permanece somente o 404 preexistente de `/favicon.ico`. Protótipo histórico preservado.
 

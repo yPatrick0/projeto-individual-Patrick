@@ -1,6 +1,7 @@
 // Demonstração local: nenhum resultado é salvo ou enviado ao servidor.
 let personagens = ['finn', 'jake', 'marceline', 'bmo', 'rei-gelado', 'princesa-jujuba'];
 let nomes = ['Finn', 'Jake', 'Marceline', 'BMO', 'Rei Gelado', 'Princesa Jujuba'];
+let fotos = ['finn.jpeg', 'jake.jpeg', 'marceline.jpeg', 'bmo.jpeg', 'rei-gelado.jpeg', 'princesa-jujuba.jpeg'];
 let cartas = [];
 let cartasEncontradas = [];
 let primeiraCarta = -1;
@@ -96,8 +97,8 @@ function virarCarta(indice) {
     let botao = document.getElementById('carta' + indice);
     let personagemDaCarta = cartas[indice];
     // O caminho depende do personagem, não da posição: os dois retratos são iguais.
-    botao.innerHTML = '<img class="card-face" src="assets/imgs/'
-        + personagens[personagemDaCarta] + '-rosto.webp" alt="">';
+    botao.innerHTML = '<img class="card-face portrait-' + personagens[personagemDaCarta]
+        + '" src="assets/imgs/' + fotos[personagemDaCarta] + '" alt="">';
     botao.className = 'card open';
     botao.setAttribute('aria-label', nomes[personagemDaCarta]);
 

@@ -118,6 +118,26 @@ h1, h2 {
     object-fit: contain;
 }
 
+.av-finn img {
+    object-fit: cover;
+    object-position: 55% 35%;
+}
+
+.av-jake img {
+    object-fit: cover;
+    object-position: 50% 20%;
+}
+
+.av-bmo img {
+    object-fit: cover;
+    object-position: 45% 30%;
+}
+
+.av-marceline img {
+    object-fit: cover;
+    object-position: 50% 20%;
+}
+
 .av-finn {
     background: var(--cor-finn);
 }

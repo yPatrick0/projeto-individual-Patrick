@@ -4,7 +4,7 @@
 
 Este é o Projeto Individual de Patrick Scaglia Rodrigues, estudante do primeiro semestre de ADS da SPTech. Leia o `README.md` antes de começar e examine os arquivos relacionados à tarefa. Consulte o planejamento e a documentação quando forem relevantes.
 
-O tema reúne Hora de Aventura, autoconhecimento e neurociência. O nome é provisório. O projeto está no início e deve ser desenvolvido em etapas que o estudante consiga compreender, revisar e explicar.
+O site se chama **Memórias de Aventura** e reúne Hora de Aventura, autoconhecimento e neurociência. Use **Hora de Aventura** para mencionar a animação, **Personagens de Hora de Aventura** e **Sequência de Hora de Aventura** nos títulos da interface e **universo de Hora de Aventura** nas referências narrativas antes chamadas de “Terra de Ooo”. Preserve nomes técnicos de arquivos, pastas, funções, variáveis, rotas e campos de dados; registros históricos e documentos acadêmicos permanecem para revisão posterior. O projeto está no início e deve ser desenvolvido em etapas que o estudante consiga compreender, revisar e explicar.
 
 ## Tecnologias e arquitetura
 
