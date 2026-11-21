@@ -14,8 +14,11 @@
                 Memórias de Aventura
             </a>
             <nav aria-label="Menu principal">
+                <a href="#serie">
+                    A série
+                </a>
                 <a href="#sobre">
-                    Sobre
+                    O projeto
                 </a>
                 <a href="#historia">
                     Minha história
@@ -23,21 +26,27 @@
                 <a href="#personagens">
                     Personagens
                 </a>
-                <a href="#jogo">
-                    Jogo
+                <a href="#jogos">
+                    Jogos
                 </a>
-                <a class="button secondary" href="login.html">
-                    Entrar
-                </a>
-                <a class="button" href="cadastro.html">
-                    Criar conta
-                </a>
+                <span class="nav-botoes">
+                    <a class="button secondary" href="login.html">
+                        Entrar
+                    </a>
+                    <a class="button" href="cadastro.html">
+                        Criar conta
+                    </a>
+                </span>
             </nav>
         </header>
         <main>
+            <!-- Apresentação com cenário de fundo (cenarios/casa-na-arvore.webp) -->
             <section class="hero">
                 <div class="wrap">
-                    <div>
+                    <div class="hero-texto">
+                        <p class="eyebrow">
+                            Hora de Aventura · Projeto Individual
+                        </p>
                         <h1>
                             Autoconhecimento <span>com Hora de Aventura</span>
                         </h1>
@@ -45,46 +54,297 @@
                             Uma visita ao universo de Hora de Aventura para revisitar histórias que me acompanharam enquanto eu crescia e conversar sobre memória, emoções e mudanças.
                         </p>
                         <div class="actions">
-                            <a class="button" href="#jogo">
-                                Jogar memória
-                            </a>
-                            <a class="button" href="jogo-aventura.html">
-                                Jogar Sequência de Hora de Aventura
+                            <a class="button" href="#jogos">
+                                Ver os minijogos
                             </a>
                             <a class="button secondary" href="#sobre">
                                 Conhecer o projeto
                             </a>
                         </div>
                     </div>
-                    <img src="assets/imgs/destaque.webp" alt="Imagem da série Hora de Aventura">
                 </div>
             </section>
+
+            <!-- A animação: fontes recebidas com o ZIP em assets/imgs/fontes.md -->
+            <section class="band serie" id="serie">
+                <div class="wrap split">
+                    <div>
+                        <p class="eyebrow">
+                            A animação
+                        </p>
+                        <h2>
+                            Conheça Hora de Aventura
+                        </h2>
+                        <p>
+                            Hora de Aventura é uma série animada criada por Pendleton Ward para o Cartoon Network. Ela acompanha Finn, um garoto humano, e Jake, um cachorro que pode esticar e mudar de forma, em aventuras por um mundo de reinos, princesas e criaturas mágicas.
+                        </p>
+                        <p>
+                            Por trás do humor, a série acompanha o crescimento dos personagens ao longo das temporadas.
+                        </p>
+                        <dl class="ficha">
+                            <div>
+                                <dt>
+                                    Criação
+                                </dt>
+                                <dd>
+                                    Pendleton Ward
+                                </dd>
+                            </div>
+                            <div>
+                                <dt>
+                                    Exibição original
+                                </dt>
+                                <dd>
+                                    Cartoon Network, de 2010 a 2018
+                                </dd>
+                            </div>
+                            <div>
+                                <dt>
+                                    Duração
+                                </dt>
+                                <dd>
+                                    10 temporadas e 283 episódios
+                                </dd>
+                            </div>
+                            <div>
+                                <dt>
+                                    Continuações
+                                </dt>
+                                <dd>
+                                    Terras Distantes (2020–2021) e Fionna e Cake (2023)
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                    <img class="serie-imagem" loading="lazy" src="assets/imgs/destaque.webp" alt="Jake e Finn juntos em uma cena de Hora de Aventura">
+                </div>
+            </section>
+
             <section class="band about" id="sobre">
                 <div class="wrap split">
                     <img loading="lazy" src="assets/imgs/marceline-rei-gelado.webp" alt="Marceline e o Rei Gelado juntos">
                     <div>
+                        <p class="eyebrow">
+                            O projeto
+                        </p>
                         <h2>
                             O que fica de uma aventura?
                         </h2>
                         <p>
                             Uma música, uma amizade ou uma cena que ganha outro sentido quando a gente cresce. Revisito momentos da série e uso essas histórias para levantar perguntas sobre o que sentimos e lembramos.
                         </p>
+                        <ul class="destaques">
+                            <li>
+                                <a href="#personagens">
+                                    Personagens
+                                </a>
+                                <span>
+                                    Seis personagens da série apresentados em cartões.
+                                </span>
+                            </li>
+                            <li>
+                                <a href="#jogos">
+                                    Minijogos
+                                </a>
+                                <span>
+                                    Jogo da memória e Sequência de Hora de Aventura.
+                                </span>
+                            </li>
+                            <li>
+                                <strong>
+                                    Reflexões
+                                </strong>
+                                <span>
+                                    Em construção: frases e reflexões sobre memória e emoções.
+                                </span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </section>
+
+            <!-- Minha história com cenário de fundo (cenarios/casa-na-arvore-por-do-sol.webp) -->
             <section class="band story" id="historia">
-                <div class="wrap split">
-                    <h2>
+                <div class="wrap">
+                    <div class="story-card">
+                        <p class="eyebrow">
+                            Minha história
+                        </p>
+                        <h2>
                             Minha história com Hora de Aventura
-                    </h2>
-                    <p>
-                        Comecei a assistir a Hora de Aventura por volta dos dez anos, no Cartoon Network. Era diversão e, com o tempo, virou também uma fonte de conforto. Hoje, ao voltar a esses episódios, percebo detalhes que me fazem pensar nas minhas experiências pessoais relacionadas a mudanças e relacionamentos.
-                    </p>
+                        </h2>
+                        <ol class="linha-tempo">
+                            <li>
+                                <strong>
+                                    Por volta dos dez anos
+                                </strong>
+                                <p>
+                                    Comecei a assistir a Hora de Aventura no Cartoon Network. Era diversão.
+                                </p>
+                            </li>
+                            <li>
+                                <strong>
+                                    Com o tempo
+                                </strong>
+                                <p>
+                                    A série virou também uma fonte de conforto.
+                                </p>
+                            </li>
+                            <li>
+                                <strong>
+                                    Hoje
+                                </strong>
+                                <p>
+                                    Ao voltar a esses episódios, percebo detalhes que me fazem pensar nas minhas experiências pessoais relacionadas a mudanças e relacionamentos.
+                                </p>
+                            </li>
+                        </ol>
+                    </div>
                 </div>
             </section>
+
+            <section class="band" id="personagens">
+                <div class="wrap">
+                    <div class="section-head">
+                        <p class="eyebrow">
+                            Personagens
+                        </p>
+                        <h2>
+                            Personagens de Hora de Aventura
+                        </h2>
+                        <p>
+                            Seis personagens que também aparecem nas cartas do jogo da memória.
+                        </p>
+                    </div>
+                    <div class="roster">
+                        <article class="person">
+                            <img class="portrait-finn" loading="lazy" src="assets/imgs/finn.jpeg" alt="Finn com seu chapéu branco">
+                            <div>
+                                <h3>
+                                    Finn
+                                </h3>
+                                <p>
+                                    Entra de cabeça nas aventuras e aprende a mudar de estratégia.
+                                </p>
+                            </div>
+                        </article>
+                        <article class="person">
+                            <img class="portrait-jake" loading="lazy" src="assets/imgs/jake.jpeg" alt="Jake, o cachorro amarelo">
+                            <div>
+                                <h3>
+                                    Jake
+                                </h3>
+                                <p>
+                                    Companheiro de Finn, capaz de mudar de forma e de ritmo.
+                                </p>
+                            </div>
+                        </article>
+                        <article class="person">
+                            <img class="portrait-marceline" loading="lazy" src="assets/imgs/marceline.jpeg" alt="Marceline com seu baixo">
+                            <div>
+                                <h3>
+                                    Marceline
+                                </h3>
+                                <p>
+                                    Usa a música para expressar o que ficou guardado.
+                                </p>
+                            </div>
+                        </article>
+                        <article class="person">
+                            <img class="portrait-bmo" loading="lazy" src="assets/imgs/bmo.jpeg" alt="BMO com seu rosto na tela">
+                            <div>
+                                <h3>
+                                    BMO
+                                </h3>
+                                <p>
+                                    Transforma situações do dia a dia em histórias e brincadeiras.
+                                </p>
+                            </div>
+                        </article>
+                        <article class="person">
+                            <img class="portrait-rei-gelado" loading="lazy" src="assets/imgs/rei-gelado.jpeg" alt="Rei Gelado com sua coroa">
+                            <div>
+                                <h3>
+                                    Rei Gelado
+                                </h3>
+                                <p>
+                                    Sua história com Marceline abre uma conversa sobre lembranças e vínculos.
+                                </p>
+                            </div>
+                        </article>
+                        <article class="person">
+                            <img class="portrait-princesa-jujuba" loading="lazy" src="assets/imgs/princesa-jujuba.jpeg" alt="Princesa Jujuba com cabelo rosa e coroa">
+                            <div>
+                                <h3>
+                                    Princesa Jujuba
+                                </h3>
+                                <p>
+                                    Cientista e governante do Reino Doce, resolve problemas inventando soluções.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="band jogos" id="jogos">
+                <div class="wrap">
+                    <div class="section-head">
+                        <p class="eyebrow">
+                            Minijogos
+                        </p>
+                        <h2>
+                            Jogue com os personagens
+                        </h2>
+                        <p>
+                            Dois jogos rápidos. São demonstrações locais: os resultados ainda não são salvos e não são testes científicos de memória.
+                        </p>
+                    </div>
+                    <div class="game-list">
+                        <article class="game-card">
+                            <img class="game-card-imagem" loading="lazy" src="assets/imgs/verso-ooo.svg" alt="">
+                            <div>
+                                <h3>
+                                    Jogo da memória
+                                </h3>
+                                <p>
+                                    Vire duas cartas de cada vez e encontre os seis pares de personagens. O tabuleiro fica nesta página.
+                                </p>
+                                <a class="button" href="#jogo">
+                                    Jogar memória
+                                </a>
+                            </div>
+                        </article>
+                        <article class="game-card">
+                            <div class="mini-retratos">
+                                <img class="portrait-finn" loading="lazy" src="assets/imgs/finn.jpeg" alt="">
+                                <img class="portrait-jake" loading="lazy" src="assets/imgs/jake.jpeg" alt="">
+                                <img class="portrait-marceline" loading="lazy" src="assets/imgs/marceline.jpeg" alt="">
+                                <img class="portrait-bmo" loading="lazy" src="assets/imgs/bmo.jpeg" alt="">
+                            </div>
+                            <div>
+                                <h3>
+                                    Sequência de Hora de Aventura
+                                </h3>
+                                <p>
+                                    Observe a ordem em que Finn, Jake, Marceline e BMO se acendem e repita a sequência em seis rodadas.
+                                </p>
+                                <a class="button" href="jogo-aventura.html">
+                                    Jogar Sequência de Hora de Aventura
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Jogo da memória com cenário de fundo (cenarios/ceu-noturno.webp) -->
             <section class="band game" id="jogo">
                 <div class="wrap split">
                     <div>
+                        <p class="eyebrow">
+                            Minijogo
+                        </p>
                         <h2>
                             Jogo da memória
                         </h2>
@@ -92,7 +352,7 @@
                             Vire duas cartas de cada vez e encontre os seis pares de personagens.
                             Repare em como você se lembra da posição das cartas à medida que joga.
                         </p>
-                        <p>
+                        <p class="nota">
                             Demonstração local com personagens: tentativas e pares não são salvos
                             nem enviados ao banco. Não é um teste científico de memória.
                         </p>
@@ -100,7 +360,7 @@
                             <button class="button" id="reset">
                                 Embaralhar cartas
                             </button>
-                            <a class="button" href="jogo-aventura.html">
+                            <a class="button secondary" href="jogo-aventura.html">
                                 Jogar Sequência de Hora de Aventura
                             </a>
                         </div>
@@ -113,90 +373,41 @@
                     </div>
                 </div>
             </section>
-            <section class="band wrap" id="personagens">
-                <h2>
-                    Personagens de Hora de Aventura
-                </h2>
-                <div class="roster">
-                    <article class="person">
-                        <img class="portrait-finn" loading="lazy" src="assets/imgs/finn.jpeg" alt="Finn com seu chapéu branco">
-                        <div>
-                            <h3>
-                                Finn
-                            </h3>
-                            <p>
-                                Entra de cabeça nas aventuras e aprende a mudar de estratégia.
-                            </p>
-                        </div>
-                    </article>
-                    <article class="person">
-                        <img class="portrait-jake" loading="lazy" src="assets/imgs/jake.jpeg" alt="Jake, o cachorro amarelo">
-                        <div>
-                            <h3>
-                                Jake
-                            </h3>
-                            <p>
-                                Companheiro de Finn, capaz de mudar de forma e de ritmo.
-                            </p>
-                        </div>
-                    </article>
-                    <article class="person">
-                        <img class="portrait-marceline" loading="lazy" src="assets/imgs/marceline.jpeg" alt="Marceline com seu baixo">
-                        <div>
-                            <h3>
-                                Marceline
-                            </h3>
-                            <p>
-                                Usa a música para expressar o que ficou guardado.
-                            </p>
-                        </div>
-                    </article>
-                    <article class="person">
-                        <img class="portrait-bmo" loading="lazy" src="assets/imgs/bmo.jpeg" alt="BMO com seu rosto na tela">
-                        <div>
-                            <h3>
-                                BMO
-                            </h3>
-                            <p>
-                                Transforma situações do dia a dia em histórias e brincadeiras.
-                            </p>
-                        </div>
-                    </article>
-                    <article class="person">
-                        <img class="portrait-rei-gelado" loading="lazy" src="assets/imgs/rei-gelado.jpeg" alt="Rei Gelado com sua coroa">
-                        <div>
-                            <h3>
-                                Rei Gelado
-                            </h3>
-                            <p>
-                                Sua história com Marceline abre uma conversa sobre lembranças e vínculos.
-                            </p>
-                        </div>
-                    </article>
-                    <article class="person">
-                        <img class="portrait-princesa-jujuba" loading="lazy" src="assets/imgs/princesa-jujuba.jpeg" alt="Princesa Jujuba com cabelo rosa e coroa">
-                        <div>
-                            <h3>
-                                Princesa Jujuba
-                            </h3>
-                            <p>
-                                Cientista e governante do Reino Doce, resolve problemas inventando soluções.
-                            </p>
-                        </div>
-                    </article>
-                </div>
-            </section>
         </main>
-        <footer>
-            <div class="wrap">
-                <span>
-                    Memórias de Aventura · Patrick Scaglia Rodrigues · Projeto Individual · SPTech
-                </span>
-                <a href="https://tv.apple.com/br/show/hora-de-aventura/umc.cmc.379m2it2q2g5zi6dwqi84cwpw">
-                    Imagens da série · Apple TV
-                </a>
-                <a href="assets/imgs/fontes.md">Fontes dos retratos</a>
+        <footer class="rodape">
+            <div class="wrap rodape-conteudo">
+                <div>
+                    <p class="rodape-marca">
+                        Memórias de Aventura
+                    </p>
+                    <p>
+                        Projeto Individual de Patrick Scaglia Rodrigues · Análise e Desenvolvimento de Sistemas · SPTech
+                    </p>
+                </div>
+                <div>
+                    <p class="rodape-titulo">
+                        Navegação
+                    </p>
+                    <nav class="rodape-links" aria-label="Links do rodapé">
+                        <a href="#jogo">Jogo da memória</a>
+                        <a href="jogo-aventura.html">Sequência de Hora de Aventura</a>
+                        <a href="login.html">Entrar</a>
+                        <a href="cadastro.html">Criar conta</a>
+                    </nav>
+                </div>
+                <div>
+                    <p class="rodape-titulo">
+                        Créditos
+                    </p>
+                    <div class="rodape-links">
+                        <a href="https://tv.apple.com/br/show/hora-de-aventura/umc.cmc.379m2it2q2g5zi6dwqi84cwpw">Imagens da série · Apple TV</a>
+                        <a href="assets/imgs/fontes.md">Fontes das imagens e dos dados</a>
+                    </div>
+                </div>
             </div>
+            <p class="wrap rodape-aviso">
+                Hora de Aventura e seus personagens pertencem aos respectivos titulares de direitos. Projeto acadêmico.
+            </p>
         </footer>
         <script src="js/jogo-memoria.js" defer>
         </script>

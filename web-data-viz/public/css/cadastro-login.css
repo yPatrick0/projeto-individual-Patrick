@@ -15,7 +15,14 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(125deg,#c1e0ed 0%,var(--green) 60%,var(--paper) 100%);
+    /* Mesma casa na árvore da apresentação inicial, com camada clara leve. */
+    background-color: #a65982;
+    background-image:
+        linear-gradient(rgba(248,244,231,.5),rgba(248,244,231,.5)),
+        url('../assets/imgs/cenarios/casa-na-arvore.webp');
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
     color: var(--ink);
     font: 16px/1.6 'Trebuchet MS',sans-serif;
 }
@@ -42,7 +49,7 @@ h1 {
 
 h2 {
     font-size: clamp(2rem,3.8vw,3.2rem);
-    max-width: 13ch;
+    max-width: 16ch;
 }
 
 .wrap {
@@ -230,6 +237,17 @@ footer {
 }
 
 @media(max-width:800px) {
+    /* Uma faixa de cenário evita ampliar a foto até a altura do formulário
+       e da apresentação somados. O restante mantém o fundo claro. */
+    body {
+        background-color: var(--paper);
+        background-image:
+            linear-gradient(var(--paper) calc(100% - 600px),rgba(248,244,231,.5) calc(100% - 540px)),
+            url('../assets/imgs/cenarios/casa-na-arvore.webp');
+        background-size: 100% 100%,auto 600px;
+        background-position: center top,62% bottom;
+    }
+
     .auth-layout {
         grid-template-columns: minmax(0,1fr);
         padding-block: 32px;

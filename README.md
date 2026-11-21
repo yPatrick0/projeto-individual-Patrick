@@ -30,6 +30,8 @@ Na atualização seguinte, também em 19/11/2026, `foto marceline.zip` forneceu 
 
 A página principal é `web-data-viz/public/index.html`. O código foi reorganizado com CSS separado para início e autenticação e o jogo em JavaScript com funções nomeadas em português. A cópia `Prototipo_Hora_de_Aventura.html` da raiz foi preservada como referência histórica, sem substituir a página principal.
 
+Em 20/11/2026, o visual do ZIP `projeto-individual-Patrick (3).zip`, atualizado pelo Claude, foi incorporado seletivamente: apresentação com cenário, ficha da série, história em etapas, cartões de acesso aos minijogos e rodapé. Três cenários locais também aparecem em cadastro/login e na sequência; regras, scripts, formulários e backend foram preservados. No celular, cartões dos minijogos ficam em coluna e o fundo de cadastro/login usa uma faixa para evitar zoom excessivo. **Qualidade ainda limitada:** casa rosa em 1042 × 587px, pôr do sol e céu noturno em 1200 × 675px. Buscas por versões maiores das mesmas cenas não permitiram downloads verificáveis por falhas de conexão/certificado; não houve ampliação artificial nem troca por outra cena. Comparação e fontes em `public/assets/imgs/fontes.md`.
+
 ## Escopo e decisões
 
 | Item | Situação |
@@ -73,7 +75,7 @@ A aplicação está na pasta já reservada `web-data-viz/`, sem outra aplicaçã
 | `web-data-viz/public/jogo-aventura.html`, `public/css/jogo-aventura.css` e `public/js/jogo-aventura.js` | Página, estilos exclusivos e lógica do minijogo Sequência de Hora de Aventura |
 | `Prototipo_Hora_de_Aventura.html` e `web-data-viz/public/css/prototipo.css` | Referência histórica preservada; não são a página principal nem o CSS ativo dela |
 | `web-data-viz/public/assets/img/` | Pasta reservada para imagens, atualmente apenas com `.gitkeep` |
-| `web-data-viz/public/assets/imgs/` | Seis fotos JPEG atuais; oito WebP originais e seis retratos `*-rosto.webp` preservados, verso `verso-ooo.svg` e registro de fontes em `fontes.md` |
+| `web-data-viz/public/assets/imgs/` | Seis fotos JPEG atuais; oito WebP originais e seis retratos `*-rosto.webp` preservados, verso `verso-ooo.svg`, três fundos em `cenarios/` e registro de fontes/limitações em `fontes.md` |
 | `web-data-viz/src/` | Backend, seguindo o material da turma |
 | `web-data-viz/src/database/` | Configuração MySQL e SQL original AquaTech, ainda não adaptado nem executado |
 | `web-data-viz/app.js` | Inicialização do servidor |
@@ -116,6 +118,8 @@ O `app.js` original carrega `.env.dev` no modo desenvolvimento. O `.env.example`
 O fluxo da base foi preservado: **rotas → controllers → models → database**. Os arquivos do servidor, dependências e SQL da turma foram mantidos; as telas AquaTech de dashboard e simulador não foram importadas. O backend ainda é o exemplo AquaTech, não uma API adaptada ou pronta para publicação.
 
 ### Verificações desta etapa
+
+- Na integração visual do ZIP (20/11/2026), Chrome real verificou as quatro páginas de 320 a 1920px, carregamento das imagens e fundos, navegação, seis pares da memória e início/interação da sequência. Sem transbordamento ou exceções JavaScript; permanece o 404 preexistente do favicon. Capturas de computador/celular foram inspecionadas. Resolução dos cenários continua pendente conforme a nota acima; não foram testados MySQL ou autenticação real.
 
 - Na atualização do nome (19/11/2026), Chrome automatizado aprovou marca, títulos de abas, seções, textos narrativos e rodapés nas quatro páginas ativas, sem “Ooo” no conteúdo apresentado. Conferida a navegação para cadastro/login, alternância, retornos e acesso ao minijogo, além da conclusão da memória e início/interação da sequência em 320, 390 e 1280px. Verso das cartas exibe Memórias de Aventura; arquivos e identificadores técnicos preservados. Sem exceções JavaScript ou transbordamento; permanece apenas o 404 preexistente do favicon.
 

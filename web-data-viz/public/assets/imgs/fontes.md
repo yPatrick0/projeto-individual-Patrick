@@ -73,3 +73,66 @@ terceiros e não é uma reprodução de logotipo oficial.
 Em 19/11/2026, na adoção do nome **Memórias de Aventura**, somente o texto visível
 do verso foi atualizado para a marca em duas linhas. Nome técnico do arquivo,
 cores e composição geométrica foram preservados.
+
+## Cenários incorporados do visual do Claude (20/11/2026)
+
+Recebidos em `projeto-individual-Patrick (3).zip`. O documento de fontes do ZIP
+informa que foram enviados pelo autor ao Claude em 19/11/2026. Isso não comprova
+a origem anterior nem a permissão de publicação. Os três WebP foram importados
+sem nova conversão, ampliação ou alteração dos bytes.
+
+| Arquivo em `cenarios/` | Resolução real | Uso |
+| --- | --- | --- |
+| `casa-na-arvore.webp` | 1042 × 587px | Apresentação da inicial, cadastro e login |
+| `casa-na-arvore-por-do-sol.webp` | 1200 × 675px | Minha história |
+| `ceu-noturno.webp` | 1200 × 675px | Memória e página da Sequência |
+
+Segundo o registro do ZIP, a casa com céu rosa veio de uma imagem de 1045 × 596px,
+recortada para retirar bordas pretas; os outros dois cenários não foram recortados.
+Esses originais anteriores à conversão não estavam no ZIP.
+
+### Comparação e limitações de qualidade
+
+- Os 20 arquivos JPEG/WebP já existentes são idênticos aos correspondentes do ZIP:
+  não havia versões melhores desses mesmos arquivos no pacote. As seis fotos atuais
+  foram preservadas; o Rei Gelado tem a menor largura (512 × 697px).
+- `destaque.webp` tem 576 × 675px e `marceline-rei-gelado.webp`, 950 × 534px.
+  São suficientes para os tamanhos comuns em CSS, mas não garantem nitidez em telas
+  de alta densidade. O recorte de `cover` também pode ampliar partes da imagem.
+- Os três cenários continuam limitados em monitores grandes. No Chrome a 1920px,
+  a área de fundo chegou a aproximadamente 1905px de largura; a casa rosa é ampliada
+  cerca de 1,83 vez e os demais cenários, pelo menos 1,59 vez. Não houve upscale
+  artificial nem promessa de qualidade Full HD.
+- A imagem local `Downloads/442432.jpg` (1920 × 1080px) foi comparada visualmente,
+  mas descartada: a disposição da casa, montanhas e nuvens difere da cena rosa.
+  Não seria uma versão maior da mesma composição.
+- Buscas via DuckDuckGo localizaram candidatos, incluindo
+  [casa ao pôr do sol no Wallpapers.com](https://wallpapers.com/wallpapers/adventure-time-treehouseat-sunset-gbudnmyfusgmer1e.html),
+  [casa no UHD Paper](https://www.uhdpaper.com/2024/11/3703b-adventure-time-tree-house-sunset.html?m=0)
+  e [céu noturno no Wallpaperbetter](https://www.wallpaperbetter.com/en/hd-wallpaper-wlohb).
+  As páginas de download, além de WallpaperAccess, WallpaperCave e Pinterest,
+  falharam por erros de transporte/conexão; Python e PowerShell também registraram
+  falhas de validação de certificado. Google exigiu JavaScript; a busca integrada
+  retornou cancelamento. Nenhuma versão maior pôde ser baixada e confirmada como
+  a mesma cena. Não foram desabilitadas verificações de segurança.
+- Conferidos carregamento e aparência no Chrome em computador e celular.
+  Em cadastro/login até 800px, o cenário fica em uma faixa de 600px de altura
+  no fim da página, com transição para o fundo claro. Isso reduz a ampliação
+  excessiva causada por `cover` na página inteira, sem criar detalhes novos.
+  A melhoria da resolução das três cenas permanece pendente de originais maiores
+  ou de acesso a uma fonte que permita baixar e comparar os arquivos.
+
+## Dados da série recebidos com a nova inicial
+
+A ficha fornecida pelo Claude informa criação por Pendleton Ward, exibição original
+no Cartoon Network de 2010 a 2018, 10 temporadas e 283 episódios, além de
+*Terras Distantes* (2020–2021) e *Fionna e Cake* (estreia em 2023).
+Os anos das continuações não pretendem descrever seu estado atual de produção.
+Fontes indicadas no ZIP (consulta declarada pelo Claude em 19/11/2026, não
+revalidada independentemente nesta integração):
+
+- [Adventure Time — Wikipédia](https://en.wikipedia.org/wiki/Adventure_Time)
+- [Adventure Time Wiki](https://adventuretime.fandom.com/wiki/Adventure_Time)
+- [TV Tropes — franquia](https://www.tvtropes.org/pmwiki/pmwiki.php/Franchise/AdventureTime)
+
+Revisão pelo autor pendente, inclusive a forma de contar episódios/segmentos.

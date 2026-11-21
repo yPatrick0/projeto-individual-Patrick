@@ -1,8 +1,12 @@
+/* Estilos da página inicial (index.html). */
+
 :root {
     --ink: #20352a;
     --paper: #f8f4e7;
     --green: #dce8cf;
     --yellow: #ffd363;
+    --yellow-light: #ffe29a;
+    --forest: #253e31;
 }
 
 * {
@@ -37,14 +41,14 @@ h1,h2,h3,p {
 
 h1,h2 {
     font-family: Georgia,serif;
-    line-height: 1.04;
-    letter-spacing: -.045em;
+    line-height: 1.1;
+    letter-spacing: -.03em;
+    /* break-word só quebra uma palavra se ela não couber sozinha na linha. */
+    overflow-wrap: break-word;
 }
 
 h1 {
-    font-size: clamp(2rem,4vw,3.6rem);
-    line-height: 1.12;
-    overflow-wrap: anywhere;
+    font-size: clamp(2.3rem,4.6vw,3.9rem);
 }
 
 .hero h1 span {
@@ -52,9 +56,7 @@ h1 {
 }
 
 h2 {
-    font-size: clamp(2rem,3.4vw,3rem);
-    line-height: 1.12;
-    overflow-wrap: anywhere;
+    font-size: clamp(1.9rem,3.2vw,2.8rem);
 }
 
 h3 {
@@ -64,7 +66,7 @@ h3 {
 }
 
 p {
-    max-width: 54ch;
+    max-width: 58ch;
 }
 
 button,input {
@@ -89,12 +91,23 @@ button:disabled {
     margin: auto;
 }
 
+/* Rótulo pequeno acima dos títulos: organiza a hierarquia das seções. */
+.eyebrow {
+    margin-bottom: 10px;
+    font-size: .8rem;
+    font-weight: bold;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+/* ---------- Cabeçalho ---------- */
 .bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 12px 24px;
     min-height: 78px;
+    padding-block: 12px;
     flex-wrap: wrap;
 }
 
@@ -106,7 +119,7 @@ button:disabled {
 
 .bar nav {
     display: flex;
-    gap: 22px;
+    gap: 8px 20px;
     align-items: center;
     flex-wrap: wrap;
 }
@@ -115,90 +128,444 @@ button:disabled {
     text-decoration: none;
 }
 
+.bar nav > a:hover {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+.nav-botoes {
+    display: flex;
+    gap: 10px;
+}
+
+/* ---------- Botões ---------- */
 .button {
     display: inline-block;
     border: 1px solid var(--ink);
     background: var(--yellow);
     color: var(--ink);
-    padding: 10px 20px;
+    padding: 10px 22px;
     border-radius: 999px;
     text-decoration: none;
+    text-align: center;
     font-weight: bold;
+    line-height: 1.3;
+}
+
+.button:hover {
+    background: var(--yellow-light);
 }
 
 .secondary {
     background: transparent;
 }
 
-.hero {
-    background: #c1e0ed;
-    border-block: 1px solid var(--ink);
-    padding: 68px 0;
-}
-
-.hero .wrap,.split {
-    display: grid;
-    grid-template-columns: repeat(2,minmax(0,1fr));
-    gap: clamp(28px,4.5vw,64px);
-    align-items: center;
-}
-
-.hero .wrap {
-    grid-template-columns: minmax(0,1.15fr) minmax(0,1fr);
-}
-
-.hero .wrap > *,.split > * {
-    min-width: 0;
-}
-
-.hero img {
-    aspect-ratio: 1.16;
-    border-radius: 44% 44% 22px 22px;
-    border: 2px solid var(--ink);
-    box-shadow: 9px 9px var(--ink);
-}
-
-.hero p,.split p {
-    margin: 20px 0;
+.secondary:hover {
+    background: rgba(255,255,255,.6);
 }
 
 .actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
+    margin-top: 28px;
 }
 
+/* ---------- Seções ---------- */
 .band {
-    padding: clamp(44px,6vw,76px) 0;
-    scroll-margin-top: 24px;
+    padding: clamp(56px,7vw,96px) 0;
+    border-top: 1px solid var(--ink);
+    scroll-margin-top: 16px;
 }
 
+.split {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: clamp(32px,5vw,72px);
+    align-items: center;
+}
+
+.split > * {
+    min-width: 0;
+}
+
+.split p:not(.eyebrow) {
+    margin-top: 18px;
+}
+
+.section-head {
+    margin-bottom: 36px;
+}
+
+.section-head p:not(.eyebrow) {
+    margin-top: 12px;
+}
+
+/* ---------- Apresentação com cenário ----------
+   O fundo pode ser recortado pelo cover; só o texto fica sobre um
+   painel claro. Para trocar o fundo, altere apenas o caminho em url(). */
+.hero {
+    display: flex;
+    align-items: center;
+    min-height: clamp(520px,46vw,720px);
+    padding: 64px 0;
+    border-top: 1px solid var(--ink);
+    background-color: #a65982;
+    background-image: url('../assets/imgs/cenarios/casa-na-arvore.webp');
+    background-size: cover;
+    background-position: center 35%;
+}
+
+.hero .wrap {
+    width: min(1160px,calc(100% - 48px));
+}
+
+/* Painel discreto: garante a leitura sem esconder a casa na árvore. */
+.hero-texto {
+    max-width: 520px;
+    padding: clamp(24px,3vw,36px);
+    background: rgba(248,244,231,.92);
+    border: 1px solid var(--ink);
+    border-radius: 20px;
+    box-shadow: 6px 6px var(--ink);
+}
+
+/* Tamanho calculado para "Autoconhecimento" caber inteiro em uma linha. */
+.hero h1 {
+    font-size: clamp(1.7rem,3.4vw,2.75rem);
+}
+
+.hero-texto > p:not(.eyebrow) {
+    margin-top: 18px;
+    font-size: 1.08rem;
+}
+
+/* ---------- A série ---------- */
+.serie-imagem {
+    max-width: 480px;
+    justify-self: center;
+    aspect-ratio: 1.12;
+    object-position: center 55%;
+    border: 2px solid var(--ink);
+    border-radius: 44% 44% 22px 22px;
+    box-shadow: 9px 9px var(--ink);
+}
+
+/* Ficha com os dados da série, em quatro blocos. */
+.ficha {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 12px;
+    margin: 28px 0 0;
+}
+
+.ficha div {
+    padding: 14px 16px;
+    background: #fffdf4;
+    border: 1px solid var(--ink);
+    border-radius: 12px;
+}
+
+.ficha dt {
+    font-size: .78rem;
+    font-weight: bold;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: #5b6d5f;
+}
+
+.ficha dd {
+    margin: 4px 0 0;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+/* ---------- O projeto ---------- */
 .about {
     background: var(--green);
 }
 
 .about img {
-    aspect-ratio: 1.6;
+    aspect-ratio: 1.45;
+    object-position: center top;
+    border: 2px solid var(--ink);
     border-radius: 20px;
+    box-shadow: 9px 9px var(--ink);
 }
 
-.story p {
+.destaques {
+    display: grid;
+    gap: 10px;
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.destaques li {
+    display: grid;
+    gap: 2px;
+    padding: 12px 16px;
+    background: rgba(255,253,244,.75);
+    border-left: 4px solid var(--forest);
+    border-radius: 0 10px 10px 0;
+}
+
+.destaques a,
+.destaques strong {
+    font-weight: bold;
+    text-underline-offset: 3px;
+}
+
+.destaques span {
+    font-size: .94rem;
+}
+
+/* ---------- Minha história com cenário ---------- */
+.story {
+    background-color: #c83802;
+    background-image: url('../assets/imgs/cenarios/casa-na-arvore-por-do-sol.webp');
+    background-size: cover;
+    background-position: center 40%;
+}
+
+/* Cartão claro à esquerda: a casa na árvore fica visível à direita. */
+.story-card {
+    max-width: 560px;
+    margin: 0;
+    padding: clamp(28px,4vw,48px);
+    background: rgba(248,244,231,.95);
+    border: 1px solid var(--ink);
+    border-radius: 20px;
+    box-shadow: 8px 8px var(--ink);
+}
+
+.linha-tempo {
+    margin: 28px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.linha-tempo li {
+    position: relative;
+    padding: 0 0 22px 32px;
+    border-left: 2px solid var(--ink);
+    margin-left: 8px;
+}
+
+.linha-tempo li:last-child {
+    padding-bottom: 0;
+    border-left-color: transparent;
+}
+
+/* Marcador redondo de cada etapa. */
+.linha-tempo li::before {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    background: var(--yellow);
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+}
+
+.linha-tempo strong {
+    display: block;
     font-size: 1.1rem;
 }
 
+.linha-tempo p {
+    margin-top: 4px;
+    font-size: 1.05rem;
+}
+
+/* ---------- Personagens ---------- */
+.roster {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 24px;
+}
+
+.person {
+    min-width: 0;
+    background: #fffdf4;
+    border: 1px solid var(--ink);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 5px 5px var(--ink);
+}
+
+.person img {
+    aspect-ratio: 1;
+    height: auto;
+    object-fit: contain;
+    border-bottom: 1px solid var(--ink);
+}
+
+/* As fotos compartilham a mesma moldura; posições destacam os rostos
+   e preservam chapéus e coroas. */
+.person img.portrait-finn,
+.person img.portrait-jake,
+.person img.portrait-marceline,
+.person img.portrait-bmo,
+.person img.portrait-rei-gelado,
+.person img.portrait-princesa-jujuba {
+    object-fit: cover;
+}
+
+.person img.portrait-finn,.card img.portrait-finn,.mini-retratos img.portrait-finn {
+    object-position: 55% 35%;
+}
+
+.person img.portrait-jake,.card img.portrait-jake,.mini-retratos img.portrait-jake {
+    object-position: 50% 20%;
+}
+
+.person img.portrait-marceline,.card img.portrait-marceline,.mini-retratos img.portrait-marceline {
+    object-position: 50% 20%;
+}
+
+.person img.portrait-bmo,.card img.portrait-bmo,.mini-retratos img.portrait-bmo {
+    object-position: 45% 30%;
+}
+
+.person img.portrait-rei-gelado,.card img.portrait-rei-gelado {
+    object-position: 45% 20%;
+}
+
+.person img.portrait-princesa-jujuba,.card img.portrait-princesa-jujuba {
+    object-position: 50% 15%;
+}
+
+.portrait-finn {
+    background: #e4f1f7;
+}
+
+.portrait-jake {
+    background: #fff0c7;
+}
+
+.portrait-marceline {
+    background: #eee1f0;
+}
+
+.portrait-bmo {
+    background: #dbeee4;
+}
+
+.portrait-rei-gelado {
+    background: #e0eafa;
+}
+
+.portrait-princesa-jujuba {
+    background: #fbe3ef;
+}
+
+.person div {
+    padding: 18px 20px 22px;
+}
+
+.person p {
+    font-size: .94rem;
+}
+
+/* ---------- Acesso aos minijogos ---------- */
+.jogos {
+    background: #fbefc8;
+}
+
+.game-list {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 24px;
+}
+
+.game-card {
+    display: grid;
+    grid-template-columns: 132px minmax(0,1fr);
+    gap: 22px;
+    align-items: start;
+    padding: 24px;
+    background: #fffdf4;
+    border: 1px solid var(--ink);
+    border-radius: 18px;
+    box-shadow: 6px 6px var(--ink);
+}
+
+.game-card p {
+    margin-bottom: 18px;
+    font-size: .95rem;
+}
+
+.game-card-imagem {
+    aspect-ratio: 1;
+    border-radius: 14px;
+}
+
+/* Quatro fotos pequenas: os personagens do jogo de sequência. */
+.mini-retratos {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 6px;
+}
+
+.mini-retratos img {
+    aspect-ratio: 1;
+    border: 1px solid var(--ink);
+    border-radius: 10px;
+}
+
+/* ---------- Jogo da memória com cenário ---------- */
 .game {
-    background: #253e31;
+    padding-top: clamp(190px,18vw,260px);
+    color: var(--paper);
+    background-color: #07367c;
+    background-image: url('../assets/imgs/cenarios/ceu-noturno.webp');
+    background-size: cover;
+    background-position: center top;
+}
+
+/* Texto alinhado embaixo, para a lua ficar visível acima do painel. */
+.game .split {
+    align-items: end;
+}
+
+.game .split > div:first-child {
+    padding: clamp(24px,3vw,32px);
+    background: rgba(6,24,66,.82);
+    border: 1px solid rgba(248,244,231,.35);
+    border-radius: 18px;
+}
+
+.game .eyebrow {
+    color: var(--yellow);
+}
+
+.game .nota {
+    font-size: .9rem;
+    opacity: .85;
+}
+
+.game .secondary {
+    border-color: var(--paper);
     color: var(--paper);
 }
 
-.game p {
-    margin: 16px 0;
+.game .secondary:hover {
+    background: rgba(255,255,255,.12);
+}
+
+.game :focus-visible {
+    outline-color: var(--yellow);
 }
 
 .board {
     display: grid;
     grid-template-columns: repeat(4,minmax(0,1fr));
     gap: 10px;
+    max-width: 520px;
+    margin-left: auto;
 }
 
 .card {
@@ -250,165 +617,222 @@ button:disabled {
 }
 
 .stats {
-    font-size: .9rem;
-    margin-top: 10px;
+    width: fit-content;
     min-height: 1.6em;
+    margin-top: 12px;
+    margin-left: auto;
+    padding: 4px 12px;
+    background: rgba(6,24,66,.82);
+    border-radius: 999px;
+    font-size: .9rem;
 }
 
-.roster {
+/* ---------- Rodapé ---------- */
+.rodape {
+    padding: 44px 0 28px;
+    border-top: 1px solid var(--ink);
+    font-size: .9rem;
+}
+
+.rodape-conteudo {
     display: grid;
-    grid-template-columns: repeat(3,minmax(0,1fr));
-    gap: 24px;
-    margin-top: 28px;
+    grid-template-columns: minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);
+    gap: 28px;
 }
 
-.person {
-    min-width: 0;
-    background: #fffdf4;
-    border: 1px solid #746e59;
-    border-radius: 16px;
-    overflow: hidden;
+.rodape-marca {
+    margin-bottom: 6px;
+    font-size: 1.2rem;
+    font-weight: 900;
 }
 
-.person img {
-    aspect-ratio: 1;
-    height: auto;
-    object-fit: contain;
-    border-bottom: 1px solid #d9d4c2;
+.rodape-titulo {
+    margin-bottom: 8px;
+    font-size: .78rem;
+    font-weight: bold;
+    letter-spacing: .08em;
+    text-transform: uppercase;
 }
 
-/* As fotos compartilham a mesma moldura; posições destacam os rostos
-   e preservam chapéus e coroas. */
-.person img.portrait-finn,
-.person img.portrait-jake,
-.person img.portrait-marceline,
-.person img.portrait-bmo,
-.person img.portrait-rei-gelado,
-.person img.portrait-princesa-jujuba {
-    object-fit: cover;
-}
-
-.person img.portrait-finn,.card img.portrait-finn {
-    object-position: 55% 35%;
-}
-
-.person img.portrait-jake,.card img.portrait-jake {
-    object-position: 50% 20%;
-}
-
-.person img.portrait-marceline,.card img.portrait-marceline {
-    object-position: 50% 20%;
-}
-
-.person img.portrait-bmo,.card img.portrait-bmo {
-    object-position: 45% 30%;
-}
-
-.person img.portrait-rei-gelado,.card img.portrait-rei-gelado {
-    object-position: 45% 20%;
-}
-
-.person img.portrait-princesa-jujuba,.card img.portrait-princesa-jujuba {
-    object-position: 50% 15%;
-}
-
-.portrait-finn {
-    background: #e4f1f7;
-}
-
-.portrait-jake {
-    background: #fff0c7;
-}
-
-.portrait-marceline {
-    background: #eee1f0;
-}
-
-.portrait-bmo {
-    background: #dbeee4;
-}
-
-.portrait-rei-gelado {
-    background: #e0eafa;
-}
-
-.portrait-princesa-jujuba {
-    background: #fbe3ef;
-}
-
-.person div {
-    padding: 20px;
-}
-
-.person p {
-    font-size: .94rem;
-}
-
-footer {
-    border-top: 1px solid #a6a48f;
-    padding: 26px 0;
-    font-size: .88rem;
-}
-
-footer .wrap {
+.rodape-links {
     display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
 }
 
+.rodape-links a {
+    text-underline-offset: 3px;
+}
+
+.rodape-aviso {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid #c9c4ae;
+    font-size: .8rem;
+    max-width: none;
+    opacity: .85;
+}
+
+/* ---------- Telas médias ---------- */
 @media(max-width:900px) {
-    .hero .wrap,.split {
+    .split {
         grid-template-columns: minmax(0,1fr);
-        gap: 32px;
+        gap: 36px;
     }
 
-    .hero img {
-        max-width: 560px;
-        justify-self: center;
+    /* No tablet o painel fica em cima e a imagem em uma faixa embaixo,
+       ocupando a largura toda (altura = 56vw, proporção da imagem);
+       a cor de fundo continua o céu da imagem acima da faixa. */
+    .hero {
+        min-height: 0;
+        padding: 48px 0 calc(56vw - 20px);
+        background-image:
+            linear-gradient(#a65982 calc(100% - 56vw),rgba(166,89,130,0) calc(100% - 50vw)),
+            url('../assets/imgs/cenarios/casa-na-arvore.webp');
+        background-size: 100% 100%,100% auto;
+        background-repeat: no-repeat;
+        background-position: center top,62% bottom;
+    }
+
+    .hero-texto {
+        max-width: 600px;
     }
 
     .hero h1 {
-        font-size: clamp(2rem,5.8vw,3.4rem);
+        font-size: clamp(1.35rem,7vw,2.75rem);
     }
 
-    .board {
+    .story {
+        padding-bottom: calc(56vw - 20px);
+        background-image:
+            linear-gradient(#c83802 calc(100% - 56vw),rgba(200,56,2,0) calc(100% - 50vw)),
+            url('../assets/imgs/cenarios/casa-na-arvore-por-do-sol.webp');
+        background-size: 100% 100%,100% auto;
+        background-repeat: no-repeat;
+        background-position: center top,58% bottom;
+    }
+
+    .story-card {
+        max-width: 640px;
+        margin: 0 auto;
+    }
+
+    .game {
+        padding-top: 240px;
+        background-image:
+            linear-gradient(rgba(7,54,124,0) 520px,#07367c 600px),
+            url('../assets/imgs/cenarios/ceu-noturno.webp');
+        background-size: 100% 100%,auto 600px;
+        background-repeat: no-repeat;
+        background-position: center top,22% top;
+    }
+
+    .serie-imagem {
+        max-width: 440px;
+    }
+
+    .about img {
+        max-width: 620px;
+    }
+
+    .board,
+    .stats {
         max-width: 560px;
         margin-inline: auto;
     }
 
-    .bar {
-        padding-block: 12px;
-    }
-
-    .bar nav {
-        gap: 12px;
+    .game-list {
+        grid-template-columns: minmax(0,1fr);
     }
 
     .roster {
         grid-template-columns: repeat(2,minmax(0,1fr));
     }
 
-    .band,.hero {
-        padding: 44px 0;
+    .rodape-conteudo {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+
+    .rodape-conteudo > div:first-child {
+        grid-column: 1 / -1;
     }
 }
 
+/* ---------- Celular ---------- */
 @media(max-width:540px) {
-    .wrap {
+    .wrap,
+    .hero .wrap {
         width: calc(100% - 40px);
     }
 
-    .hero h1 {
-        font-size: clamp(1.8rem,7.8vw,2.4rem);
+    .bar nav {
+        width: 100%;
+        gap: 6px 16px;
+        font-size: .95rem;
     }
 
-    .roster {
+    .nav-botoes {
+        width: 100%;
+    }
+
+    .nav-botoes .button {
+        flex: 1;
+        padding: 8px 14px;
+    }
+
+    .hero {
+        padding: 32px 0 330px;
+        background-image:
+            linear-gradient(#a65982 calc(100% - 340px),rgba(166,89,130,0) calc(100% - 290px)),
+            url('../assets/imgs/cenarios/casa-na-arvore.webp');
+        background-size: 100% 100%,auto 340px;
+        background-position: center top,62% bottom;
+    }
+
+    .story {
+        padding-bottom: 290px;
+        background-image:
+            linear-gradient(#c83802 calc(100% - 310px),rgba(200,56,2,0) calc(100% - 260px)),
+            url('../assets/imgs/cenarios/casa-na-arvore-por-do-sol.webp');
+        background-size: 100% 100%,auto 310px;
+    }
+
+    .game {
+        padding-top: 200px;
+    }
+
+    .hero-texto > p:not(.eyebrow) {
+        font-size: 1rem;
+    }
+
+    .actions .button {
+        flex: 1 1 auto;
+    }
+
+    .ficha {
         grid-template-columns: minmax(0,1fr);
     }
 
-    .person img {
-        max-height: 320px;
+    .serie-imagem,
+    .about img {
+        box-shadow: 6px 6px var(--ink);
+    }
+
+    .story-card {
+        box-shadow: 5px 5px var(--ink);
+    }
+
+    .game-card {
+        grid-template-columns: minmax(0,1fr);
+        gap: 16px;
+        padding: 18px;
+        box-shadow: 4px 4px var(--ink);
+    }
+
+    .game-card-imagem,
+    .mini-retratos {
+        width: 88px;
     }
 
     .board {
@@ -421,7 +845,23 @@ footer .wrap {
         border-radius: 9px;
     }
 
-    footer .wrap {
-        flex-direction: column;
+    .roster {
+        gap: 14px;
+    }
+
+    .person {
+        box-shadow: 3px 3px var(--ink);
+    }
+
+    .person div {
+        padding: 12px 14px 16px;
+    }
+
+    .person h3 {
+        font-size: 1.05rem;
+    }
+
+    .person p {
+        font-size: .88rem;
     }
 }
