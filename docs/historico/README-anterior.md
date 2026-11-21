@@ -1,3 +1,5 @@
+> **Arquivo histórico.** Primeira versão do README, preservada sem alterações.
+
 # Hora de Aventura e Neurociência
 
 Projeto individual desenvolvido no primeiro semestre de Análise e Desenvolvimento de Sistemas na SPTech.
