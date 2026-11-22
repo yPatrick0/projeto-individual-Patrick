@@ -38,13 +38,15 @@ O Finn é corajoso, leal, quer sempre ajudar e sente tudo com intensidade, como 
 | ![Jogo da memória](docs/imagens/jogo-da-memoria.jpg) | ![Sequência de Hora de Aventura](docs/imagens/sequencia-hora-de-aventura.jpg) |
 | Vire duas cartas por vez e encontre os seis pares de personagens. O site conta as tentativas. | Finn, Jake, Marceline e BMO se acendem em uma ordem que você precisa repetir. São 6 rodadas, e você tem 3 vidas. |
 
-Ao final de cada partida, o site vai mostrar uma frase de um personagem e o episódio de origem. Hoje, a Sequência exibe frases provisórias, que serão trocadas por mensagens ligadas aos episódios (veja o Quadro 1 da documentação).
+Ao final de cada partida, o site mostra uma mensagem de um episódio: a frase de um personagem (quando já conferida), a lição e o episódio para assistir. Exemplo: em *Puhoy* (T5, ep. 16), Jake diz a Finn: “Você tá se enrolando nos seus problemas imaginários.” As mensagens ficam em [`web-data-viz/public/js/mensagens-episodios.js`](web-data-viz/public/js/mensagens-episodios.js).
+
+**Conta de usuário:** crie uma conta em `cadastro.html` e entre em `login.html`. Com login, suas partidas ficam salvas no seu nome e o painel mostra quantas você jogou. Sem login, dá para jogar normalmente, e a partida é salva como anônima.
 
 > Os jogos são uma atividade de lazer e reflexão. Não são teste, diagnóstico nem tratamento.
 
 ---
 
-## 📊 Dashboard (planejado)
+## 📊 Dashboard
 
 | Indicador | Cálculo |
 | --- | --- |
@@ -53,26 +55,41 @@ Ao final de cada partida, o site vai mostrar uma frase de um personagem e o epis
 | Média de rodadas na Sequência | soma das rodadas concluídas ÷ número de partidas |
 | Tempo médio por partida | soma das durações ÷ número de partidas |
 
+O painel fica em `/dashboard.html`, exige login e usa Chart.js. Mostra os indicadores gerais, quantas partidas a pessoa logada jogou e o ranking dos episódios mais indicados. Cada partida terminada é enviada pela API e gravada no MySQL.
+
 ![Fluxo de dados](docs/imagens/fluxo-dados.png)
+
+---
+
+## 🗄️ Banco de dados
+
+Três tabelas no MySQL:
+
+- **usuario**: quem se cadastra no site;
+- **mensagem**: os episódios, as frases e as lições mostradas no fim dos jogos;
+- **partida**: o resultado de cada jogo, ligado ao usuário (`fk_usuario`) e à mensagem recebida (`fk_mensagem`).
+
+Os relacionamentos são 1:N: um usuário joga várias partidas, e uma mensagem aparece em várias partidas. O script completo, com as mensagens, dados de teste e as consultas do dashboard (incluindo um JOIN), está em [`banco-de-dados/script.sql`](banco-de-dados/script.sql).
+
+![Modelo lógico](banco-de-dados/modelo-logico.png)
 
 ---
 
 ## 📦 Entregáveis
 
-- [x] Documentação do projeto ([`ti/documentacao.docx`](ti/documentacao.docx))
-- [x] Planejamento no Trello
-- [x] Backlog de requisitos ([`ti/backlog-requisitos.xlsx`](ti/backlog-requisitos.xlsx))
-- [x] Página Home
-- [x] Minijogos com variáveis, funções, condicionais, repetições e vetores
-- [ ] Cadastro e login com validações em JavaScript
-- [ ] Modelo lógico e relacionamentos
-- [ ] Comandos SQL
-- [ ] Integração da API Node.js com o MySQL
-- [ ] Aplicação de cálculos matemáticos nos indicadores
-- [ ] VM Linux contendo somente o banco de dados
-- [ ] Dashboard com gráficos (Chart.js)
-- [ ] Apresentação para a banca
-- [x] Diário de Prompts ([`docs/diario-de-prompts.md`](docs/diario-de-prompts.md))
+- ✅ Documentação do projeto ([`ti/documentacao.docx`](ti/documentacao.docx))
+- ✅ Planejamento no Trello
+- ✅ Página Home
+- ✅ Minijogos com variáveis, funções, condicionais, repetições e vetores
+- ✅ Cadastro e login com validações em JavaScript
+- ✅ Modelo lógico e relacionamentos
+- ✅ Comandos SQL
+- ✅ Integração da API Node.js com o MySQL (rotas de partidas)
+- ✅ Aplicação de cálculos matemáticos nos indicadores
+- ✅ VM Linux contendo somente o banco de dados
+- ✅ Dashboard com gráficos (Chart.js)
+- ✅ Apresentação para a banca
+- ✅ Diário de Prompts ([`docs/diario-de-prompts.md`](docs/diario-de-prompts.md))
 
 ---
 
@@ -90,9 +107,9 @@ Ao final de cada partida, o site vai mostrar uma frase de um personagem e o epis
 
 ```
 projeto-individual-Patrick/
-├── banco-de-dados/        → modelo lógico e scripts SQL
+├── banco-de-dados/        → modelo lógico (imagem) e script SQL
 ├── docs/                  → planejamento, diário de prompts, imagens e histórico
-├── ti/                    → documentação acadêmica e backlog de requisitos
+├── ti/                    → documentação acadêmica
 ├── web-data-viz/          → aplicação (site + API)
 │   ├── public/            → páginas, CSS, JavaScript e imagens
 │   └── src/               → rotas, controllers, models e conexão com o banco
@@ -104,14 +121,19 @@ projeto-individual-Patrick/
 
 ## ▶️ Como executar
 
+1. No MySQL (na VM Linux), rode o arquivo `banco-de-dados/script.sql` inteiro.
+2. No terminal:
+
 ```bash
 cd web-data-viz
 npm install
 cp .env.example .env.dev   # no PowerShell: Copy-Item .env.example .env.dev
-npm start
 ```
 
-Abra <http://localhost:3333/>. Se o PowerShell bloquear o `npm`, use `npm.cmd start`.
+3. No `.env.dev`, preencha `DB_HOST`, `DB_USER` e `DB_PASSWORD` do seu MySQL (`DB_DATABASE=memorias_aventura`).
+4. Rode `npm start` e abra <http://localhost:3333/>. O painel fica em <http://localhost:3333/dashboard.html>.
+
+Se o PowerShell bloquear o `npm`, use `npm.cmd start`.
 
 ---
 

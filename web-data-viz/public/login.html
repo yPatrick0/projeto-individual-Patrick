@@ -25,19 +25,18 @@
         <section class="auth-card" aria-labelledby="titulo-login">
             <a class="back-link" href="./index.html">← Voltar ao início</a>
             <h1 id="titulo-login">Login</h1>
-            <p class="aviso" id="aviso-login">
-                Integração pendente: esta tela ainda não autentica usuários.
-                O login está desabilitado. Não preencha dados reais nesta etapa.
+            <p class="aviso" id="aviso-login" role="status">
+                Entre para ver o painel e salvar suas partidas no seu nome.
             </p>
-            <!-- Sem envio: nenhuma sessão de usuário é criada nesta etapa. -->
-            <form aria-describedby="aviso-login" onsubmit="return false;">
+            <!-- O envio é feito por js/login.js (fetch para /usuarios/autenticar) -->
+            <form aria-describedby="aviso-login" onsubmit="return entrar();" novalidate>
                 <label for="email">E-mail</label>
                 <input id="email" type="email" autocomplete="email">
 
                 <label for="senha">Senha</label>
                 <input id="senha" type="password" autocomplete="current-password">
 
-                <button class="button" type="submit" disabled>Entrar (em breve)</button>
+                <button class="button" id="botao-entrar" type="submit">Entrar</button>
             </form>
             <p class="auth-switch">Ainda não tem uma conta? <a href="cadastro.html">Ir para o cadastro</a>.</p>
         </section>
@@ -45,5 +44,7 @@
     <footer class="wrap">
         <p>Memórias de Aventura · Projeto individual de Patrick Scaglia — SPTech.</p>
     </footer>
+    <script src="js/api.js"></script>
+    <script src="js/login.js"></script>
 </body>
 </html>

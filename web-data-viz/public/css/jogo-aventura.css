@@ -203,6 +203,43 @@ h1, h2 {
     opacity: 0.75;
 }
 
+/* Mensagem completa do episódio na tela de resultado */
+.mensagem-episodio {
+    margin: 0 0 16px;
+    padding: 14px 16px;
+    border-left: 5px solid var(--destaque);
+    background: rgba(0, 0, 0, 0.2);
+    text-align: left;
+}
+
+.mensagem-episodio[hidden] {
+    display: none;
+}
+
+.mensagem-episodio p {
+    margin: 0 0 6px;
+}
+
+.mensagem-rotulo {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.85;
+}
+
+.mensagem-frase {
+    margin: 0 0 4px;
+    font-size: 1.15rem;
+    font-style: italic;
+}
+
+.mensagem-autor,
+.mensagem-onde {
+    font-size: 0.85rem;
+    opacity: 0.85;
+}
+
 .av-resultado {
     list-style: none;
     padding: 0;

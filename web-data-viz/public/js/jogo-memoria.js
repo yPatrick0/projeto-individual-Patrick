@@ -1,4 +1,5 @@
-// Demonstração local: nenhum resultado é salvo ou enviado ao servidor.
+// Jogo da memória: ao encontrar os seis pares, mostra a mensagem de um episódio
+// e envia o resultado para a API (ver js/registrar-partida.js).
 let personagens = ['finn', 'jake', 'marceline', 'bmo', 'rei-gelado', 'princesa-jujuba'];
 let nomes = ['Finn', 'Jake', 'Marceline', 'BMO', 'Rei Gelado', 'Princesa Jujuba'];
 let fotos = ['finn.jpeg', 'jake.jpeg', 'marceline.jpeg', 'bmo.jpeg', 'rei-gelado.jpeg', 'princesa-jujuba.jpeg'];
@@ -9,6 +10,7 @@ let segundaCarta = -1;
 let tentativas = 0;
 let paresEncontrados = 0;
 let temporizador = null;
+let inicioDaPartida = 0;   // Date.now() do primeiro clique; 0 = partida ainda não começou
 
 let tabuleiro = document.getElementById('board');
 let resultado = document.getElementById('stats');
@@ -32,6 +34,7 @@ function iniciarJogo() {
     segundaCarta = -1;
     tentativas = 0;
     paresEncontrados = 0;
+    inicioDaPartida = 0;
     cartas = [];
     cartasEncontradas = [];
 
@@ -49,6 +52,7 @@ function iniciarJogo() {
     }
 
     tabuleiro.innerHTML = '';
+    document.getElementById('mensagem-episodio').hidden = true;
 
     for (let i = 0; i < cartas.length; i++) {
         cartasEncontradas.push(false);
@@ -94,6 +98,11 @@ function virarCarta(indice) {
         return;
     }
 
+    // O tempo da partida começa no primeiro clique, não quando a página abre.
+    if (inicioDaPartida == 0) {
+        inicioDaPartida = Date.now();
+    }
+
     let botao = document.getElementById('carta' + indice);
     let personagemDaCarta = cartas[indice];
     // O caminho depende do personagem, não da posição: os dois retratos são iguais.
@@ -114,6 +123,10 @@ function virarCarta(indice) {
             marcarPar(segundaCarta);
             primeiraCarta = -1;
             segundaCarta = -1;
+
+            if (paresEncontrados == personagens.length) {
+                finalizarPartida();
+            }
         } else {
             // Mantém o intervalo de 750 ms usado no protótipo.
             temporizador = setTimeout(esconderCartas, 750);
@@ -121,6 +134,29 @@ function virarCarta(indice) {
 
         atualizarResultado();
     }
+}
+
+// Chamada quando os seis pares são encontrados.
+function finalizarPartida() {
+    let duracaoSegundos = Math.round((Date.now() - inicioDaPartida) / 1000);
+
+    // Sorteia e mostra a mensagem de um episódio (funções em js/mensagens-episodios.js).
+    // O id da mensagem vai para o banco, na coluna fk_mensagem da tabela partida.
+    let mensagem = sortearMensagem();
+    mostrarMensagemEpisodio('mensagem-episodio', mensagem);
+
+    // Envia o resultado para o banco (função em js/registrar-partida.js)
+    // Erros = tentativas que não formaram par.
+    registrarPartida({
+        jogo: 'memoria',
+        venceu: 1,
+        tentativas: tentativas,
+        paresEncontrados: paresEncontrados,
+        rodadasConcluidas: '',
+        erros: tentativas - paresEncontrados,
+        duracaoSegundos: duracaoSegundos,
+        idMensagem: mensagem.id
+    });
 }
 
 document.getElementById('reset').setAttribute('onclick', 'iniciarJogo()');

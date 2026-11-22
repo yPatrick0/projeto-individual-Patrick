@@ -136,3 +136,19 @@ revalidada independentemente nesta integração):
 - [TV Tropes — franquia](https://www.tvtropes.org/pmwiki/pmwiki.php/Franchise/AdventureTime)
 
 Revisão pelo autor pendente, inclusive a forma de contar episódios/segmentos.
+
+## Ampliação dos cenários (21/11/2026)
+
+A pedido do autor, os três cenários foram ampliados pelo Claude para 2400px de largura,
+porque eram esticados quase 2 vezes em telas Full HD e ficavam borrados.
+Processo, feito com OpenCV: limpeza leve de artefatos de compressão (filtro bilateral),
+ampliação em duas etapas com Lanczos e nitidez leve (unsharp mask).
+
+- `casa-na-arvore.webp`: 1042 × 587px → 2400 × 1352px
+- `casa-na-arvore-por-do-sol.webp`: 1200 × 675px → 2400 × 1350px
+- `ceu-noturno.webp`: 1200 × 675px → 2400 × 1350px
+
+É uma ampliação artificial: os contornos ficam mais definidos, mas nenhum detalhe novo
+é criado. Os arquivos anteriores foram preservados em `cenarios/originais/`.
+A solução definitiva continua sendo baixar versões maiores das mesmas cenas
+(candidatos listados acima) e substituir estes arquivos mantendo os mesmos nomes.

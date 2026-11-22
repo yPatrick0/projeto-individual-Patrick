@@ -25,25 +25,24 @@
         <section class="auth-card" aria-labelledby="titulo-cadastro">
             <a class="back-link" href="./index.html">← Voltar ao início</a>
             <h1 id="titulo-cadastro">Cadastro</h1>
-            <p class="aviso" id="aviso-cadastro">
-                Integração pendente: esta tela ainda não envia nem salva dados.
-                O cadastro está desabilitado. Não preencha dados reais nesta etapa.
+            <p class="aviso" id="aviso-cadastro" role="status">
+                Crie sua conta para que suas partidas fiquem salvas no seu nome.
             </p>
-            <!-- Sem envio: os campos são apenas a preparação visual do cadastro. -->
-            <form aria-describedby="aviso-cadastro" onsubmit="return false;">
+            <!-- O envio é feito por js/cadastro.js (fetch para /usuarios/cadastrar) -->
+            <form aria-describedby="aviso-cadastro" onsubmit="return cadastrar();" novalidate>
                 <label for="nome">Nome</label>
-                <input id="nome" type="text" autocomplete="name">
+                <input id="nome" type="text" autocomplete="name" maxlength="80">
 
                 <label for="email">E-mail</label>
-                <input id="email" type="email" autocomplete="email">
+                <input id="email" type="email" autocomplete="email" maxlength="100">
 
                 <label for="senha">Senha</label>
-                <input id="senha" type="password" autocomplete="new-password">
+                <input id="senha" type="password" autocomplete="new-password" maxlength="50">
 
                 <label for="confirmacao-senha">Confirme a senha</label>
-                <input id="confirmacao-senha" type="password" autocomplete="new-password">
+                <input id="confirmacao-senha" type="password" autocomplete="new-password" maxlength="50">
 
-                <button class="button" type="submit" disabled>Cadastrar (em breve)</button>
+                <button class="button" id="botao-cadastrar" type="submit">Cadastrar</button>
             </form>
             <p class="auth-switch">Já tem uma conta? <a href="login.html">Ir para o login</a>.</p>
         </section>
@@ -51,5 +50,7 @@
     <footer class="wrap">
         <p>Memórias de Aventura · Projeto individual de Patrick Scaglia — SPTech.</p>
     </footer>
+    <script src="js/api.js"></script>
+    <script src="js/cadastro.js"></script>
 </body>
 </html>

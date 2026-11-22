@@ -1,41 +1,29 @@
 var usuarioModel = require("../models/usuarioModel");
-var aquarioModel = require("../models/aquarioModel");
 
 function autenticar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
 
-    if (email == undefined) {
-        res.status(400).send("Seu email está undefined!");
-    } else if (senha == undefined) {
-        res.status(400).send("Sua senha está indefinida!");
+    if (email == undefined || email == "") {
+        res.status(400).send("Informe o e-mail.");
+    } else if (senha == undefined || senha == "") {
+        res.status(400).send("Informe a senha.");
     } else {
 
         usuarioModel.autenticar(email, senha)
             .then(
                 function (resultadoAutenticar) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
-                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
 
                     if (resultadoAutenticar.length == 1) {
-                        console.log(resultadoAutenticar);
-
-                        aquarioModel.buscarAquariosPorEmpresa(resultadoAutenticar[0].empresaId)
-                            .then((resultadoAquarios) => {
-                                if (resultadoAquarios.length > 0) {
-                                    res.json({
-                                        id: resultadoAutenticar[0].id,
-                                        email: resultadoAutenticar[0].email,
-                                        nome: resultadoAutenticar[0].nome,
-                                        senha: resultadoAutenticar[0].senha,
-                                        aquarios: resultadoAquarios
-                                    });
-                                } else {
-                                    res.status(204).json({ aquarios: [] });
-                                }
-                            })
+                        // Devolve só o que a tela precisa (a senha não volta para o navegador)
+                        res.json({
+                            id: resultadoAutenticar[0].id,
+                            nome: resultadoAutenticar[0].nome,
+                            email: resultadoAutenticar[0].email
+                        });
                     } else if (resultadoAutenticar.length == 0) {
-                        res.status(403).send("Email e/ou senha inválido(s)");
+                        res.status(403).send("E-mail e/ou senha inválido(s).");
                     } else {
                         res.status(403).send("Mais de um usuário com o mesmo login e senha!");
                     }
@@ -48,41 +36,40 @@ function autenticar(req, res) {
                 }
             );
     }
-
 }
 
 function cadastrar(req, res) {
-    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    // Valores enviados pelo cadastro.html (js/cadastro.js)
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
-    var fkEmpresa = req.body.idEmpresaVincularServer;
 
-    // Faça as validações dos valores
-    if (nome == undefined) {
-        res.status(400).send("Seu nome está undefined!");
-    } else if (email == undefined) {
-        res.status(400).send("Seu email está undefined!");
-    } else if (senha == undefined) {
-        res.status(400).send("Sua senha está undefined!");
-    } else if (fkEmpresa == undefined) {
-        res.status(400).send("Sua empresa a vincular está undefined!");
+    // Validações (o navegador também valida, mas a API confere de novo)
+    if (nome == undefined || nome.trim().length < 2) {
+        res.status(400).send("Informe um nome com pelo menos 2 letras.");
+    } else if (email == undefined || email.indexOf("@") == -1 || email.indexOf(".") == -1) {
+        res.status(400).send("Informe um e-mail válido.");
+    } else if (senha == undefined || senha.length < 6) {
+        res.status(400).send("A senha precisa ter pelo menos 6 caracteres.");
+    } else if (nome.length > 80 || email.length > 100 || senha.length > 50) {
+        res.status(400).send("Algum campo passou do tamanho máximo.");
     } else {
 
-        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, email, senha, fkEmpresa)
+        usuarioModel.cadastrar(nome.trim(), email.trim(), senha)
             .then(
                 function (resultado) {
-                    res.json(resultado);
+                    res.status(201).json(resultado);
                 }
             ).catch(
                 function (erro) {
                     console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao realizar o cadastro! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
+                    // 1062 = valor repetido em coluna UNIQUE (o e-mail já existe)
+                    if (erro.errno == 1062) {
+                        res.status(409).send("Este e-mail já está cadastrado.");
+                    } else {
+                        console.log("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage);
+                        res.status(500).json(erro.sqlMessage);
+                    }
                 }
             );
     }

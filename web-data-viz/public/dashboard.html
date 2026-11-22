@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de indicadores | Memórias de Aventura</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <!-- Sessão: quem não fez login volta para a tela de login -->
+    <script src="js/sessao.js"></script>
+    <script>
+        validarSessao();
+    </script>
+    <!-- Chart.js, a mesma biblioteca de gráficos usada no material da turma (AquaTech) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <header class="painel-topo">
+        <a class="painel-marca" href="index.html">Memórias de Aventura</a>
+        <nav class="painel-nav" aria-label="Navegação do painel">
+            <a href="index.html">Início</a>
+            <a href="index.html#jogo">Jogo da memória</a>
+            <a href="jogo-aventura.html">Sequência</a>
+            <a href="dashboard.html" aria-current="page">Painel</a>
+            <span class="nav-usuario" id="nav-usuario"></span>
+        </nav>
+    </header>
+
+    <main class="painel">
+        <section class="painel-cabecalho">
+            <div>
+                <p class="painel-rotulo">Dashboard</p>
+                <h1>Painel de indicadores</h1>
+                <p>Resultados das partidas dos dois minijogos, gravados no banco de dados.</p>
+                <p class="suas-partidas" id="suas-partidas"></p>
+            </div>
+            <button class="painel-botao" onclick="carregarPainel()">Atualizar dados</button>
+        </section>
+
+        <p id="aviso-dados" class="painel-aviso" role="status" hidden></p>
+
+        <!-- Indicadores principais (KPIs) -->
+        <section class="kpis" aria-label="Indicadores principais">
+            <article class="kpi">
+                <p class="kpi-titulo">Partidas registradas</p>
+                <p class="kpi-valor" id="kpi-total">—</p>
+                <p class="kpi-formula">soma das partidas dos dois jogos</p>
+            </article>
+            <article class="kpi">
+                <p class="kpi-titulo">Aproveitamento na memória</p>
+                <p class="kpi-valor" id="kpi-aproveitamento">—</p>
+                <p class="kpi-formula">média de: pares (6) ÷ tentativas × 100</p>
+            </article>
+            <article class="kpi">
+                <p class="kpi-titulo">Média de rodadas na Sequência</p>
+                <p class="kpi-valor" id="kpi-rodadas">—</p>
+                <p class="kpi-formula">soma das rodadas ÷ número de partidas</p>
+            </article>
+            <article class="kpi">
+                <p class="kpi-titulo">Tempo médio por partida</p>
+                <p class="kpi-valor" id="kpi-tempo">—</p>
+                <p class="kpi-formula">média ponderada dos dois jogos</p>
+            </article>
+        </section>
+
+        <!-- Gráficos -->
+        <section class="graficos">
+            <article class="grafico-card">
+                <h2>Partidas por jogo</h2>
+                <p class="grafico-pergunta">Qual jogo é mais jogado?</p>
+                <div class="grafico-area">
+                    <canvas id="grafico-partidas" aria-label="Gráfico de barras com o número de partidas de cada jogo" role="img"></canvas>
+                </div>
+            </article>
+            <article class="grafico-card">
+                <h2>Tempo médio por jogo</h2>
+                <p class="grafico-pergunta">Quanto tempo dura uma partida, em segundos?</p>
+                <div class="grafico-area">
+                    <canvas id="grafico-tempo" aria-label="Gráfico de barras com o tempo médio de cada jogo" role="img"></canvas>
+                </div>
+            </article>
+        </section>
+
+        <!-- Ranking que usa a terceira tabela (mensagem) com JOIN -->
+        <section class="grafico-card ranking-card">
+            <h2>Episódios mais indicados</h2>
+            <p class="grafico-pergunta">Quais mensagens de episódios os jogadores mais receberam?</p>
+            <ol class="ranking" id="ranking-episodios">
+                <li class="ranking-vazio">Sem dados carregados.</li>
+            </ol>
+        </section>
+
+        <!-- Os mesmos números em tabela (acessibilidade) -->
+        <details class="tabela-dados">
+            <summary>Ver os dados em tabela</summary>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Jogo</th>
+                        <th>Partidas</th>
+                        <th>Tempo médio (s)</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-corpo">
+                    <tr>
+                        <td colspan="3">Sem dados carregados.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </details>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+
+</html>

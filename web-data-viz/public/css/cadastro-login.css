@@ -181,6 +181,19 @@ nav [aria-current="page"] {
     font-size: .85rem;
 }
 
+/* Cores das mensagens do cadastro e do login (js/cadastro.js e js/login.js) */
+.aviso-erro {
+    border-left-color: #b3261e;
+    background: #fbe9e7;
+    color: #8c1d18;
+}
+
+.aviso-sucesso {
+    border-left-color: #2e7d32;
+    background: #e6f4e7;
+    color: #1e5b22;
+}
+
 form {
     width: 100%;
 }

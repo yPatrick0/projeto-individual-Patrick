@@ -59,7 +59,7 @@
 
             <div id="caixa-frase" class="av-frase" hidden>
                 <p id="texto-frase-jogo"></p>
-                <small>Reflexão provisória fornecida por IA (Claude); revisão do autor pendente. Não é citação da série.</small>
+                <small>Lição inspirada em um episódio de Hora de Aventura (interpretação do autor).</small>
             </div>
 
             <button class="av-botao av-secundario" onclick="iniciarPartida()">Recomeçar</button>
@@ -73,11 +73,8 @@
                 <li>Erros: <strong id="res-erros"></strong></li>
                 <li>Duração: <strong id="res-duracao"></strong></li>
             </ul>
-            <div class="av-frase">
-                <p id="texto-frase-final"></p>
-                <small>Reflexão provisória fornecida por IA (Claude); revisão do autor pendente. Não é citação da série.</small>
-            </div>
-            <p class="av-aviso">Este resultado fica apenas na memória do navegador e ainda não é salvo no banco de dados.
+            <div id="mensagem-episodio" class="mensagem-episodio" aria-live="polite" hidden></div>
+            <p class="av-aviso">O resultado desta partida é enviado ao painel do site.
                 O jogo é uma atividade de reflexão, não um teste científico de memória.</p>
             <p id="res-partidas" class="av-aviso"></p>
             <div class="av-acoes">
@@ -88,6 +85,9 @@
 
     </main>
 
+    <script src="js/mensagens-episodios.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/registrar-partida.js"></script>
     <script src="js/jogo-aventura.js"></script>
 </body>
 

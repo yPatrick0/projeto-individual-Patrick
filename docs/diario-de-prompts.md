@@ -237,8 +237,67 @@ Entrada abaixo reproduzida da entrega `docs/diario-de-prompts-NOVA-ENTRADA.md` d
 
 - **Data e assistente:** 21/11/2026; Claude (Anthropic), modelo Claude Opus 5.5, pelo app Claude.
 - **Pedido recebido (resumo):** (1) reescrever a documentação acadêmica a partir da primeira versão, usando como modelo a documentação de outra aluna (JoJo's Bizarre Adventure), com imagens e o contexto pessoal informado pelo autor; (2) estruturar o repositório no GitHub parecido com os repositórios de referência `bee-perez/sptech-projeto-individual` e `esthernascimento/projeto_individual_dj`, com as informações deste projeto.
-- **O que foi fornecido:** documentação em Word (`ti/documentacao.docx`, antes `ti/Memorias_de_Aventura_documentacao V2.docx`) com contexto, objetivo, justificativa, escopo, ODS e referências; capturas do site, diagrama do fluxo de dados e macrocronograma. Novo `README.md` curto no formato das referências; README anterior e primeira versão do README movidos sem alterações para `docs/historico/`; `ti/backlog-requisitos.xlsx` com os requisitos da documentação e prazos/status copiados do Trello; imagens em `docs/imagens/`; `docs/planejamento.md` atualizado.
-- **Verificações:** documento convertido para PDF e páginas conferidas; sumário conferido com as páginas; planilha recalculada sem erros. Links do README conferidos contra os caminhos do repositório. Código do site, backend, banco, AGENTS.md e protótipo histórico não foram alterados.
+- **O que foi fornecido:** documentação em Word (`ti/documentacao.docx`, antes `ti/Memorias_de_Aventura_documentacao V2.docx`) com contexto, objetivo, justificativa, escopo, ODS e referências; capturas do site, diagrama do fluxo de dados e macrocronograma. Novo `README.md` curto no formato das referências; README anterior e primeira versão do README movidos sem alterações para `docs/historico/`; imagens em `docs/imagens/`; `docs/planejamento.md` atualizado.
+- **Verificações:** documento convertido para PDF e páginas conferidas; sumário conferido com as páginas. Links do README conferidos contra os caminhos do repositório. Código do site, backend, banco, AGENTS.md e protótipo histórico não foram alterados.
 - **Aplicação:** arquivos novos e alterados gravados pelo assistente diretamente na cópia local `Downloads/ooo/projeto-individual-Patrick` (clone recém-feito do GitHub), com autorização do autor. A remoção de `anterior-README.md` e de `ti/Memorias_de_Aventura_documentacao V2.docx` (substituídos pelas novas versões) e o commit ficam com o autor.
 - **Limitações:** frases e episódios do Quadro 1 da documentação são interpretações do autor, exceto a fala de Jake (tradução livre). Nenhum commit ou push foi feito pelo assistente.
+- **Aproveitamento e modificações pelo estudante:** pendente de revisão pelo autor.
+
+## Banco de dados, API de partidas, dashboard, mensagens dos episódios e cenários
+
+- **Data e assistente:** 21/11/2026; Claude (Anthropic), modelo Claude Opus 5.5, pelo app Claude.
+- **Pedido recebido (resumo):** implementar as ideias da documentação: primeira versão do dashboard, modelagem e script do banco, frases e lições dos episódios nos jogos (exemplo dado pelo autor: *Puhoy*, T5 ep. 16, fala do Jake “Você tá se enrolando nos seus problemas imaginários”) e tentar resolver a baixa qualidade das imagens de fundo.
+- **O que foi feito:**
+  - `banco-de-dados/script.sql`: banco `memorias_aventura` com as tabelas `usuario` e `partida` (1:N; `fk_usuario` aceita NULL para partidas sem login), dados de teste identificados como teste e as consultas dos indicadores. Imagem do modelo em `banco-de-dados/modelo-logico.png`.
+  - API no padrão do Web Data Viz: `src/routes/partidas.js`, `src/controllers/partidaController.js` e `src/models/partidaModel.js` (POST `/partidas/registrar` e GET `/partidas/por-jogo`, `/aproveitamento-memoria`, `/media-rodadas`, `/tempo-medio`). Rota registrada em `app.js`; `.env.example` aponta para `memorias_aventura`. O controller só aceita os jogos `memoria` e `sequencia` e números válidos.
+  - `public/js/mensagens-episodios.js`: vetor com 7 mensagens (personagem, episódio, temporada/número, frase e lição). Só duas têm fala: *Puhoy* (informada pelo autor) e *His Hero* (tradução livre). As demais têm apenas a lição, que é interpretação do autor. Temporadas e números conferidos em fichas dos episódios.
+  - `public/js/registrar-partida.js`: envia o resultado de cada partida para a API, com o id do usuário se houver login.
+  - Jogo da memória: ao encontrar os 6 pares, mostra a mensagem do episódio e registra a partida. Sequência: as frases provisórias foram trocadas pelas lições dos episódios entre as rodadas e pela mensagem completa no resultado; o resultado é enviado à API.
+  - `public/dashboard.html`, `css/dashboard.css` e `js/dashboard.js`: 4 indicadores (partidas, aproveitamento na memória, média de rodadas, tempo médio ponderado) e 2 gráficos de barras com Chart.js, tabela com os mesmos dados e avisos para “sem partidas” e “servidor fora do ar”. Link “Painel” na página inicial.
+  - Cenários: os três fundos foram ampliados para 2400px (limpeza de artefatos, Lanczos e nitidez leve). Originais preservados em `assets/imgs/cenarios/originais/`; registro em `assets/imgs/fontes.md`.
+- **Verificações:** consultas do script testadas em SQLite (resultados esperados: 3 e 3 partidas, 67,5%, 4,3 rodadas, 51 s e 71 s). Controller testado com banco simulado: inserções corretas e recusa de jogo inválido, texto em campo numérico e campos obrigatórios ausentes. No Chrome, com a API simulada: dashboard com dados, sem dados e com servidor fora; jogo da memória concluído (mensagem exibida e partida enviada); Sequência com lição entre rodadas, derrota, mensagem final e partida enviada; nenhuma exceção JavaScript.
+- **Limitações:** não havia MySQL, dependências do Node nem acesso ao Chart.js neste ambiente. O servidor real, o banco real e o desenho final dos gráficos precisam ser testados pelo autor com `npm start`. A ampliação dos cenários não cria detalhes novos. Cadastro e login continuam sem integração (próxima etapa). Nenhum commit ou push foi feito pelo assistente.
+- **Aproveitamento e modificações pelo estudante:** pendente de revisão pelo autor.
+
+## Terceira tabela no banco: mensagem
+
+- **Data e assistente:** 22/11/2026; Claude (Anthropic), modelo Claude Opus 5.5, pelo app Claude.
+- **Pedido recebido (resumo):** o banco precisa de 3 tabelas, e não só 2.
+- **O que foi feito:** nova tabela `mensagem` (episódio, temporada, número, personagem, frase e lição), com os mesmos 7 registros do vetor de `public/js/mensagens-episodios.js` e os mesmos ids. A tabela `partida` ganhou `fk_mensagem`, então cada partida guarda qual mensagem o jogador recebeu. Os dois jogos passam a enviar o id da mensagem (`idMensagemServer`); controller e model gravam `fk_mensagem`. Nova rota `GET /partidas/episodios-mais-indicados`, com JOIN entre `partida` e `mensagem`, e um ranking de episódios no dashboard. Modelo lógico, diagrama de fluxo, README e documentação (RNF-02) atualizados.
+- **Verificações:** script testado em SQLite com chaves estrangeiras ativas (JOIN retornou Puhoy 3, His Hero 2, Breezy 1 com os dados de teste). Controller testado com banco simulado, inclusive recusa de id de mensagem inválido. No Chrome, com API simulada, os dois jogos enviaram o id da mensagem exibida e o ranking apareceu no painel; nenhuma exceção JavaScript.
+- **Limitações:** o MySQL real não estava disponível neste ambiente; o autor precisa rodar o script e testar com `npm start`. Se o script antigo já foi executado, é preciso apagar o banco antes (`DROP DATABASE memorias_aventura;`). Nenhum commit ou push foi feito pelo assistente.
+- **Aproveitamento e modificações pelo estudante:** pendente de revisão pelo autor.
+
+## Cadastro, login e sessão integrados à API (Web Data Viz)
+
+- **Data e assistente:** 22/11/2026; Claude (Anthropic), modelo Claude Opus 5.5, pelo app Claude.
+- **Pedido recebido (resumo):** usar a estrutura do Web Data Viz (enviada em ZIP, repositório BandTec/web-data-viz) como API e fazer o site inteiro funcionar: cadastro, login, dashboard etc.
+- **Conferência inicial:** o back-end do projeto já era o Web Data Viz da turma, sem mudanças (só quebras de linha diferentes), mais as rotas de partidas. Os arquivos `.env` e `.env.dev` do ZIP não foram copiados para o projeto.
+- **O que foi feito:**
+  - `src/models/usuarioModel.js` e `src/controllers/usuarioController.js` adaptados à tabela `usuario` do projeto (sem `fk_empresa` e sem aquários). Cadastro com validações na API (nome, e-mail, senha com 6+ caracteres e tamanhos máximos) e resposta 409 para e-mail repetido. Login devolve id, nome e e-mail (a senha não volta para o navegador). Textos protegidos contra apóstrofo e barra invertida antes de entrar no SQL.
+  - Nova rota `GET /partidas/usuario/:idUsuario` (partidas da pessoa logada).
+  - `public/js/cadastro.js` e `public/js/login.js`: validações em JavaScript e `fetch` para `/usuarios/cadastrar` e `/usuarios/autenticar`; login guarda `ID_USUARIO`, `NOME_USUARIO` e `EMAIL_USUARIO` no `sessionStorage` e abre o painel.
+  - `public/js/sessao.js`: `validarSessao()`, `sair()` e troca de "Entrar / Criar conta" por "Olá, nome / Sair" na página inicial.
+  - `cadastro.html` e `login.html` habilitados (avisos de "integração pendente" removidos); mensagens de erro e sucesso com cores em `cadastro-login.css`.
+  - `dashboard.html` exige login, mostra o usuário, o botão Sair e quantas partidas ele jogou.
+- **Verificações:** controllers testados com banco simulado (cadastro válido, nome/e-mail/senha inválidos, e-mail repetido, login certo e errado, tentativa de injeção de SQL escapada, id inválido na rota de usuário). No Chrome, com API simulada: painel sem login redireciona para o login; cadastro com campos vazios, senhas diferentes, e-mail inválido, sucesso e e-mail repetido; login errado e certo; jogo da memória salvou a partida com o id do usuário; painel mostrou "Olá, Patrick" e a contagem do usuário; Sair limpou a sessão. Nenhuma exceção JavaScript.
+- **Limitações:** sem MySQL, Node (express/mysql2) e Chart.js reais neste ambiente; o autor precisa testar com `npm install`, o script do banco, o `.env.dev` e `npm start`. A senha é guardada em texto no banco, como no modelo da turma. Rotas antigas da AquaTech (aquários, medidas, empresas, avisos) continuam no `app.js` sem uso. Nenhum commit ou push foi feito pelo assistente.
+- **Aproveitamento e modificações pelo estudante:** pendente de revisão pelo autor.
+
+## Teste real no computador do autor
+
+- **Data e assistente:** 22/11/2026; Claude (Anthropic), modelo Claude Opus 5.5, pelo app Claude.
+- **Pedido recebido (resumo):** fazer pelo autor os passos de teste que o assistente conseguisse.
+- **O que foi feito:** conferência no MySQL Workbench (com permissão do autor) de que `banco-de-dados/script.sql` rodou sem erros: banco, 3 tabelas, 7 mensagens e consultas do painel. Criação de `iniciar-site.bat` na raiz, que roda `npm install` (só na primeira vez) e `npm start` com dois cliques. O `.env.dev`, com a senha do MySQL, foi criado pelo próprio autor, porque o assistente não tem permissão para gravar arquivos de senha. Um servidor antigo ocupava a porta 3333 e foi encerrado pelo autor.
+- **Teste no navegador do app, com o servidor e o MySQL reais:** painel sem login levou ao login; cadastro recusou senhas diferentes e aceitou um usuário de teste ("Teste Claude"); e-mail repetido recusado (409); login com senha errada recusado (403) e com senha certa aceito; jogo da memória e Sequência concluídos, com mensagem do episódio e "Partida salva no banco!"; painel com gráficos do Chart.js, indicadores recalculados (8 partidas, 75,6%, 3,5 de 6, 48 s), ranking de episódios e "você jogou 2 partida(s)"; Sair limpou a sessão.
+- **Limitações:** o usuário de teste e as 2 partidas dele ficaram no banco; podem ser apagados com `DELETE FROM partida WHERE fk_usuario = 3; DELETE FROM usuario WHERE id = 3;`. Nenhum commit ou push foi feito pelo assistente.
+- **Aproveitamento e modificações pelo estudante:** pendente de revisão pelo autor.
+
+## Site funcionando fora do localhost:3333 (Live Server ou arquivo)
+
+- **Data e assistente:** 22/11/2026; Claude (Anthropic), modelo Claude Opus 5.5, pelo app Claude.
+- **Pedido recebido (resumo):** o cadastro mostrava "Não foi possível falar com o servidor" quando a página era aberta fora de http://localhost:3333; o autor quer que cadastro e login funcionem abrindo direto essas páginas.
+- **O que foi feito:** novo `public/js/api.js` com a função `enderecoApi()`: se a página veio do próprio servidor (porta 3333), usa o caminho normal; se veio do Live Server ou do arquivo, chama `http://localhost:3333`. Todos os `fetch` de `cadastro.js`, `login.js`, `registrar-partida.js` e `dashboard.js` passaram a usar essa função, e as páginas carregam `api.js`. Funciona porque o `app.js` do Web Data Viz já usa `cors()`. O servidor continua precisando estar ligado com `npm start`.
+- **Verificações:** no Chrome, com páginas servidas em 127.0.0.1:5500 (como o Live Server) e uma API simulada em localhost:3333 com CORS: cadastro, login, painel, jogo da memória salvando a partida e contagem do usuário funcionaram; cadastro também funcionou abrindo o arquivo direto (file://). Nenhuma exceção JavaScript.
+- **Limitações:** o login fica guardado no `sessionStorage` de cada endereço; quem entrar por 127.0.0.1:5500 precisa continuar navegando por esse mesmo endereço. Nenhum commit ou push foi feito pelo assistente.
 - **Aproveitamento e modificações pelo estudante:** pendente de revisão pelo autor.
