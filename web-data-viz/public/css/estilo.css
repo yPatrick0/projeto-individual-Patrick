@@ -5,6 +5,7 @@
     --yellow: #ffd363;
     --yellow-light: #ffe29a;
     --forest: #253e31;
+    --mascara-cenario: linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.25));
 }
 
 * {
@@ -206,7 +207,9 @@ button:disabled {
     padding: 64px 0;
     border-top: 1px solid var(--ink);
     background-color: #a65982;
-    background-image: url('../assets/imgs/cenarios/casa-na-arvore.webp');
+    background-image:
+        var(--mascara-cenario),
+        url('../assets/imgs/cenarios/casa-na-arvore.webp');
     background-size: cover;
     background-position: center 35%;
 }
@@ -312,7 +315,9 @@ button:disabled {
 
 .story {
     background-color: #c83802;
-    background-image: url('../assets/imgs/cenarios/casa-na-arvore-por-do-sol.webp');
+    background-image:
+        var(--mascara-cenario),
+        url('../assets/imgs/cenarios/casa-na-arvore-por-do-sol.webp');
     background-size: cover;
     background-position: center 40%;
 }
@@ -502,7 +507,9 @@ button:disabled {
     padding-top: clamp(190px,18vw,260px);
     color: var(--paper);
     background-color: #07367c;
-    background-image: url('../assets/imgs/cenarios/ceu-noturno.webp');
+    background-image:
+        var(--mascara-cenario),
+        url('../assets/imgs/cenarios/ceu-noturno.webp');
     background-size: cover;
     background-position: center top;
 }
@@ -664,10 +671,11 @@ button:disabled {
         padding: 48px 0 calc(56vw - 20px);
         background-image:
             linear-gradient(#a65982 calc(100% - 56vw),rgba(166,89,130,0) calc(100% - 50vw)),
+            var(--mascara-cenario),
             url('../assets/imgs/cenarios/casa-na-arvore.webp');
-        background-size: 100% 100%,100% auto;
+        background-size: 100% 100%,100% auto,100% auto;
         background-repeat: no-repeat;
-        background-position: center top,62% bottom;
+        background-position: center top,62% bottom,62% bottom;
     }
 
     .hero-texto {
@@ -682,10 +690,11 @@ button:disabled {
         padding-bottom: calc(56vw - 20px);
         background-image:
             linear-gradient(#c83802 calc(100% - 56vw),rgba(200,56,2,0) calc(100% - 50vw)),
+            var(--mascara-cenario),
             url('../assets/imgs/cenarios/casa-na-arvore-por-do-sol.webp');
-        background-size: 100% 100%,100% auto;
+        background-size: 100% 100%,100% auto,100% auto;
         background-repeat: no-repeat;
-        background-position: center top,58% bottom;
+        background-position: center top,58% bottom,58% bottom;
     }
 
     .story-card {
@@ -697,10 +706,11 @@ button:disabled {
         padding-top: 240px;
         background-image:
             linear-gradient(rgba(7,54,124,0) 520px,#07367c 600px),
+            var(--mascara-cenario),
             url('../assets/imgs/cenarios/ceu-noturno.webp');
-        background-size: 100% 100%,auto 600px;
+        background-size: 100% 100%,100% 600px,auto 600px;
         background-repeat: no-repeat;
-        background-position: center top,22% top;
+        background-position: center top,22% top,22% top;
     }
 
     .serie-imagem {
@@ -759,17 +769,19 @@ button:disabled {
         padding: 32px 0 330px;
         background-image:
             linear-gradient(#a65982 calc(100% - 340px),rgba(166,89,130,0) calc(100% - 290px)),
+            var(--mascara-cenario),
             url('../assets/imgs/cenarios/casa-na-arvore.webp');
-        background-size: 100% 100%,auto 340px;
-        background-position: center top,62% bottom;
+        background-size: 100% 100%,100% 340px,auto 340px;
+        background-position: center top,62% bottom,62% bottom;
     }
 
     .story {
         padding-bottom: 290px;
         background-image:
             linear-gradient(#c83802 calc(100% - 310px),rgba(200,56,2,0) calc(100% - 260px)),
+            var(--mascara-cenario),
             url('../assets/imgs/cenarios/casa-na-arvore-por-do-sol.webp');
-        background-size: 100% 100%,auto 310px;
+        background-size: 100% 100%,100% 310px,auto 310px;
     }
 
     .game {

@@ -152,3 +152,7 @@ ampliação em duas etapas com Lanczos e nitidez leve (unsharp mask).
 é criado. Os arquivos anteriores foram preservados em `cenarios/originais/`.
 A solução definitiva continua sendo baixar versões maiores das mesmas cenas
 (candidatos listados acima) e substituir estes arquivos mantendo os mesmos nomes.
+
+## Nova imagem de destaque (22/11/2026)
+
+`destaque.webp` foi trocada por uma imagem de Finn e Jake sentados num tronco na floresta, enviada pelo autor na conversa com o assistente (Claude). A imagem original (768 × 1136px) foi recortada para 768 × 900px, mantendo os dois personagens no centro, e salva em WebP com o mesmo nome, por isso a página inicial, o cadastro e o login usam a nova imagem sem mudança no HTML ou no CSS. Origem e permissão de publicação não foram informadas. A versão anterior continua no histórico do Git.
