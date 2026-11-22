@@ -215,38 +215,112 @@ a {
 }
 
 /* ---------- Ranking de episódios ---------- */
-.ranking-card {
+.album-card {
     margin-top: 16px;
 }
 
-.ranking {
-    margin: 0;
-    padding-left: 24px;
+.album-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px 16px;
 }
 
-.ranking li {
-    padding: 8px 0;
-    border-bottom: 1px solid var(--line);
-}
-
-.ranking li:last-child {
-    border-bottom: 0;
-}
-
-.ranking span {
-    color: var(--muted);
-    font-size: .9rem;
-}
-
-.ranking em {
-    float: right;
-    font-style: normal;
+.album-contagem {
+    margin: 4px 0 0;
     font-weight: 700;
 }
 
-.ranking-vazio {
-    color: var(--muted);
+.album-progresso {
+    height: 8px;
+    margin: 12px 0 16px;
+    border-radius: 999px;
+    background: var(--line);
+    overflow: hidden;
+}
+
+.album-barra {
+    width: 0;
+    height: 100%;
+    border-radius: 999px;
+    background: #2e7d32;
+    transition: width .4s;
+}
+
+.album-cartas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 12px;
+    margin: 0;
+    padding: 0;
     list-style: none;
+}
+
+.album-carta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    height: 100%;
+    min-height: 150px;
+    padding: 14px 10px;
+    border: 2px solid var(--ink);
+    border-radius: 14px;
+    background: #fffdf4;
+    color: var(--ink);
+    font: inherit;
+    text-align: center;
+    cursor: pointer;
+}
+
+button.album-carta:hover {
+    background: #fff4cc;
+    box-shadow: 4px 4px 0 var(--yellow);
+}
+
+.album-carta img {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 4px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #dce8cf;
+}
+
+.album-carta strong {
+    font-size: .95rem;
+    line-height: 1.25;
+}
+
+.album-carta span {
+    color: var(--muted);
+    font-size: .8rem;
+}
+
+.album-bloqueada {
+    justify-content: center;
+    border-style: dashed;
+    border-color: #a9b3a5;
+    background: transparent;
+    cursor: default;
+}
+
+.album-cadeado {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border: 2px dashed #a9b3a5;
+    border-radius: 50%;
+    font-size: 1.4rem !important;
+    font-weight: 700;
+}
+
+.album-vazio {
+    color: var(--muted);
 }
 
 /* ---------- Tabela ---------- */

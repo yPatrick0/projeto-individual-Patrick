@@ -4,21 +4,41 @@
 //        -> usuarioController -> usuarioModel -> tabela usuario
 // ============================================================
 
-// Regras da senha. Cada regra tem um id (o <li> no cadastro.html)
-// e um teste que devolve true quando a senha cumpre a regra.
-const regrasDaSenha = [
-    { id: "regra-tamanho", teste: function (senha) { return senha.length >= 8; } },
-    { id: "regra-maiuscula", teste: function (senha) { return /[A-Z]/.test(senha); } },
-    { id: "regra-minuscula", teste: function (senha) { return /[a-z]/.test(senha); } },
-    { id: "regra-numero", teste: function (senha) { return /[0-9]/.test(senha); } },
-    { id: "regra-especial", teste: function (senha) { return /[^A-Za-z0-9]/.test(senha); } }
-];
+// Regras da senha: dois vetores na mesma ordem (como personagens/nomes no jogo da memória).
+// idsDasRegras guarda o id de cada <li> do cadastro.html.
+let idsDasRegras = ["regra-tamanho", "regra-maiuscula", "regra-minuscula", "regra-numero", "regra-especial"];
+
+// Confere a senha letra por letra e devolve um vetor com true/false para cada regra,
+// na mesma ordem de idsDasRegras.
+function conferirRegrasDaSenha(senha) {
+    let temMaiuscula = false;
+    let temMinuscula = false;
+    let temNumero = false;
+    let temEspecial = false;
+
+    for (let i = 0; i < senha.length; i++) {
+        let letra = senha[i];
+
+        if (letra >= "A" && letra <= "Z") {
+            temMaiuscula = true;
+        } else if (letra >= "a" && letra <= "z") {
+            temMinuscula = true;
+        } else if (letra >= "0" && letra <= "9") {
+            temNumero = true;
+        } else {
+            temEspecial = true;   // tudo que não é letra nem número (! @ # $ % ...)
+        }
+    }
+
+    return [senha.length >= 8, temMaiuscula, temMinuscula, temNumero, temEspecial];
+}
 
 // Conta quantas regras a senha cumpre (de 0 a 5)
 function contarRegrasCumpridas(senha) {
+    let regras = conferirRegrasDaSenha(senha);
     let cumpridas = 0;
-    for (let i = 0; i < regrasDaSenha.length; i++) {
-        if (regrasDaSenha[i].teste(senha)) {
+    for (let i = 0; i < regras.length; i++) {
+        if (regras[i]) {
             cumpridas++;
         }
     }
@@ -28,11 +48,12 @@ function contarRegrasCumpridas(senha) {
 // Roda a cada tecla digitada na senha (oninput no cadastro.html)
 function verificarSenha() {
     let senha = document.getElementById("senha").value;
+    let regras = conferirRegrasDaSenha(senha);
 
     // 1) Marca cada regra como cumprida (✓) ou faltando (✗)
-    for (let i = 0; i < regrasDaSenha.length; i++) {
-        let item = document.getElementById(regrasDaSenha[i].id);
-        if (regrasDaSenha[i].teste(senha)) {
+    for (let i = 0; i < idsDasRegras.length; i++) {
+        let item = document.getElementById(idsDasRegras[i]);
+        if (regras[i]) {
             item.className = "regra-ok";
         } else {
             item.className = "regra-falta";
@@ -44,7 +65,7 @@ function verificarSenha() {
     let barra = document.getElementById("barra-forca");
     let texto = document.getElementById("texto-forca");
 
-    barra.style.width = (cumpridas / regrasDaSenha.length * 100) + "%";
+    barra.style.width = (cumpridas / idsDasRegras.length * 100) + "%";
 
     if (senha == "") {
         barra.className = "barra-forca";
@@ -82,15 +103,30 @@ function verificarConfirmacao() {
     }
 }
 
+// Confere se o texto tem um caractere (ex.: "@"), olhando letra por letra
+function contemCaractere(texto, caractere) {
+    for (let i = 0; i < texto.length; i++) {
+        if (texto[i] == caractere) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// O e-mail precisa ter @ e ponto
+function emailValido(email) {
+    return contemCaractere(email, "@") && contemCaractere(email, ".");
+}
+
 // Roda a cada tecla digitada no e-mail
 function verificarEmail() {
-    let email = document.getElementById("email").value.trim();
+    let email = document.getElementById("email").value;
     let dica = document.getElementById("dica-email");
 
     if (email == "") {
         dica.innerHTML = "";
         dica.className = "dica-campo";
-    } else if (email.indexOf("@") == -1 || email.indexOf(".") == -1) {
+    } else if (!emailValido(email)) {
         dica.innerHTML = "✗ O e-mail precisa ter @ e ponto (ex.: finn@email.com)";
         dica.className = "dica-campo dica-falta";
     } else {
@@ -106,8 +142,8 @@ function mostrarMensagemCadastro(texto, tipo) {
 }
 
 function cadastrar() {
-    let nome = document.getElementById("nome").value.trim();
-    let email = document.getElementById("email").value.trim();
+    let nome = document.getElementById("nome").value;
+    let email = document.getElementById("email").value;
     let senha = document.getElementById("senha").value;
     let confirmacao = document.getElementById("confirmacao-senha").value;
 
@@ -116,9 +152,9 @@ function cadastrar() {
         mostrarMensagemCadastro("Preencha todos os campos.", "erro");
     } else if (nome.length < 2) {
         mostrarMensagemCadastro("O nome precisa ter pelo menos 2 letras.", "erro");
-    } else if (email.indexOf("@") == -1 || email.indexOf(".") == -1) {
+    } else if (!emailValido(email)) {
         mostrarMensagemCadastro("Digite um e-mail válido, com @ e ponto.", "erro");
-    } else if (contarRegrasCumpridas(senha) < regrasDaSenha.length) {
+    } else if (contarRegrasCumpridas(senha) < idsDasRegras.length) {
         mostrarMensagemCadastro("A senha ainda não está forte. Veja os itens com ✗ abaixo da senha.", "erro");
     } else if (senha != confirmacao) {
         mostrarMensagemCadastro("As senhas não são iguais.", "erro");

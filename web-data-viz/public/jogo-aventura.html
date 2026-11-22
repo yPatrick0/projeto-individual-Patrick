@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sequência de Hora de Aventura | Memórias de Aventura</title>
     <link rel="stylesheet" href="css/jogo-aventura.css">
+    <link rel="stylesheet" href="css/carta-episodio.css">
 </head>
 
 <body>
@@ -26,6 +27,7 @@
                 <li>A cada rodada concluída, a sequência ganha mais um passo.</li>
                 <li>Você tem 3 vidas. Cada erro custa uma vida e repete a sequência.</li>
                 <li>Conclua 6 rodadas para vencer.</li>
+                <li>No fim, ganhando ou perdendo, você recebe a carta de um episódio.</li>
             </ol>
             <button class="av-botao" onclick="iniciarPartida()">Começar</button>
         </section>
@@ -57,11 +59,6 @@
                 </button>
             </div>
 
-            <div id="caixa-frase" class="av-frase" hidden>
-                <p id="texto-frase-jogo"></p>
-                <small>Lição inspirada em um episódio de Hora de Aventura (interpretação do autor).</small>
-            </div>
-
             <button class="av-botao av-secundario" onclick="iniciarPartida()">Recomeçar</button>
         </section>
 
@@ -73,19 +70,23 @@
                 <li>Erros: <strong id="res-erros"></strong></li>
                 <li>Duração: <strong id="res-duracao"></strong></li>
             </ul>
-            <div id="mensagem-episodio" class="mensagem-episodio" aria-live="polite" hidden></div>
             <p class="av-aviso">O resultado desta partida é enviado ao painel do site.
                 O jogo é uma atividade de reflexão, não um teste científico de memória.</p>
             <p id="res-partidas" class="av-aviso"></p>
             <div class="av-acoes">
                 <button class="av-botao" onclick="iniciarPartida()">Jogar novamente</button>
+                <button class="av-botao av-secundario" onclick="reabrirCartaEpisodio()">Ver carta do episódio</button>
                 <a class="av-botao av-secundario" href="index.html">Voltar ao início</a>
             </div>
         </section>
 
     </main>
 
+    <!-- Janela da carta do episódio (preenchida por js/carta-episodio.js) -->
+    <div id="carta-fundo" class="carta-fundo" hidden></div>
+
     <script src="js/mensagens-episodios.js"></script>
+    <script src="js/carta-episodio.js"></script>
     <script src="js/api.js"></script>
     <script src="js/registrar-partida.js"></script>
     <script src="js/jogo-aventura.js"></script>

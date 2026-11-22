@@ -633,51 +633,6 @@ button:disabled {
     font-size: .9rem;
 }
 
-/* ---------- Mensagem do episódio (fim do jogo da memória) ---------- */
-.mensagem-episodio {
-    max-width: 560px;
-    margin-top: 16px;
-    margin-left: auto;
-    padding: 18px 20px;
-    background: var(--paper);
-    color: var(--ink);
-    border: 2px solid var(--ink);
-    border-radius: 18px;
-    box-shadow: 6px 6px 0 var(--yellow);
-}
-
-.mensagem-episodio[hidden] {
-    display: none;
-}
-
-.mensagem-episodio p {
-    margin: 0 0 8px;
-}
-
-.mensagem-rotulo {
-    font-size: .78rem;
-    font-weight: 700;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-}
-
-.mensagem-frase {
-    margin: 0 0 6px;
-    font-size: 1.15rem;
-    font-style: italic;
-    line-height: 1.4;
-}
-
-.mensagem-autor,
-.mensagem-onde {
-    font-size: .88rem;
-}
-
-.mensagem-onde {
-    margin-bottom: 0;
-    opacity: .8;
-}
-
 /* ---------- Rodapé ---------- */
 .rodape {
     padding: 44px 0 28px;

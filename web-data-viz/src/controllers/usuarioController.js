@@ -38,13 +38,39 @@ function autenticar(req, res) {
     }
 }
 
-// Mesmas regras do medidor de senha do cadastro (public/js/cadastro.js)
+// Confere se o texto tem um caractere (ex.: "@"), olhando letra por letra
+function contemCaractere(texto, caractere) {
+    for (var i = 0; i < texto.length; i++) {
+        if (texto[i] == caractere) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Mesmas regras do medidor de senha do cadastro (public/js/cadastro.js):
+// 8+ caracteres, letra maiúscula, letra minúscula, número e caractere especial
 function senhaForte(senha) {
-    return senha.length >= 8 &&
-        /[A-Z]/.test(senha) &&
-        /[a-z]/.test(senha) &&
-        /[0-9]/.test(senha) &&
-        /[^A-Za-z0-9]/.test(senha);
+    var temMaiuscula = false;
+    var temMinuscula = false;
+    var temNumero = false;
+    var temEspecial = false;
+
+    for (var i = 0; i < senha.length; i++) {
+        var letra = senha[i];
+
+        if (letra >= "A" && letra <= "Z") {
+            temMaiuscula = true;
+        } else if (letra >= "a" && letra <= "z") {
+            temMinuscula = true;
+        } else if (letra >= "0" && letra <= "9") {
+            temNumero = true;
+        } else {
+            temEspecial = true;
+        }
+    }
+
+    return senha.length >= 8 && temMaiuscula && temMinuscula && temNumero && temEspecial;
 }
 
 function cadastrar(req, res) {
@@ -54,9 +80,9 @@ function cadastrar(req, res) {
     var senha = req.body.senhaServer;
 
     // Validações (o navegador também valida, mas a API confere de novo)
-    if (nome == undefined || nome.trim().length < 2) {
+    if (nome == undefined || nome.length < 2) {
         res.status(400).send("Informe um nome com pelo menos 2 letras.");
-    } else if (email == undefined || email.indexOf("@") == -1 || email.indexOf(".") == -1) {
+    } else if (email == undefined || !contemCaractere(email, "@") || !contemCaractere(email, ".")) {
         res.status(400).send("Informe um e-mail válido.");
     } else if (senha == undefined || !senhaForte(senha)) {
         res.status(400).send("A senha precisa ter 8+ caracteres, letra maiúscula, letra minúscula, número e caractere especial.");
@@ -64,23 +90,26 @@ function cadastrar(req, res) {
         res.status(400).send("Algum campo passou do tamanho máximo.");
     } else {
 
-        usuarioModel.cadastrar(nome.trim(), email.trim(), senha)
-            .then(
-                function (resultado) {
-                    res.status(201).json(resultado);
+        // Primeiro confere se o e-mail já está cadastrado
+        usuarioModel.buscarPorEmail(email)
+            .then(function (resultado) {
+                if (resultado.length > 0) {
+                    res.status(409).send("Este e-mail já está cadastrado.");
+                } else {
+                    usuarioModel.cadastrar(nome, email, senha)
+                        .then(function (resultadoCadastro) {
+                            res.status(201).json(resultadoCadastro);
+                        })
+                        .catch(function (erro) {
+                            console.log("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage);
+                            res.status(500).json(erro.sqlMessage);
+                        });
                 }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    // 1062 = valor repetido em coluna UNIQUE (o e-mail já existe)
-                    if (erro.errno == 1062) {
-                        res.status(409).send("Este e-mail já está cadastrado.");
-                    } else {
-                        console.log("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage);
-                        res.status(500).json(erro.sqlMessage);
-                    }
-                }
-            );
+            })
+            .catch(function (erro) {
+                console.log("\nHouve um erro ao conferir o e-mail! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
     }
 }
 

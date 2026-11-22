@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de indicadores | Memórias de Aventura</title>
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/carta-episodio.css">
     <!-- Sessão: quem não fez login volta para a tela de login -->
     <script src="js/sessao.js"></script>
     <script>
@@ -32,7 +33,7 @@
             <div>
                 <p class="painel-rotulo">Dashboard</p>
                 <h1>Painel de indicadores</h1>
-                <p>Resultados das partidas dos dois minijogos, gravados no banco de dados.</p>
+                <p>Seus resultados nos dois minijogos, gravados no banco de dados. Só contam as partidas jogadas com login.</p>
                 <p class="suas-partidas" id="suas-partidas"></p>
             </div>
             <button class="painel-botao" onclick="carregarPainel()">Atualizar dados</button>
@@ -43,7 +44,7 @@
         <!-- Indicadores principais (KPIs) -->
         <section class="kpis" aria-label="Indicadores principais">
             <article class="kpi">
-                <p class="kpi-titulo">Partidas registradas</p>
+                <p class="kpi-titulo">Suas partidas</p>
                 <p class="kpi-valor" id="kpi-total">—</p>
                 <p class="kpi-formula">soma das partidas dos dois jogos</p>
             </article>
@@ -68,27 +69,35 @@
         <section class="graficos">
             <article class="grafico-card">
                 <h2>Partidas por jogo</h2>
-                <p class="grafico-pergunta">Qual jogo é mais jogado?</p>
+                <p class="grafico-pergunta">Qual jogo você joga mais?</p>
                 <div class="grafico-area">
                     <canvas id="grafico-partidas" aria-label="Gráfico de barras com o número de partidas de cada jogo" role="img"></canvas>
                 </div>
             </article>
             <article class="grafico-card">
                 <h2>Tempo médio por jogo</h2>
-                <p class="grafico-pergunta">Quanto tempo dura uma partida, em segundos?</p>
+                <p class="grafico-pergunta">Quanto tempo duram suas partidas, em segundos?</p>
                 <div class="grafico-area">
                     <canvas id="grafico-tempo" aria-label="Gráfico de barras com o tempo médio de cada jogo" role="img"></canvas>
                 </div>
             </article>
         </section>
 
-        <!-- Ranking que usa a terceira tabela (mensagem) com JOIN -->
-        <section class="grafico-card ranking-card">
-            <h2>Episódios mais indicados</h2>
-            <p class="grafico-pergunta">Quais mensagens de episódios os jogadores mais receberam?</p>
-            <ol class="ranking" id="ranking-episodios">
-                <li class="ranking-vazio">Sem dados carregados.</li>
-            </ol>
+        <!-- Álbum de cartas: usa a terceira tabela (mensagem) com LEFT JOIN -->
+        <section class="grafico-card album-card" id="album">
+            <div class="album-cabecalho">
+                <div>
+                    <h2>Seu álbum de episódios</h2>
+                    <p class="grafico-pergunta">Cada partida termina com uma carta. Clique numa carta aberta para ler de novo.</p>
+                </div>
+                <p class="album-contagem" id="album-contagem">— de 7 cartas</p>
+            </div>
+            <div class="album-progresso" aria-hidden="true">
+                <div class="album-barra" id="album-barra"></div>
+            </div>
+            <ul class="album-cartas" id="album-cartas">
+                <li class="album-vazio">Carregando o álbum...</li>
+            </ul>
         </section>
 
         <!-- Os mesmos números em tabela (acessibilidade) -->
@@ -111,7 +120,12 @@
         </details>
     </main>
 
+    <!-- Janela da carta do episódio (preenchida por js/carta-episodio.js) -->
+    <div id="carta-fundo" class="carta-fundo" hidden></div>
+
     <script src="js/api.js"></script>
+    <script src="js/mensagens-episodios.js"></script>
+    <script src="js/carta-episodio.js"></script>
     <script src="js/dashboard.js"></script>
 </body>
 

@@ -1,11 +1,35 @@
 var database = require("../database/config")
 
-// Protege o texto antes de colocar na instrução SQL:
-// - a barra invertida \ vira \\
+// Protege o texto antes de colocar na instrução SQL.
+// Percorre o texto letra por letra (como um vetor) e monta um texto novo:
 // - o apóstrofo ' vira '' (ex.: "D'Ávila")
+// - a barra invertida \ vira \\
 // Assim o que a pessoa digita nunca quebra nem muda o comando SQL.
 function protegerTexto(texto) {
-    return String(texto).replace(/\\/g, "\\\\").replace(/'/g, "''");
+    var textoProtegido = "";
+
+    for (var i = 0; i < texto.length; i++) {
+        var letra = texto[i];
+
+        if (letra == "'") {
+            textoProtegido = textoProtegido + "''";
+        } else if (letra == "\\") {
+            textoProtegido = textoProtegido + "\\\\";
+        } else {
+            textoProtegido = textoProtegido + letra;
+        }
+    }
+
+    return textoProtegido;
+}
+
+// Confere se já existe um usuário com este e-mail (usado antes do cadastro)
+function buscarPorEmail(email) {
+    var instrucaoSql = `
+        SELECT id FROM usuario WHERE email = '${protegerTexto(email)}';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 
 // Login: procura um usuário com este e-mail e senha
@@ -33,5 +57,6 @@ function cadastrar(nome, email, senha) {
 
 module.exports = {
     autenticar,
+    buscarPorEmail,
     cadastrar
 };

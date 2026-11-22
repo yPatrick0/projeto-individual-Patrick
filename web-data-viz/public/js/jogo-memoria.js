@@ -1,5 +1,5 @@
-// Jogo da memória: ao encontrar os seis pares, mostra a mensagem de um episódio
-// e envia o resultado para a API (ver js/registrar-partida.js).
+// Jogo da memória: ao encontrar os seis pares, mostra a carta de um episódio
+// (js/carta-episodio.js) e envia o resultado para a API (js/registrar-partida.js).
 let personagens = ['finn', 'jake', 'marceline', 'bmo', 'rei-gelado', 'princesa-jujuba'];
 let nomes = ['Finn', 'Jake', 'Marceline', 'BMO', 'Rei Gelado', 'Princesa Jujuba'];
 let fotos = ['finn.jpeg', 'jake.jpeg', 'marceline.jpeg', 'bmo.jpeg', 'rei-gelado.jpeg', 'princesa-jujuba.jpeg'];
@@ -24,6 +24,12 @@ function atualizarResultado() {
 
     resultado.innerHTML = mensagem + paresEncontrados + ' de ' + personagens.length
         + ' pares · ' + tentativas + ' tentativas';
+
+    // Depois de fechar a carta, este botão abre de novo
+    if (paresEncontrados == personagens.length) {
+        resultado.innerHTML = resultado.innerHTML
+            + ' <button type="button" class="botao-ver-carta" onclick="reabrirCartaEpisodio()">Ver carta</button>';
+    }
 }
 
 function iniciarJogo() {
@@ -52,7 +58,6 @@ function iniciarJogo() {
     }
 
     tabuleiro.innerHTML = '';
-    document.getElementById('mensagem-episodio').hidden = true;
 
     for (let i = 0; i < cartas.length; i++) {
         cartasEncontradas.push(false);
@@ -140,10 +145,20 @@ function virarCarta(indice) {
 function finalizarPartida() {
     let duracaoSegundos = Math.round((Date.now() - inicioDaPartida) / 1000);
 
-    // Sorteia e mostra a mensagem de um episódio (funções em js/mensagens-episodios.js).
+    // Escolhe a carta pelo desempenho (função em js/carta-episodio.js).
     // O id da mensagem vai para o banco, na coluna fk_mensagem da tabela partida.
-    let mensagem = sortearMensagem();
-    mostrarMensagemEpisodio('mensagem-episodio', mensagem);
+    let carta = escolherCartaMemoria(tentativas);
+    let mensagem = carta.mensagem;
+
+    // Espera um pouco para a pessoa ver o último par virado, depois mostra a carta
+    setTimeout(function () {
+        mostrarCartaEpisodio({
+            mensagem: mensagem,
+            resumo: 'Jogo da memória concluído · 6 pares em ' + tentativas + ' tentativas',
+            motivo: carta.motivo,
+            jogo: 'memoria'
+        });
+    }, 700);
 
     // Envia o resultado para o banco (função em js/registrar-partida.js)
     // Erros = tentativas que não formaram par.

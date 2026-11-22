@@ -11,7 +11,7 @@ function mostrarMensagemLogin(texto, tipo) {
 }
 
 function entrar() {
-    let email = document.getElementById("email").value.trim();
+    let email = document.getElementById("email").value;
     let senha = document.getElementById("senha").value;
 
     if (email == "" || senha == "") {

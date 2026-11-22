@@ -1,18 +1,34 @@
 var partidaModel = require("../models/partidaModel");
 
-// Converte o valor recebido em um número inteiro para o SQL.
-// - vazio/ausente  -> "NULL" (o campo não se aplica a este jogo)
-// - número válido  -> o número arredondado
-// - qualquer outra coisa (texto, negativo) -> undefined (dado inválido)
+// Confere se o texto tem só algarismos de 0 a 9 (ex.: "42" sim; "4a", "-1" e "" não)
+function somenteDigitos(texto) {
+    if (texto.length == 0) {
+        return false;
+    }
+    for (var i = 0; i < texto.length; i++) {
+        if (texto[i] < "0" || texto[i] > "9") {
+            return false;
+        }
+    }
+    return true;
+}
+
+// Prepara o valor recebido para o SQL.
+// - vazio/ausente      -> "NULL" (o campo não se aplica a este jogo)
+// - número inteiro     -> o próprio número
+// - qualquer outra coisa (texto, negativo, decimal) -> undefined (dado inválido)
 function paraNumeroOuNulo(valor) {
-    if (valor == undefined || valor === "") {
+    if (valor == undefined) {
         return "NULL";
     }
-    var numero = Number(valor);
-    if (isNaN(numero) || numero < 0) {
+    var texto = "" + valor;   // junta com um texto vazio para virar texto
+    if (texto == "") {
+        return "NULL";
+    }
+    if (!somenteDigitos(texto)) {
         return undefined;
     }
-    return Math.round(numero);
+    return Number(texto);
 }
 
 function registrar(req, res) {
@@ -53,10 +69,25 @@ function registrar(req, res) {
     }
 }
 
-// As quatro funções abaixo seguem o mesmo padrão:
+// Lê o id do usuário que veio na rota (ex.: /partidas/por-jogo/3).
+// Devolve o número, ou undefined se o id for inválido.
+function lerIdUsuario(req) {
+    var texto = req.params.idUsuario;
+    if (!somenteDigitos(texto) || Number(texto) == 0) {
+        return undefined;
+    }
+    return Number(texto);
+}
+
+// As funções abaixo seguem o mesmo padrão: conferem o id do usuário,
 // chamam o model e devolvem as linhas da consulta em JSON.
 function contarPorJogo(req, res) {
-    partidaModel.contarPorJogo()
+    var idUsuario = lerIdUsuario(req);
+    if (idUsuario == undefined) {
+        res.status(400).send("Id de usuário inválido.");
+        return;
+    }
+    partidaModel.contarPorJogo(idUsuario)
         .then(function (resultado) {
             res.status(200).json(resultado);
         })
@@ -67,7 +98,12 @@ function contarPorJogo(req, res) {
 }
 
 function aproveitamentoMemoria(req, res) {
-    partidaModel.aproveitamentoMemoria()
+    var idUsuario = lerIdUsuario(req);
+    if (idUsuario == undefined) {
+        res.status(400).send("Id de usuário inválido.");
+        return;
+    }
+    partidaModel.aproveitamentoMemoria(idUsuario)
         .then(function (resultado) {
             res.status(200).json(resultado[0]);
         })
@@ -78,7 +114,12 @@ function aproveitamentoMemoria(req, res) {
 }
 
 function mediaRodadas(req, res) {
-    partidaModel.mediaRodadas()
+    var idUsuario = lerIdUsuario(req);
+    if (idUsuario == undefined) {
+        res.status(400).send("Id de usuário inválido.");
+        return;
+    }
+    partidaModel.mediaRodadas(idUsuario)
         .then(function (resultado) {
             res.status(200).json(resultado[0]);
         })
@@ -89,7 +130,12 @@ function mediaRodadas(req, res) {
 }
 
 function tempoMedio(req, res) {
-    partidaModel.tempoMedio()
+    var idUsuario = lerIdUsuario(req);
+    if (idUsuario == undefined) {
+        res.status(400).send("Id de usuário inválido.");
+        return;
+    }
+    partidaModel.tempoMedio(idUsuario)
         .then(function (resultado) {
             res.status(200).json(resultado);
         })
@@ -99,21 +145,26 @@ function tempoMedio(req, res) {
         });
 }
 
-function episodiosMaisIndicados(req, res) {
-    partidaModel.episodiosMaisIndicados()
+function albumDoUsuario(req, res) {
+    var idUsuario = lerIdUsuario(req);
+    if (idUsuario == undefined) {
+        res.status(400).send("Id de usuário inválido.");
+        return;
+    }
+    partidaModel.albumDoUsuario(idUsuario)
         .then(function (resultado) {
             res.status(200).json(resultado);
         })
         .catch(function (erro) {
-            console.log("\nErro ao buscar os episódios mais indicados: ", erro.sqlMessage);
+            console.log("\nErro ao buscar o álbum do usuário: ", erro.sqlMessage);
             res.status(500).json(erro.sqlMessage);
         });
 }
 
 function partidasDoUsuario(req, res) {
-    var idUsuario = Number(req.params.idUsuario);
+    var idUsuario = lerIdUsuario(req);
 
-    if (isNaN(idUsuario) || idUsuario <= 0) {
+    if (idUsuario == undefined) {
         res.status(400).send("Id de usuário inválido.");
     } else {
         partidaModel.partidasDoUsuario(idUsuario)
@@ -133,6 +184,6 @@ module.exports = {
     aproveitamentoMemoria,
     mediaRodadas,
     tempoMedio,
-    episodiosMaisIndicados,
+    albumDoUsuario,
     partidasDoUsuario
 };

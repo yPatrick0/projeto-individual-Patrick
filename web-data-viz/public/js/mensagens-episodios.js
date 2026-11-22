@@ -10,6 +10,7 @@
 //   frase:      fala da série. Deixe "" quando ainda não tiver a fala conferida.
 //   origemFrase: de onde veio a frase (ex.: "tradução livre", "dublagem")
 //   licao:      a lição em uma frase. É a MINHA interpretação do episódio.
+//   fotos:      rosto(s) do personagem na carta (arquivos em assets/imgs)
 // Regra do projeto: não inventar falas. Só preencha "frase" com algo conferido.
 // IMPORTANTE: os ids são os mesmos da tabela mensagem do banco
 // (banco-de-dados/script.sql). Se incluir ou mudar uma mensagem aqui,
@@ -24,7 +25,8 @@ const mensagensDosEpisodios = [
         numero: 16,
         frase: "Você tá se enrolando nos seus problemas imaginários.",
         origemFrase: "fala informada pelo autor (dublagem brasileira)",
-        licao: "Nem todo silêncio quer dizer que algo deu errado. Antes de sofrer por um problema, vale conferir se ele existe mesmo."
+        licao: "Nem todo silêncio quer dizer que algo deu errado. Antes de sofrer por um problema, vale conferir se ele existe mesmo.",
+        fotos: ["jake-rosto.webp"]
     },
     {
         id: 2,
@@ -34,7 +36,8 @@ const mensagensDosEpisodios = [
         numero: 25,
         frase: "Ser ruim em alguma coisa é o primeiro passo para ficar meio bom nela.",
         origemFrase: "tradução livre",
-        licao: "Errar faz parte de aprender. Cada tentativa deixa você um pouco melhor."
+        licao: "Errar faz parte de aprender. Cada tentativa deixa você um pouco melhor.",
+        fotos: ["jake-rosto.webp"]
     },
     {
         id: 3,
@@ -44,7 +47,8 @@ const mensagensDosEpisodios = [
         numero: 10,
         frase: "",
         origemFrase: "",
-        licao: "Dizer o que sentimos aproxima as pessoas, mesmo quando dá medo."
+        licao: "Dizer o que sentimos aproxima as pessoas, mesmo quando dá medo.",
+        fotos: ["finn-rosto.webp", "jake-rosto.webp", "marceline-rosto.webp", "princesa-jujuba-rosto.webp"]
     },
     {
         id: 4,
@@ -54,7 +58,8 @@ const mensagensDosEpisodios = [
         numero: 26,
         frase: "",
         origemFrase: "",
-        licao: "Guardar a tristeza não faz ela sumir. Aceitar ajuda também é coragem."
+        licao: "Guardar a tristeza não faz ela sumir. Aceitar ajuda também é coragem.",
+        fotos: ["finn-rosto.webp", "jake-rosto.webp"]
     },
     {
         id: 5,
@@ -64,7 +69,8 @@ const mensagensDosEpisodios = [
         numero: 25,
         frase: "",
         origemFrase: "",
-        licao: "Algumas lembranças ficam com a gente porque vieram junto com uma emoção forte."
+        licao: "Algumas lembranças ficam com a gente porque vieram junto com uma emoção forte.",
+        fotos: ["marceline-rosto.webp", "rei-gelado-rosto.webp"]
     },
     {
         id: 6,
@@ -74,7 +80,8 @@ const mensagensDosEpisodios = [
         numero: 6,
         frase: "",
         origemFrase: "",
-        licao: "Depois de um término, cada pessoa tem o seu tempo para seguir em frente."
+        licao: "Depois de um término, cada pessoa tem o seu tempo para seguir em frente.",
+        fotos: ["finn-rosto.webp"]
     },
     {
         id: 7,
@@ -84,51 +91,25 @@ const mensagensDosEpisodios = [
         numero: 24,
         frase: "",
         origemFrase: "",
-        licao: "Persistir também pode significar mudar de estratégia."
+        licao: "Persistir também pode significar mudar de estratégia.",
+        fotos: ["finn-rosto.webp"]
     }
 ];
 
 const ONDE_ASSISTIR = "Hora de Aventura está na HBO Max e na Netflix (o catálogo pode mudar).";
 
-// Guarda a última mensagem sorteada para não repetir duas vezes seguidas
-let ultimaMensagemSorteada = -1;
-
-// Sorteia uma mensagem do vetor, diferente da anterior
-function sortearMensagem() {
-    let indice = Math.floor(Math.random() * mensagensDosEpisodios.length);
-    if (mensagensDosEpisodios.length > 1 && indice == ultimaMensagemSorteada) {
-        indice = (indice + 1) % mensagensDosEpisodios.length;
+// Procura a mensagem pelo id (o mesmo id da tabela mensagem do banco)
+function buscarMensagem(id) {
+    for (let i = 0; i < mensagensDosEpisodios.length; i++) {
+        if (mensagensDosEpisodios[i].id == id) {
+            return mensagensDosEpisodios[i];
+        }
     }
-    ultimaMensagemSorteada = indice;
-    return mensagensDosEpisodios[indice];
+    return mensagensDosEpisodios[0];
 }
 
-// Monta o texto "Temporada 5 · Episódio 16"
-function descreverEpisodio(mensagem) {
-    let texto = "Temporada " + mensagem.temporada;
-    if (mensagem.numero > 0) {
-        texto = texto + " · Episódio " + mensagem.numero;
-    }
-    return texto;
-}
-
-// Escreve a mensagem dentro do elemento com o id informado e mostra o elemento
-function mostrarMensagemEpisodio(idDoElemento, mensagem) {
-    let html = '<p class="mensagem-rotulo">Mensagem de Hora de Aventura</p>';
-
-    if (mensagem.frase != "") {
-        html = html + '<blockquote class="mensagem-frase">“' + mensagem.frase + '”</blockquote>';
-        html = html + '<p class="mensagem-autor">— ' + mensagem.personagem + ' (' + mensagem.origemFrase + ')</p>';
-    } else {
-        html = html + '<p class="mensagem-autor">' + mensagem.personagem + '</p>';
-    }
-
-    html = html + '<p class="mensagem-licao"><strong>Lição:</strong> ' + mensagem.licao + '</p>';
-    html = html + '<p class="mensagem-episodio-info">Episódio: <strong>' + mensagem.episodio + '</strong> · '
-        + descreverEpisodio(mensagem) + '</p>';
-    html = html + '<p class="mensagem-onde">' + ONDE_ASSISTIR + ' A lição é uma interpretação do autor do site.</p>';
-
-    let elemento = document.getElementById(idDoElemento);
-    elemento.innerHTML = html;
-    elemento.hidden = false;
+// Sorteia uma mensagem entre os ids da lista, ex.: sortearMensagem([1, 3, 4])
+function sortearMensagem(listaDeIds) {
+    let posicao = Math.floor(Math.random() * listaDeIds.length);
+    return buscarMensagem(listaDeIds[posicao]);
 }

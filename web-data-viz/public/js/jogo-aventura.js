@@ -3,10 +3,10 @@
 // ============================================================
 
 // ------------------------------------------------------------
-// MENSAGENS DOS EPISÓDIOS
-// As frases e lições ficam em js/mensagens-episodios.js (vetor
-// mensagensDosEpisodios), compartilhado com o jogo da memória.
-// Durante a partida aparece só a lição; no fim, a mensagem completa.
+// CARTA DO EPISÓDIO
+// As frases e lições ficam em js/mensagens-episodios.js e a carta em
+// js/carta-episodio.js (os dois são usados também pelo jogo da memória).
+// A carta aparece só no fim da partida, ganhando ou perdendo.
 // ------------------------------------------------------------
 
 // ------------------------------------------------------------
@@ -16,7 +16,7 @@ const TOTAL_RODADAS = 6;
 const VIDAS_INICIAIS = 3;
 const TEMPO_ACESO = 600;      // quanto tempo cada personagem fica aceso (ms)
 const TEMPO_ENTRE = 250;      // pausa entre um personagem e o próximo (ms)
-const TEMPO_FRASE = 3500;     // quanto tempo a frase fica na tela entre rodadas (ms)
+const TEMPO_ENTRE_RODADAS = 1200;   // pausa depois de concluir uma rodada (ms)
 const nomesDosPersonagens = ["Finn", "Jake", "Marceline", "BMO"];
 
 // ------------------------------------------------------------
@@ -33,7 +33,7 @@ let partidaAtiva = false;
 let bloqueado = true;          // true = cliques ignorados (sequência sendo mostrada)
 let temporizador = null;       // guarda o setTimeout atual para poder cancelar
 
-// Resultados (apenas em memória nesta versão; sem banco de dados)
+// Resultados desta visita (cada partida também vai para o banco pela API)
 let ultimoResultado = null;
 let historicoDePartidas = [];
 
@@ -71,15 +71,6 @@ function apagarTodos() {
 }
 
 // ------------------------------------------------------------
-// LIÇÃO ENTRE AS RODADAS
-// ------------------------------------------------------------
-function mostrarFraseDurante() {
-    let mensagem = sortearMensagem();   // função de js/mensagens-episodios.js
-    document.getElementById("texto-frase-jogo").innerHTML = mensagem.licao + " <em>(" + mensagem.episodio + ")</em>";
-    document.getElementById("caixa-frase").hidden = false;
-}
-
-// ------------------------------------------------------------
 // FLUXO DA PARTIDA
 // ------------------------------------------------------------
 function iniciarPartida() {
@@ -95,13 +86,12 @@ function iniciarPartida() {
     partidaAtiva = true;
     bloqueado = true;
 
-    document.getElementById("caixa-frase").hidden = true;
+    fecharCartaEpisodio();   // função de js/carta-episodio.js
     mostrarTela("tela-jogo");
     iniciarRodada();
 }
 
 function iniciarRodada() {
-    document.getElementById("caixa-frase").hidden = true;
     rodadaAtual++;
     sequencia.push(Math.floor(Math.random() * nomesDosPersonagens.length));
     atualizarPlacar();
@@ -166,8 +156,7 @@ function concluirRodada() {
         }, 900);
     } else {
         escreverMensagem("Rodada concluída!");
-        mostrarFraseDurante();
-        temporizador = setTimeout(iniciarRodada, TEMPO_FRASE);
+        temporizador = setTimeout(iniciarRodada, TEMPO_ENTRE_RODADAS);
     }
 }
 
@@ -200,9 +189,10 @@ function finalizarPartida(venceu) {
 
     let duracaoSegundos = Math.round((Date.now() - inicioDaPartida) / 1000);
 
-    // Sorteia a mensagem do episódio (função de js/mensagens-episodios.js).
-    // O id dela vai para o banco, na coluna fk_mensagem da tabela partida.
-    let mensagem = sortearMensagem();
+    // Escolhe a carta pelo desempenho (função de js/carta-episodio.js).
+    // O id da mensagem vai para o banco, na coluna fk_mensagem da tabela partida.
+    let carta = escolherCartaSequencia(venceu, rodadasConcluidas, erros);
+    let mensagem = carta.mensagem;
 
     // Objeto de resultado: é este objeto que vai para a API / MySQL
     let resultado = {
@@ -214,6 +204,7 @@ function finalizarPartida(venceu) {
         erros: erros,
         duracaoSegundos: duracaoSegundos,
         mensagem: mensagem,
+        motivo: carta.motivo,
         fkUsuario: null   // o id do usuário logado é lido em js/registrar-partida.js
     };
 
@@ -225,10 +216,13 @@ function finalizarPartida(venceu) {
 }
 
 function mostrarResultado(resultado) {
+    let resumo = "";
     if (resultado.venceu) {
         document.getElementById("titulo-resultado").innerHTML = "Você venceu!";
+        resumo = "Você venceu! · " + resultado.erros + " erro(s)";
     } else {
         document.getElementById("titulo-resultado").innerHTML = "Boa tentativa!";
+        resumo = "Fim de jogo · " + resultado.rodadasConcluidas + " de " + resultado.totalRodadas + " rodadas";
     }
 
     document.getElementById("res-rodadas").innerHTML = resultado.rodadasConcluidas + " de " + resultado.totalRodadas;
@@ -236,10 +230,15 @@ function mostrarResultado(resultado) {
     document.getElementById("res-duracao").innerHTML = resultado.duracaoSegundos + " s";
     document.getElementById("res-partidas").innerHTML = "Partidas concluídas nesta visita: " + historicoDePartidas.length;
 
-    // Mensagem completa do episódio (função de js/mensagens-episodios.js)
-    mostrarMensagemEpisodio("mensagem-episodio", resultado.mensagem);
-
     mostrarTela("tela-resultado");
+
+    // Carta do episódio por cima da tela de resultado (função de js/carta-episodio.js)
+    mostrarCartaEpisodio({
+        mensagem: resultado.mensagem,
+        resumo: resumo,
+        motivo: resultado.motivo,
+        jogo: "sequencia"
+    });
 }
 
 // ------------------------------------------------------------

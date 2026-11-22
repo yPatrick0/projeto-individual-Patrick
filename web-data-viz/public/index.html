@@ -7,6 +7,7 @@
             Memórias de Aventura
         </title>
         <link rel="stylesheet" href="css/estilo.css">
+        <link rel="stylesheet" href="css/carta-episodio.css">
     </head>
     <body>
         <header class="wrap bar">
@@ -373,8 +374,6 @@
                         </div>
                         <p class="stats" id="stats" role="status">
                         </p>
-                        <div class="mensagem-episodio" id="mensagem-episodio" aria-live="polite" hidden>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -415,6 +414,9 @@
                 Hora de Aventura e seus personagens pertencem aos respectivos titulares de direitos. Projeto acadêmico.
             </p>
         </footer>
+        <!-- Janela da carta do episódio (preenchida por js/carta-episodio.js) -->
+        <div id="carta-fundo" class="carta-fundo" hidden></div>
+
         <script src="js/sessao.js">
         </script>
         <script>
@@ -422,6 +424,8 @@
             mostrarUsuarioNoMenu("nav-botoes");
         </script>
         <script src="js/mensagens-episodios.js" defer>
+        </script>
+        <script src="js/carta-episodio.js" defer>
         </script>
         <script src="js/api.js" defer>
         </script>
