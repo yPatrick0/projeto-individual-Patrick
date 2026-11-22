@@ -34,13 +34,28 @@
                 <input id="nome" type="text" autocomplete="name" maxlength="80">
 
                 <label for="email">E-mail</label>
-                <input id="email" type="email" autocomplete="email" maxlength="100">
+                <input id="email" type="email" autocomplete="email" maxlength="100" oninput="verificarEmail()" aria-describedby="dica-email">
+                <p class="dica-campo" id="dica-email" aria-live="polite"></p>
 
                 <label for="senha">Senha</label>
-                <input id="senha" type="password" autocomplete="new-password" maxlength="50">
+                <input id="senha" type="password" autocomplete="new-password" maxlength="50" oninput="verificarSenha()" aria-describedby="texto-forca regras-senha">
+
+                <!-- Medidor de força e regras da senha (js/cadastro.js -> verificarSenha) -->
+                <div class="medidor-forca" aria-hidden="true">
+                    <div class="barra-forca" id="barra-forca"></div>
+                </div>
+                <p class="texto-forca" id="texto-forca" aria-live="polite">Força da senha: digite uma senha</p>
+                <ul class="regras-senha" id="regras-senha">
+                    <li id="regra-tamanho" class="regra-falta">Pelo menos 8 caracteres</li>
+                    <li id="regra-maiuscula" class="regra-falta">Uma letra maiúscula (A-Z)</li>
+                    <li id="regra-minuscula" class="regra-falta">Uma letra minúscula (a-z)</li>
+                    <li id="regra-numero" class="regra-falta">Um número (0-9)</li>
+                    <li id="regra-especial" class="regra-falta">Um caractere especial (ex.: ! @ # $ %)</li>
+                </ul>
 
                 <label for="confirmacao-senha">Confirme a senha</label>
-                <input id="confirmacao-senha" type="password" autocomplete="new-password" maxlength="50">
+                <input id="confirmacao-senha" type="password" autocomplete="new-password" maxlength="50" oninput="verificarConfirmacao()" aria-describedby="dica-confirmacao">
+                <p class="dica-campo" id="dica-confirmacao" aria-live="polite"></p>
 
                 <button class="button" id="botao-cadastrar" type="submit">Cadastrar</button>
             </form>

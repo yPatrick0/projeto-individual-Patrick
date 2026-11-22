@@ -194,6 +194,83 @@ nav [aria-current="page"] {
     color: #1e5b22;
 }
 
+/* Medidor de força da senha e dicas dos campos (js/cadastro.js) */
+.medidor-forca {
+    height: 8px;
+    margin-top: 10px;
+    border-radius: 999px;
+    background: #e1e6d8;
+    overflow: hidden;
+}
+
+.barra-forca {
+    width: 0;
+    height: 100%;
+    border-radius: 999px;
+    background: #b9c2b0;
+    transition: width .25s, background-color .25s;
+}
+
+.forca-fraca {
+    background: #c62828;
+}
+
+.forca-media {
+    background: #e0a100;
+}
+
+.forca-forte {
+    background: #2e7d32;
+}
+
+.texto-forca {
+    margin-top: 6px;
+    font-size: .85rem;
+}
+
+.regras-senha {
+    margin: 6px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: .85rem;
+}
+
+.regras-senha li::before {
+    display: inline-block;
+    width: 1.3em;
+    font-weight: bold;
+}
+
+.regra-falta {
+    color: #8c1d18;
+}
+
+.regra-falta::before {
+    content: "✗";
+}
+
+.regra-ok {
+    color: #1e5b22;
+}
+
+.regra-ok::before {
+    content: "✓";
+}
+
+.dica-campo {
+    min-height: 0;
+    margin-top: 4px;
+    font-size: .85rem;
+}
+
+.dica-ok {
+    color: #1e5b22;
+}
+
+.dica-falta {
+    color: #8c1d18;
+}
+
 form {
     width: 100%;
 }
