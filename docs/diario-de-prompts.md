@@ -301,3 +301,93 @@ Entrada abaixo reproduzida da entrega `docs/diario-de-prompts-NOVA-ENTRADA.md` d
 - **Verificações:** no Chrome, com páginas servidas em 127.0.0.1:5500 (como o Live Server) e uma API simulada em localhost:3333 com CORS: cadastro, login, painel, jogo da memória salvando a partida e contagem do usuário funcionaram; cadastro também funcionou abrindo o arquivo direto (file://). Nenhuma exceção JavaScript.
 - **Limitações:** o login fica guardado no `sessionStorage` de cada endereço; quem entrar por 127.0.0.1:5500 precisa continuar navegando por esse mesmo endereço. Nenhum commit ou push foi feito pelo assistente.
 - **Aproveitamento e modificações pelo estudante:** pendente de revisão pelo autor.
+
+## Medidor de força da senha no cadastro
+
+- **Data e assistente:** 22/11/2026; Claude (Anthropic), modelo Claude Opus 5.5, pelo app Claude.
+- **Pedido recebido (resumo):** validação nos campos do cadastro, com a força da senha (fraca, média, forte) e o que está faltando (caractere especial etc.). O autor também perguntou por que a dashboard já tinha dados com um cadastro novo.
+- **O que foi feito:** `public/js/cadastro.js` ganhou um vetor `regrasDaSenha` (8+ caracteres, maiúscula, minúscula, número, caractere especial) e as funções `verificarSenha()`, `verificarConfirmacao()` e `verificarEmail()`, chamadas a cada tecla (`oninput`). A barra muda de cor (fraca = 0 a 2 regras, média = 3 ou 4, forte = 5) e cada regra aparece com ✓ ou ✗. O cadastro só é enviado com a senha forte. `cadastro.html` recebeu a barra, a lista de regras e as dicas de e-mail e confirmação; `cadastro-login.css`, os estilos. A API (`usuarioController.js`, função `senhaForte`) confere as mesmas regras.
+- **Sobre a dashboard:** os indicadores mostram todas as partidas registradas (as de teste do `script.sql` e as de todos os jogadores); só a frase "você jogou X partida(s)" é da pessoa logada.
+- **Verificações:** no Chrome, as senhas "abc", "abcdefgh", "Abcdefg1" e "Abcdef1!" deram fraca, fraca, média e forte, com as regras certas marcadas; e-mail e confirmação mostraram ✓/✗; nenhum erro JavaScript. A API recusou "abc123" e "Abcdefg1" (400) e aceitou "Abcdef1!".
+- **Limitações:** contas antigas com senha fraca continuam entrando normalmente; a regra vale só para cadastros novos. Nenhum commit ou push foi feito pelo assistente.
+- **Aproveitamento e modificações pelo estudante:** pendente de revisão pelo autor.
+
+## Painel com os dados de cada usuário
+
+- **Data e assistente:** 22/11/2026; Claude (Anthropic), modelo Claude Opus 5.5, pelo app Claude.
+- **Pedido recebido (resumo):** ao criar um cadastro novo e entrar, o painel já aparecia com dados; o autor quer que cada conta veja só as próprias partidas.
+- **O que foi feito:** as rotas dos indicadores passaram a receber o id de quem está logado (`/partidas/por-jogo/:idUsuario`, `/aproveitamento-memoria/:idUsuario`, `/media-rodadas/:idUsuario`, `/tempo-medio/:idUsuario`, `/episodios-mais-indicados/:idUsuario`). No `partidaModel.js`, cada consulta ganhou `WHERE fk_usuario = id` (no JOIN, `p.fk_usuario`). O `partidaController.js` confere o id com a função `lerIdUsuario` e responde 400 se for inválido. O `dashboard.js` envia o `ID_USUARIO` do `sessionStorage` e, numa conta sem partidas, limpa gráficos, ranking e tabela e mostra um aviso com links para os jogos. Os textos do `dashboard.html` e do README passaram a falar em "suas partidas".
+- **Verificações:** no Chrome, com API simulada: conta sem partidas mostrou 0, "—" e o aviso; conta com partidas mostrou 4 partidas, 70,0%, 4,0 de 6, 45 s e o ranking; todas as chamadas levaram o id certo; nenhum erro JavaScript. O controller recusou ids "abc", "0" e "1 OR 1=1" (400).
+- **Limitações:** as 6 partidas de teste do `script.sql` não têm dono visível no painel de contas novas (estão ligadas aos usuários de teste 1 e 2 ou sem usuário). As consultas gerais do `script.sql` continuam lá como exemplo. Nenhum commit ou push foi feito pelo assistente.
+- **Aproveitamento e modificações pelo estudante:** pendente de revisão pelo autor.
+
+## Carta do episódio e álbum no painel
+
+- **Data e assistente:** 22/11/2026; Claude (Anthropic), modelo Claude Opus 5.5, pelo app Claude.
+- **Pedido recebido (resumo):** ideias para a recomendação de episódio e a frase ficarem com mais intenção e mais fáceis de ver. O assistente mostrou um modelo de carta e de álbum; o autor aprovou e pediu: a carta bem posicionada, a foto do personagem no lugar da inicial, e na Sequência a frase só no fim da partida (ganhando ou perdendo), não a cada rodada.
+- **O que foi feito:**
+  - Novo `public/js/carta-episodio.js`: escolhe a carta pelo desempenho (`escolherCartaMemoria` e `escolherCartaSequencia`, com o motivo da escolha) e mostra a carta numa janela centralizada por cima da página (`mostrarCartaEpisodio`), com fechar pelo ×, pela tecla Esc ou clicando fora, e `reabrirCartaEpisodio` para ver de novo.
+  - Novo `public/css/carta-episodio.css`, com as cores do site, usado na página inicial, na Sequência e no painel.
+  - `mensagens-episodios.js`: cada mensagem ganhou `fotos` (rostos já existentes em `assets/imgs`); com mais de um personagem, as fotos ficam sobrepostas. Funções `buscarMensagem(id)` e `sortearMensagem(listaDeIds)`.
+  - Jogo da memória: a carta abre ao achar os 6 pares; o placar ganhou o botão "Ver carta". A caixa antiga de mensagem saiu do `index.html` e do `estilo.css`.
+  - Sequência: saiu a lição entre as rodadas (a pausa entre rodadas caiu para 1,2 s); a carta abre no fim, ganhando ou perdendo, e a tela de resultado tem "Ver carta do episódio".
+  - Painel: o ranking "episódios mais indicados" virou o álbum (X de 7 cartas, barra de progresso, cartas abertas com foto e cartas bloqueadas). Nova rota `GET /partidas/album/:idUsuario` com LEFT JOIN entre `mensagem` e `partida`; a rota do ranking foi removida. A consulta 5 do `script.sql`, o README e os textos foram atualizados.
+- **Verificações:** no Chrome, com API simulada e as imagens reais: memória com 6 tentativas abriu a carta de *I Remember You* com as fotos de Marceline e Rei Gelado; ×, Esc, "Ver carta" e "Jogar de novo" funcionaram. Sequência: nenhuma frase entre rodadas; derrota na rodada 4 abriu *The Hall of Egress*; vitória com 2 erros abriu *Puhoy*. Os ids das mensagens foram enviados certos para `/partidas/registrar`. Painel: álbum com 3 de 7 cartas e 4 bloqueadas; clicar numa carta abriu a carta completa. Testado também em tela de celular. Nenhum erro JavaScript.
+- **Limitações:** as regras de escolha são uma interpretação do autor e ficam fáceis de mudar no começo de `carta-episodio.js`. Os episódios 3, 4 e 6 só aparecem por sorteio. Nenhum commit ou push foi feito pelo assistente.
+- **Aproveitamento e modificações pelo estudante:** pendente de revisão pelo autor.
+
+## Código no padrão da aula (Web Data Viz e código do estudante)
+
+- **Data e assistente:** 22/11/2026; Claude (Anthropic), modelo Claude Opus 5.5, pelo app Claude.
+- **Pedido recebido (resumo):** o autor pediu que o assistente aprendesse o padrão dos códigos dele e dos conceitos vistos em aula e usasse, ao máximo, só comandos e códigos do Web Data Viz ou aprendidos em aula.
+- **O que foi feito:** comparação automática de todos os métodos e recursos usados no código atual com as referências disponíveis (o código original do autor em `public.zip` e o Web Data Viz/AquaTech enviado em ZIP). Foram encontrados 17 recursos fora das referências, todos em código escrito pelo assistente, e trocados por equivalentes do padrão:
+  - `cadastro.js` e `usuarioController.js`: expressões regulares, `.indexOf` e `.trim()` viraram laços `for` que olham letra por letra (`conferirRegrasDaSenha`, `senhaForte`, `contemCaractere`), com vetores paralelos para as regras.
+  - `usuarioController.js` e `usuarioModel.js`: e-mail repetido agora é conferido com `buscarPorEmail` antes do `INSERT` (`resultado.length > 0`), como nos controllers do Web Data Viz, em vez de ler `erro.errno`; `protegerTexto` usa um laço em vez de `String().replace()` com expressão regular.
+  - `partidaController.js`: `isNaN` e `===` viraram a função `somenteDigitos` (laço com `>=`/`<=`).
+  - `dashboard.js`: gráficos no formato do Web Data Viz (`dados`, `config`, `new Chart`, `.update()`), sem `.destroy()`, `typeof` e `.toFixed()`.
+  - `carta-episodio.js`: botões com `onclick="..."` no HTML; saíram `addEventListener`, `.focus()`, `evento.key` e `window.location.pathname`. A `<div id="carta-fundo">` passou a ficar no HTML de cada página. Fechar com Esc ou clicando fora deixou de existir; fecha pelo ×.
+  - `api.js`: sem `window.location.port`; todas as chamadas vão para `http://localhost:3333`.
+  - `AGENTS.md`: nova lista de trocas para assistentes futuros.
+- **Verificações:** a mesma comparação, rodada de novo, não encontrou nenhum recurso fora das referências. No Chrome, com os controllers reais e um banco simulado: medidor de senha (fraca/média/forte), e-mail, confirmação, cadastro, e-mail repetido (409), login errado e certo, painel vazio, carta da memória e da Sequência, "Jogar de novo", álbum e gráficos (`new Chart` na primeira vez e `update()` no botão Atualizar). Testes diretos dos controllers com valores inválidos e tentativa de injeção de SQL. Nenhum erro JavaScript.
+- **Limitações:** os exercícios e apostilas da turma não estavam disponíveis; a lista de recursos autorizados foi montada só com o código do autor e o Web Data Viz. O CSS não foi revisado (o `AGENTS.md` permite técnicas além do AquaTech). Nenhum commit ou push foi feito pelo assistente.
+- **Aproveitamento e modificações pelo estudante:** pendente de revisão pelo autor.
+
+## Padrão conferido no Moodle de Algoritmos
+
+- **Data e assistente:** 22/11/2026; Claude (Anthropic), modelo Claude Opus 5.5, pelo app Claude.
+- **Pedido recebido (resumo):** o autor enviou exercícios de Algoritmos (Listas 09 a 11 e atividade avaliativa), a Prática 10 de Banco de Dados e uma página do curso, e pediu que o assistente visse o conteúdo das disciplinas no Moodle para reformular o código com os comandos aprendidos, sem mudar a estrutura do site e com tudo funcionando igual.
+- **O que foi feito:** com o login feito pelo próprio autor no navegador do app, o assistente leu (sem enviar nada) a página do curso de Algoritmos, o "Guia: Algoritmos SPTech", o "Guia: Operações com String" e o "Guia de Números (Pseudo)Aleatórios". O guia de Strings ensina `.includes()`, `.indexOf()`, `.replace()`/`.replaceAll()`, `.startsWith()`/`.endsWith()` e `.toUpperCase()`/`.toLowerCase()`, e o guia de Algoritmos ensina `.toFixed()`. Com isso, a reformulação anterior foi ajustada ao que é ensinado:
+  - `cadastro.js` e `usuarioController.js`: e-mail validado com `email.includes("@") && email.includes(".")` (exemplo do guia); regras da senha com um `for` que procura cada letra com `.includes()` em textos como `"ABCDEFGHIJKLMNOPQRSTUVWXYZ"`.
+  - `usuarioModel.js`: `protegerTexto` com `.replaceAll()`.
+  - `partidaController.js`: `somenteDigitos` com `.includes()` em `"0123456789"`.
+  - `jogo-aventura.js`: o operador `? :` (escrito pelo assistente) virou `if`.
+  - `AGENTS.md`: a lista de recursos foi refeita com o que está confirmado no Moodle e no Web Data Viz.
+- **Verificações:** testes diretos dos controllers (e-mail sem @ ou sem ponto, senhas fracas, ids inválidos, apóstrofo e tentativa de injeção de SQL). No Chrome, com os controllers reais e um banco simulado: cadastro com medidor de senha, e-mail repetido, login, os dois jogos com a carta, painel com álbum e gráficos. Mesmo comportamento da versão anterior; nenhum erro JavaScript.
+- **Limitações:** as Listas 01 a 08 não foram abertas uma a uma (o guia cobre os mesmos assuntos). Banco de Dados foi visto pela lista de aulas; o `script.sql` não foi alterado para não mudar a estrutura do banco (em aula usam nomes como `idEspecie`/`fkTutor` e comandos em minúsculo). Os ids do HTML continuam com hífen e `getElementById`. Nenhum commit ou push foi feito pelo assistente.
+- **Aproveitamento e modificações pelo estudante:** pendente de revisão pelo autor.
+
+## Remoção dos comentários do código
+
+- **Data e assistente:** 22/11/2026; Claude (Anthropic), modelo Claude Opus 5.5, pelo app Claude.
+- **Pedido recebido:** "quero que voce remova todos os comentarios do codigo".
+- **O que foi feito:** remoção de todos os comentários (`//`, `/* */`, `<!-- -->` e `--` no SQL) de 32 arquivos: HTML, CSS e JavaScript de `web-data-viz/public`, `web-data-viz/app.js`, os arquivos de `web-data-viz/src` que tinham comentários (incluindo `config.js`, `script-tabelas.sql` e rotas do modelo da turma) e `banco-de-dados/script.sql`. Linhas que só tinham comentário foram apagadas; nas linhas com código e comentário, só o comentário saiu. `public/js/script.js`, que só tinha um comentário, ficou vazio. Os outros 13 arquivos de código já não tinham comentários e não foram alterados. O `Prototipo_Hora_de_Aventura.html` da raiz foi mantido como registro histórico, como pede o `AGENTS.md`.
+- **Verificações:** a remoção ignorou textos que só parecem comentário (ex.: `"http://localhost:3333"`). Comparação linha a linha entre antes e depois: só saíram comentários. Busca por `//`, `/*` e `<!--` nos arquivos novos: nenhum comentário sobrou. Todos os `.js` passaram na checagem de sintaxe do Node. No Chrome, com os controllers reais e um banco simulado: cadastro, login, os dois jogos, a carta e o painel funcionaram igual à versão anterior, sem erros.
+- **Limitações:** as explicações que estavam nos comentários (ex.: como editar as mensagens dos episódios em `mensagens-episodios.js`) saíram do código; as principais continuam no README e neste diário. Nenhum commit ou push foi feito pelo assistente.
+- **Aproveitamento e modificações pelo estudante:** pendente de revisão pelo autor.
+
+## DER das 3 tabelas no MySQL Workbench
+
+- **Data e assistente:** 22/11/2026; Claude (Anthropic), modelo Claude Opus 5.5, pelo app Claude.
+- **Pedido recebido:** "consegue criar o dher pra mim? pode ser por python sla da um jeito de fazer a modelagem das 3 tabelas nno meu mysql".
+- **O que foi feito:** no MySQL Workbench do autor, pelo controle do computador, foi usado Database → Reverse Engineer na conexão "Local instance MySQL80", com o banco `memorias_aventura`. O Workbench leu as 3 tabelas (`usuario`, `partida`, `mensagem`) e as chaves estrangeiras e desenhou o DER. As tabelas foram colocadas lado a lado (usuario, partida, mensagem). Exportado como `banco-de-dados/der.png` (File → Export → Export as PNG) e salvo o modelo em `banco-de-dados/der-memorias-aventura.mwb`. O README passou a mostrar o DER na seção do banco de dados. Nada foi alterado no banco: o Reverse Engineer só lê a estrutura.
+- **Verificações:** a imagem exportada mostra as 3 tabelas com as colunas e tipos, as chaves primárias e as duas ligações 1:N (usuario → partida e mensagem → partida).
+- **Limitações:** a aba "MySQL Model" e o diagrama continuam abertos no Workbench do autor. O arquivo antigo `banco-de-dados/modelo-logico.png` não foi apagado. Nenhum commit ou push foi feito pelo assistente.
+- **Aproveitamento e modificações pelo estudante:** pendente de revisão pelo autor.
+
+## Troca da imagem do modelo pelo DER do Workbench
+
+- **Data e assistente:** 22/11/2026; Claude (Anthropic), modelo Claude Opus 5.5, pelo app Claude.
+- **Pedido recebido:** "adicione esse der la no git troque pelo que esta la que é feito por ia".
+- **O que foi feito:** conferido que a imagem antiga `banco-de-dados/modelo-logico.png` (desenhada pelo assistente) só aparecia no README, que já mostra o `der.png` do Workbench; ela não está no documento Word. No README, o entregável "Modelo lógico e relacionamentos" passou a ser "DER (MySQL Workbench) e relacionamentos". O assistente não consegue rodar o Git no computador do autor (o terminal e o VS Code só aceitam cliques), então a remoção do arquivo antigo e o commit ficaram com o autor, com os comandos passados na conversa.
+- **Limitações:** nenhum commit ou push foi feito pelo assistente.
+- **Aproveitamento e modificações pelo estudante:** pendente de revisão pelo autor.

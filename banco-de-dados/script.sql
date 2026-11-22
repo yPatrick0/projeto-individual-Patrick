@@ -1,29 +1,6 @@
--- ============================================================
--- MEMÓRIAS DE AVENTURA - script do banco de dados (versão 2)
--- Projeto Individual · Patrick Scaglia Rodrigues · SPTech 2026.2
---
--- Modelo lógico (3 tabelas):
---   usuario  (1) ----< (N) partida
---   mensagem (1) ----< (N) partida
---
---   Um usuário pode jogar várias partidas.
---   Uma mensagem de episódio pode ser recebida em várias partidas.
---   Cada partida guarda quem jogou (fk_usuario) e qual mensagem
---   apareceu no fim (fk_mensagem).
---   fk_usuario pode ficar NULL enquanto o login não estiver
---   integrado: a partida é anônima.
---
--- Rode este arquivo inteiro no MySQL da VM Linux (Workbench ou terminal).
--- Se você já rodou a versão anterior (2 tabelas), apague o banco antes:
---   DROP DATABASE memorias_aventura;
--- ============================================================
-
 CREATE DATABASE IF NOT EXISTS memorias_aventura;
 USE memorias_aventura;
 
--- ------------------------------------------------------------
--- TABELA usuario: quem se cadastra no site
--- ------------------------------------------------------------
 CREATE TABLE usuario (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(80) NOT NULL,
@@ -32,11 +9,6 @@ CREATE TABLE usuario (
     dt_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- ------------------------------------------------------------
--- TABELA mensagem: os episódios e as lições mostradas no fim dos jogos
---   frase fica NULL quando a fala da série ainda não foi conferida.
---   Os ids são os mesmos do vetor em public/js/mensagens-episodios.js.
--- ------------------------------------------------------------
 CREATE TABLE mensagem (
     id INT PRIMARY KEY,
     personagem VARCHAR(80) NOT NULL,
@@ -47,12 +19,6 @@ CREATE TABLE mensagem (
     licao VARCHAR(200) NOT NULL
 );
 
--- ------------------------------------------------------------
--- TABELA partida: o resultado de cada jogo terminado
---   jogo = 'memoria'   -> usa tentativas e pares_encontrados
---   jogo = 'sequencia' -> usa rodadas_concluidas e erros
---   venceu = 1 (terminou o jogo) ou 0 (acabaram as vidas)
--- ------------------------------------------------------------
 CREATE TABLE partida (
     id INT PRIMARY KEY AUTO_INCREMENT,
     jogo VARCHAR(20) NOT NULL,
@@ -71,11 +37,6 @@ CREATE TABLE partida (
     CONSTRAINT chk_partida_venceu CHECK (venceu IN (0, 1))
 );
 
--- ------------------------------------------------------------
--- MENSAGENS DOS EPISÓDIOS (conteúdo do site, não é teste)
--- Lições = interpretação do autor. Falas: Puhoy (informada pelo
--- autor, dublagem) e His Hero (tradução livre).
--- ------------------------------------------------------------
 INSERT INTO mensagem (id, personagem, episodio, temporada, numero_episodio, frase, licao) VALUES
     (1, 'Jake', 'Puhoy', 5, 16,
         'Você tá se enrolando nos seus problemas imaginários.',
@@ -94,13 +55,6 @@ INSERT INTO mensagem (id, personagem, episodio, temporada, numero_episodio, fras
     (7, 'Finn', 'The Hall of Egress', 7, 24, NULL,
         'Persistir também pode significar mudar de estratégia.');
 
--- ------------------------------------------------------------
--- DADOS DE TESTE
--- Servem só para conferir se o dashboard mostra os gráficos.
--- Não são resultados reais de visitantes. Para começar do zero:
---   DELETE FROM partida;  DELETE FROM usuario;
--- (a tabela mensagem continua, porque é conteúdo do site)
--- ------------------------------------------------------------
 INSERT INTO usuario (nome, email, senha) VALUES
     ('Usuário Teste 1', 'teste1@memorias.com', 'teste123'),
     ('Usuário Teste 2', 'teste2@memorias.com', 'teste123');
@@ -113,39 +67,28 @@ INSERT INTO partida (jogo, venceu, tentativas, pares_encontrados, rodadas_conclu
     ('sequencia', 0, NULL, NULL, 3,    3, 51, 2,    2),
     ('sequencia', 0, NULL, NULL, 4,    3, 70, NULL, 1);
 
--- ------------------------------------------------------------
--- CONSULTAS DO DASHBOARD (as mesmas que estão em partidaModel.js)
--- ------------------------------------------------------------
-
--- 1) Partidas por jogo: qual jogo é mais jogado?
 SELECT jogo, COUNT(*) AS total_partidas
 FROM partida
 GROUP BY jogo;
 
--- 2) Aproveitamento no jogo da memória: pares encontrados ÷ tentativas × 100
 SELECT ROUND(AVG(pares_encontrados / tentativas * 100), 1) AS aproveitamento_medio
 FROM partida
 WHERE jogo = 'memoria' AND tentativas > 0;
 
--- 3) Média de rodadas concluídas na Sequência de Hora de Aventura
 SELECT ROUND(AVG(rodadas_concluidas), 1) AS media_rodadas
 FROM partida
 WHERE jogo = 'sequencia';
 
--- 4) Tempo médio por partida, separado por jogo
 SELECT jogo, ROUND(AVG(duracao_segundos)) AS tempo_medio_segundos
 FROM partida
 GROUP BY jogo;
 
--- 5) Episódios mais indicados (JOIN entre partida e mensagem)
-SELECT m.episodio, m.temporada, m.numero_episodio, COUNT(p.id) AS vezes_indicado
+SELECT m.id, m.episodio, m.temporada, m.numero_episodio, COUNT(p.id) AS vezes_recebida
 FROM mensagem m
-JOIN partida p ON p.fk_mensagem = m.id
+LEFT JOIN partida p ON p.fk_mensagem = m.id AND p.fk_usuario = 1
 GROUP BY m.id, m.episodio, m.temporada, m.numero_episodio
-ORDER BY vezes_indicado DESC
-LIMIT 5;
+ORDER BY m.id;
 
--- Conferência dos relacionamentos: cada partida com o usuário e a mensagem
 SELECT p.id, p.jogo, u.nome AS jogador, m.episodio AS mensagem_recebida
 FROM partida p
 LEFT JOIN usuario u ON u.id = p.fk_usuario

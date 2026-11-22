@@ -38,7 +38,7 @@ O Finn é corajoso, leal, quer sempre ajudar e sente tudo com intensidade, como 
 | ![Jogo da memória](docs/imagens/jogo-da-memoria.jpg) | ![Sequência de Hora de Aventura](docs/imagens/sequencia-hora-de-aventura.jpg) |
 | Vire duas cartas por vez e encontre os seis pares de personagens. O site conta as tentativas. | Finn, Jake, Marceline e BMO se acendem em uma ordem que você precisa repetir. São 6 rodadas, e você tem 3 vidas. |
 
-Ao final de cada partida, o site mostra uma mensagem de um episódio: a frase de um personagem (quando já conferida), a lição e o episódio para assistir. Exemplo: em *Puhoy* (T5, ep. 16), Jake diz a Finn: “Você tá se enrolando nos seus problemas imaginários.” As mensagens ficam em [`web-data-viz/public/js/mensagens-episodios.js`](web-data-viz/public/js/mensagens-episodios.js).
+Ao final de cada partida, ganhando ou perdendo, aparece a **carta de um episódio**: a foto do personagem, a frase dele (quando já conferida), a lição e o episódio para assistir. A carta não é só sorteada: ela depende de como foi a partida. Quem errou bastante e terminou recebe *His Hero* ("errar faz parte de aprender"); quem chegou longe na Sequência e perdeu recebe *The Hall of Egress* ("persistir também pode significar mudar de estratégia"). Exemplo de frase: em *Puhoy* (T5, ep. 16), Jake diz a Finn: “Você tá se enrolando nos seus problemas imaginários.” As mensagens ficam em [`web-data-viz/public/js/mensagens-episodios.js`](web-data-viz/public/js/mensagens-episodios.js) e as regras da escolha em [`web-data-viz/public/js/carta-episodio.js`](web-data-viz/public/js/carta-episodio.js).
 
 **Conta de usuário:** crie uma conta em `cadastro.html` e entre em `login.html`. Com login, suas partidas ficam salvas no seu nome e o painel mostra quantas você jogou. Sem login, dá para jogar normalmente, e a partida é salva como anônima.
 
@@ -54,8 +54,9 @@ Ao final de cada partida, o site mostra uma mensagem de um episódio: a frase de
 | Aproveitamento na memória | pares encontrados (6) ÷ tentativas × 100 |
 | Média de rodadas na Sequência | soma das rodadas concluídas ÷ número de partidas |
 | Tempo médio por partida | soma das durações ÷ número de partidas |
+| Álbum de episódios | cartas diferentes recebidas ÷ 7 cartas |
 
-O painel fica em `/dashboard.html`, exige login e usa Chart.js. Mostra os indicadores gerais, quantas partidas a pessoa logada jogou e o ranking dos episódios mais indicados. Cada partida terminada é enviada pela API e gravada no MySQL.
+O painel fica em `/dashboard.html`, exige login e usa Chart.js. Cada pessoa vê só os próprios resultados (as consultas filtram pelo `fk_usuario` de quem está logado): os indicadores, quantas partidas jogou e o álbum com as cartas de episódios que já recebeu (as outras aparecem bloqueadas; clicar numa carta aberta mostra a carta inteira). Partidas jogadas sem login são gravadas, mas não aparecem em nenhum painel. Cada partida terminada é enviada pela API e gravada no MySQL.
 
 ![Fluxo de dados](docs/imagens/fluxo-dados.png)
 
@@ -71,7 +72,9 @@ Três tabelas no MySQL:
 
 Os relacionamentos são 1:N: um usuário joga várias partidas, e uma mensagem aparece em várias partidas. O script completo, com as mensagens, dados de teste e as consultas do dashboard (incluindo um JOIN), está em [`banco-de-dados/script.sql`](banco-de-dados/script.sql).
 
-![Modelo lógico](banco-de-dados/modelo-logico.png)
+**DER (Diagrama Entidade-Relacionamento)**, gerado no MySQL Workbench a partir do banco `memorias_aventura` (Database → Reverse Engineer). O arquivo do modelo é [`banco-de-dados/der-memorias-aventura.mwb`](banco-de-dados/der-memorias-aventura.mwb) e abre no Workbench.
+
+![DER do banco memorias_aventura](banco-de-dados/der.png)
 
 ---
 
@@ -82,7 +85,7 @@ Os relacionamentos são 1:N: um usuário joga várias partidas, e uma mensagem a
 - ✅ Página Home
 - ✅ Minijogos com variáveis, funções, condicionais, repetições e vetores
 - ✅ Cadastro e login com validações em JavaScript
-- ✅ Modelo lógico e relacionamentos
+- ✅ DER (MySQL Workbench) e relacionamentos
 - ✅ Comandos SQL
 - ✅ Integração da API Node.js com o MySQL (rotas de partidas)
 - ✅ Aplicação de cálculos matemáticos nos indicadores
@@ -107,7 +110,7 @@ Os relacionamentos são 1:N: um usuário joga várias partidas, e uma mensagem a
 
 ```
 projeto-individual-Patrick/
-├── banco-de-dados/        → modelo lógico (imagem) e script SQL
+├── banco-de-dados/        → DER (imagem e modelo .mwb do Workbench) e script SQL
 ├── docs/                  → planejamento, diário de prompts, imagens e histórico
 ├── ti/                    → documentação acadêmica
 ├── web-data-viz/          → aplicação (site + API)
