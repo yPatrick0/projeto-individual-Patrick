@@ -1,6 +1,3 @@
-/* Sequência de Ooo - estilos do minijogo.
-   Folha exclusiva de jogo-aventura.html; classes com prefixo "av-".
-   Para combinar com as outras páginas, ajuste as cores nas variáveis abaixo. */
 :root {
     --fundo: #12303f;
     --painel: #1b4457;
@@ -20,7 +17,6 @@ body {
     margin: 0;
     min-height: 100vh;
     background-color: var(--fundo);
-    /* Céu noturno da página inicial, com camada leve para manter o contraste. */
     background-image:
         linear-gradient(rgba(18,48,63,.3),rgba(18,48,63,.3)),
         url('../assets/imgs/cenarios/ceu-noturno.webp');
@@ -161,7 +157,6 @@ h1, h2 {
     background: var(--cor-bmo);
 }
 
-/* Personagem aceso (durante a sequência ou no clique) */
 .av-personagem.av-aceso {
     opacity: 1;
     transform: scale(1.06);

@@ -1,21 +1,10 @@
-// ============================================================
-// DASHBOARD - Memórias de Aventura
-// Busca os indicadores na API (rotas /partidas/.../idUsuario) e desenha
-// os números (KPIs) e os gráficos com Chart.js.
-// Cada pessoa vê só as partidas que jogou com login.
-// ============================================================
-
-// Vetores com os dois jogos, na mesma ordem em todo o painel
 const codigosDosJogos = ["memoria", "sequencia"];
 const nomesDosJogos = ["Jogo da memória", "Sequência"];
-const coresDosJogos = ["#2a78c4", "#d96f1f"];   // azul = memória, laranja = sequência
+const coresDosJogos = ["#2a78c4", "#d96f1f"];
 
-// Guardam os gráficos para atualizar depois com update()
 let graficoPartidas = null;
 let graficoTempo = null;
 
-// Procura, nas linhas que vieram do banco, o valor de um campo para um jogo.
-// Se o jogo ainda não tiver partidas, devolve 0.
 function valorDoJogo(linhas, jogo, campo) {
     for (let i = 0; i < linhas.length; i++) {
         if (linhas[i].jogo == jogo) {
@@ -35,12 +24,10 @@ function esconderAviso() {
     document.getElementById("aviso-dados").hidden = true;
 }
 
-// Id de quem está logado (guardado no login, em js/login.js)
 function idDoUsuarioLogado() {
     return sessionStorage.ID_USUARIO;
 }
 
-// Deixa o painel vazio (conta nova, sem partidas)
 function limparGraficosETabela() {
     if (graficoPartidas != null) {
         graficoPartidas = desenharGrafico("grafico-partidas", graficoPartidas, "Partidas", [0, 0]);
@@ -58,9 +45,6 @@ function limparKpis() {
     document.getElementById("kpi-tempo").innerHTML = "—";
 }
 
-// Desenha um gráfico de barras (uma barra por jogo), no mesmo jeito do
-// dashboard do Web Data Viz: monta "dados" e "config" e cria com new Chart(...).
-// Se o gráfico já existe (botão "Atualizar dados"), só troca os valores e chama update().
 function desenharGrafico(idDoCanvas, grafico, nomeDaSerie, valores) {
     if (grafico != null) {
         grafico.data.datasets[0].data = valores;
@@ -81,12 +65,12 @@ function desenharGrafico(idDoCanvas, grafico, nomeDaSerie, valores) {
         type: "bar",
         data: dados,
         options: {
-            maintainAspectRatio: false,          // usa a altura da caixa do gráfico
+            maintainAspectRatio: false,
             plugins: {
-                legend: { display: false }       // uma série só: o título já explica
+                legend: { display: false }
             },
             scales: {
-                y: { beginAtZero: true }         // eixo começa no zero
+                y: { beginAtZero: true }
             }
         }
     };
@@ -102,7 +86,6 @@ function preencherTabela(partidas, tempos) {
     document.getElementById("tabela-corpo").innerHTML = linhasHtml;
 }
 
-// Função principal: chamada ao abrir a página e no botão "Atualizar dados"
 function carregarPainel() {
     esconderAviso();
     carregarAlbum();
@@ -142,7 +125,6 @@ function carregarPainel() {
         });
 }
 
-// Tempo médio por jogo + tempo médio geral (média ponderada pelo número de partidas)
 function carregarTempos(partidas, tempos, totalDePartidas) {
     return fetch(enderecoApi("/partidas/tempo-medio/" + idDoUsuarioLogado()))
         .then(function (resposta) {
@@ -170,7 +152,6 @@ function carregarAproveitamento() {
             return resposta.json();
         })
         .then(function (dados) {
-            // Sem partidas da memória, o banco devolve null na média
             if (dados.aproveitamento_medio == null) {
                 document.getElementById("kpi-aproveitamento").innerHTML = "sem partidas";
             } else {
@@ -194,9 +175,6 @@ function carregarMediaRodadas() {
         });
 }
 
-// ÁLBUM DE CARTAS: as 7 mensagens; as que a pessoa já recebeu ficam abertas.
-// Dados: rota /partidas/album/:idUsuario (LEFT JOIN entre mensagem e partida).
-// Fotos, frases e lições vêm de js/mensagens-episodios.js (mesmos ids do banco).
 function carregarAlbum() {
     fetch(enderecoApi("/partidas/album/" + idDoUsuarioLogado()))
         .then(function (resposta) {
@@ -238,7 +216,6 @@ function carregarAlbum() {
         });
 }
 
-// Abre a carta completa ao clicar no álbum (função de js/carta-episodio.js)
 function abrirCartaDoAlbum(idMensagem, vezes) {
     let palavra = "vezes";
     if (vezes == 1) {
@@ -252,7 +229,6 @@ function abrirCartaDoAlbum(idMensagem, vezes) {
     });
 }
 
-// Quantas partidas a pessoa logada jogou (rota /partidas/usuario/:id)
 function carregarPartidasDoUsuario() {
     let idUsuario = idDoUsuarioLogado();
     let primeiroNome = sessionStorage.NOME_USUARIO.split(" ")[0];
@@ -278,6 +254,6 @@ function carregarPartidasDoUsuario() {
         });
 }
 
-mostrarUsuarioNoMenu("nav-usuario");   // função de js/sessao.js
+mostrarUsuarioNoMenu("nav-usuario");
 carregarPainel();
 carregarPartidasDoUsuario();

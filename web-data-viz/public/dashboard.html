@@ -7,12 +7,10 @@
     <title>Painel de indicadores | Memórias de Aventura</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/carta-episodio.css">
-    <!-- Sessão: quem não fez login volta para a tela de login -->
     <script src="js/sessao.js"></script>
     <script>
         validarSessao();
     </script>
-    <!-- Chart.js, a mesma biblioteca de gráficos usada no material da turma (AquaTech) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -41,7 +39,6 @@
 
         <p id="aviso-dados" class="painel-aviso" role="status" hidden></p>
 
-        <!-- Indicadores principais (KPIs) -->
         <section class="kpis" aria-label="Indicadores principais">
             <article class="kpi">
                 <p class="kpi-titulo">Suas partidas</p>
@@ -65,7 +62,6 @@
             </article>
         </section>
 
-        <!-- Gráficos -->
         <section class="graficos">
             <article class="grafico-card">
                 <h2>Partidas por jogo</h2>
@@ -83,7 +79,6 @@
             </article>
         </section>
 
-        <!-- Álbum de cartas: usa a terceira tabela (mensagem) com LEFT JOIN -->
         <section class="grafico-card album-card" id="album">
             <div class="album-cabecalho">
                 <div>
@@ -100,7 +95,6 @@
             </ul>
         </section>
 
-        <!-- Os mesmos números em tabela (acessibilidade) -->
         <details class="tabela-dados">
             <summary>Ver os dados em tabela</summary>
             <table>
@@ -120,7 +114,6 @@
         </details>
     </main>
 
-    <!-- Janela da carta do episódio (preenchida por js/carta-episodio.js) -->
     <div id="carta-fundo" class="carta-fundo" hidden></div>
 
     <script src="js/api.js"></script>

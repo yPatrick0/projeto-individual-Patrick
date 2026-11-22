@@ -1,9 +1,3 @@
-// ============================================================
-// LOGIN - confere e-mail e senha na API e guarda a sessão
-// Fluxo: login.html -> fetch -> /usuarios/autenticar
-//        -> usuarioController -> usuarioModel -> tabela usuario
-// ============================================================
-
 function mostrarMensagemLogin(texto, tipo) {
     let aviso = document.getElementById("aviso-login");
     aviso.innerHTML = texto;
@@ -35,7 +29,6 @@ function entrar() {
     }).then(function (resposta) {
         if (resposta.ok) {
             resposta.json().then(function (usuario) {
-                // Guarda quem está logado (usado nos jogos e no dashboard)
                 sessionStorage.ID_USUARIO = usuario.id;
                 sessionStorage.NOME_USUARIO = usuario.nome;
                 sessionStorage.EMAIL_USUARIO = usuario.email;
@@ -57,5 +50,5 @@ function entrar() {
         botao.disabled = false;
     });
 
-    return false;   // impede o formulário de recarregar a página
+    return false;
 }

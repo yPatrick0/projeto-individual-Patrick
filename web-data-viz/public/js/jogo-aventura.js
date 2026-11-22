@@ -1,45 +1,24 @@
-// ============================================================
-// SEQUÊNCIA DE OOO - minijogo de memória (versão 1)
-// ============================================================
-
-// ------------------------------------------------------------
-// CARTA DO EPISÓDIO
-// As frases e lições ficam em js/mensagens-episodios.js e a carta em
-// js/carta-episodio.js (os dois são usados também pelo jogo da memória).
-// A carta aparece só no fim da partida, ganhando ou perdendo.
-// ------------------------------------------------------------
-
-// ------------------------------------------------------------
-// REGRAS (valores fáceis de mudar)
-// ------------------------------------------------------------
 const TOTAL_RODADAS = 6;
 const VIDAS_INICIAIS = 3;
-const TEMPO_ACESO = 600;      // quanto tempo cada personagem fica aceso (ms)
-const TEMPO_ENTRE = 250;      // pausa entre um personagem e o próximo (ms)
-const TEMPO_ENTRE_RODADAS = 1200;   // pausa depois de concluir uma rodada (ms)
+const TEMPO_ACESO = 600;
+const TEMPO_ENTRE = 250;
+const TEMPO_ENTRE_RODADAS = 1200;
 const nomesDosPersonagens = ["Finn", "Jake", "Marceline", "BMO"];
 
-// ------------------------------------------------------------
-// ESTADO DA PARTIDA
-// ------------------------------------------------------------
-let sequencia = [];            // índices (0 a 3) dos personagens sorteados
-let posicaoDoJogador = 0;      // em qual passo da sequência o jogador está
+let sequencia = [];
+let posicaoDoJogador = 0;
 let rodadaAtual = 0;
 let rodadasConcluidas = 0;
 let erros = 0;
 let vidas = VIDAS_INICIAIS;
-let inicioDaPartida = 0;       // Date.now() de quando começou
+let inicioDaPartida = 0;
 let partidaAtiva = false;
-let bloqueado = true;          // true = cliques ignorados (sequência sendo mostrada)
-let temporizador = null;       // guarda o setTimeout atual para poder cancelar
+let bloqueado = true;
+let temporizador = null;
 
-// Resultados desta visita (cada partida também vai para o banco pela API)
 let ultimoResultado = null;
 let historicoDePartidas = [];
 
-// ------------------------------------------------------------
-// FUNÇÕES DE TELA
-// ------------------------------------------------------------
 function mostrarTela(idDaTela) {
     document.getElementById("tela-instrucoes").hidden = true;
     document.getElementById("tela-jogo").hidden = true;
@@ -70,11 +49,8 @@ function apagarTodos() {
     }
 }
 
-// ------------------------------------------------------------
-// FLUXO DA PARTIDA
-// ------------------------------------------------------------
 function iniciarPartida() {
-    clearTimeout(temporizador);   // cancela qualquer sequência em andamento (cliques repetidos)
+    clearTimeout(temporizador);
     apagarTodos();
 
     sequencia = [];
@@ -86,7 +62,7 @@ function iniciarPartida() {
     partidaAtiva = true;
     bloqueado = true;
 
-    fecharCartaEpisodio();   // função de js/carta-episodio.js
+    fecharCartaEpisodio();
     mostrarTela("tela-jogo");
     iniciarRodada();
 }
@@ -107,7 +83,6 @@ function mostrarSequencia() {
     }, 800);
 }
 
-// Acende o personagem do passo "i", apaga e chama o próximo
 function mostrarPasso(i) {
     if (i >= sequencia.length) {
         bloqueado = false;
@@ -124,12 +99,10 @@ function mostrarPasso(i) {
 }
 
 function clicarPersonagem(indice) {
-    // Ignora cliques fora de hora (sequência sendo mostrada ou partida encerrada)
     if (!partidaAtiva || bloqueado) {
         return;
     }
 
-    // Brilho rápido para dar retorno ao clique
     acender(indice);
     setTimeout(function () {
         apagar(indice);
@@ -177,24 +150,18 @@ function errar() {
     }
 }
 
-// ------------------------------------------------------------
-// RESULTADO
-// ------------------------------------------------------------
 function finalizarPartida(venceu) {
     if (!partidaAtiva) {
-        return;   // evita finalizar duas vezes
+        return;
     }
     partidaAtiva = false;
     bloqueado = true;
 
     let duracaoSegundos = Math.round((Date.now() - inicioDaPartida) / 1000);
 
-    // Escolhe a carta pelo desempenho (função de js/carta-episodio.js).
-    // O id da mensagem vai para o banco, na coluna fk_mensagem da tabela partida.
     let carta = escolherCartaSequencia(venceu, rodadasConcluidas, erros);
     let mensagem = carta.mensagem;
 
-    // Objeto de resultado: é este objeto que vai para a API / MySQL
     let resultado = {
         jogo: "sequencia",
         dataHora: new Date().toISOString(),
@@ -205,7 +172,7 @@ function finalizarPartida(venceu) {
         duracaoSegundos: duracaoSegundos,
         mensagem: mensagem,
         motivo: carta.motivo,
-        fkUsuario: null   // o id do usuário logado é lido em js/registrar-partida.js
+        fkUsuario: null
     };
 
     ultimoResultado = resultado;
@@ -232,7 +199,6 @@ function mostrarResultado(resultado) {
 
     mostrarTela("tela-resultado");
 
-    // Carta do episódio por cima da tela de resultado (função de js/carta-episodio.js)
     mostrarCartaEpisodio({
         mensagem: resultado.mensagem,
         resumo: resumo,
@@ -241,15 +207,15 @@ function mostrarResultado(resultado) {
     });
 }
 
-// ------------------------------------------------------------
-// ENVIO PARA A API
-// Usa registrarPartida() de js/registrar-partida.js:
-// fetch -> /partidas/registrar -> partidaController -> partidaModel -> MySQL
-// ------------------------------------------------------------
 function enviarResultadoParaApi(resultado) {
+    let venceu = 0;
+    if (resultado.venceu) {
+        venceu = 1;
+    }
+
     registrarPartida({
         jogo: "sequencia",
-        venceu: resultado.venceu ? 1 : 0,
+        venceu: venceu,
         tentativas: "",
         paresEncontrados: "",
         rodadasConcluidas: resultado.rodadasConcluidas,

@@ -1,27 +1,24 @@
 var partidaModel = require("../models/partidaModel");
 
-// Confere se o texto tem só algarismos de 0 a 9 (ex.: "42" sim; "4a", "-1" e "" não)
 function somenteDigitos(texto) {
+    var algarismos = "0123456789";
+
     if (texto.length == 0) {
         return false;
     }
     for (var i = 0; i < texto.length; i++) {
-        if (texto[i] < "0" || texto[i] > "9") {
+        if (!algarismos.includes(texto[i])) {
             return false;
         }
     }
     return true;
 }
 
-// Prepara o valor recebido para o SQL.
-// - vazio/ausente      -> "NULL" (o campo não se aplica a este jogo)
-// - número inteiro     -> o próprio número
-// - qualquer outra coisa (texto, negativo, decimal) -> undefined (dado inválido)
 function paraNumeroOuNulo(valor) {
     if (valor == undefined) {
         return "NULL";
     }
-    var texto = "" + valor;   // junta com um texto vazio para virar texto
+    var texto = "" + valor;
     if (texto == "") {
         return "NULL";
     }
@@ -42,7 +39,6 @@ function registrar(req, res) {
     var fkUsuario = paraNumeroOuNulo(req.body.idUsuarioServer);
     var fkMensagem = paraNumeroOuNulo(req.body.idMensagemServer);
 
-    // Validações: só aceita os dois jogos do site e números válidos
     if (jogo != "memoria" && jogo != "sequencia") {
         res.status(400).send("O jogo precisa ser 'memoria' ou 'sequencia'.");
     } else if (venceu != 0 && venceu != 1) {
@@ -69,8 +65,6 @@ function registrar(req, res) {
     }
 }
 
-// Lê o id do usuário que veio na rota (ex.: /partidas/por-jogo/3).
-// Devolve o número, ou undefined se o id for inválido.
 function lerIdUsuario(req) {
     var texto = req.params.idUsuario;
     if (!somenteDigitos(texto) || Number(texto) == 0) {
@@ -79,8 +73,6 @@ function lerIdUsuario(req) {
     return Number(texto);
 }
 
-// As funções abaixo seguem o mesmo padrão: conferem o id do usuário,
-// chamam o model e devolvem as linhas da consulta em JSON.
 function contarPorJogo(req, res) {
     var idUsuario = lerIdUsuario(req);
     if (idUsuario == undefined) {

@@ -1,15 +1,9 @@
-// ============================================================
-// CADASTRO - valida o formulário e envia para a API
-// Fluxo: cadastro.html -> fetch -> /usuarios/cadastrar
-//        -> usuarioController -> usuarioModel -> tabela usuario
-// ============================================================
-
-// Regras da senha: dois vetores na mesma ordem (como personagens/nomes no jogo da memória).
-// idsDasRegras guarda o id de cada <li> do cadastro.html.
 let idsDasRegras = ["regra-tamanho", "regra-maiuscula", "regra-minuscula", "regra-numero", "regra-especial"];
 
-// Confere a senha letra por letra e devolve um vetor com true/false para cada regra,
-// na mesma ordem de idsDasRegras.
+let letrasMaiusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+let letrasMinusculas = "abcdefghijklmnopqrstuvwxyz";
+let numeros = "0123456789";
+
 function conferirRegrasDaSenha(senha) {
     let temMaiuscula = false;
     let temMinuscula = false;
@@ -19,21 +13,20 @@ function conferirRegrasDaSenha(senha) {
     for (let i = 0; i < senha.length; i++) {
         let letra = senha[i];
 
-        if (letra >= "A" && letra <= "Z") {
+        if (letrasMaiusculas.includes(letra)) {
             temMaiuscula = true;
-        } else if (letra >= "a" && letra <= "z") {
+        } else if (letrasMinusculas.includes(letra)) {
             temMinuscula = true;
-        } else if (letra >= "0" && letra <= "9") {
+        } else if (numeros.includes(letra)) {
             temNumero = true;
         } else {
-            temEspecial = true;   // tudo que não é letra nem número (! @ # $ % ...)
+            temEspecial = true;
         }
     }
 
     return [senha.length >= 8, temMaiuscula, temMinuscula, temNumero, temEspecial];
 }
 
-// Conta quantas regras a senha cumpre (de 0 a 5)
 function contarRegrasCumpridas(senha) {
     let regras = conferirRegrasDaSenha(senha);
     let cumpridas = 0;
@@ -45,12 +38,10 @@ function contarRegrasCumpridas(senha) {
     return cumpridas;
 }
 
-// Roda a cada tecla digitada na senha (oninput no cadastro.html)
 function verificarSenha() {
     let senha = document.getElementById("senha").value;
     let regras = conferirRegrasDaSenha(senha);
 
-    // 1) Marca cada regra como cumprida (✓) ou faltando (✗)
     for (let i = 0; i < idsDasRegras.length; i++) {
         let item = document.getElementById(idsDasRegras[i]);
         if (regras[i]) {
@@ -60,7 +51,6 @@ function verificarSenha() {
         }
     }
 
-    // 2) Calcula a força: fraca (0 a 2), média (3 ou 4), forte (5)
     let cumpridas = contarRegrasCumpridas(senha);
     let barra = document.getElementById("barra-forca");
     let texto = document.getElementById("texto-forca");
@@ -81,11 +71,9 @@ function verificarSenha() {
         texto.innerHTML = "Força da senha: <strong>forte</strong>";
     }
 
-    // A confirmação depende da senha, então confere de novo
     verificarConfirmacao();
 }
 
-// Roda a cada tecla digitada na confirmação
 function verificarConfirmacao() {
     let senha = document.getElementById("senha").value;
     let confirmacao = document.getElementById("confirmacao-senha").value;
@@ -103,22 +91,10 @@ function verificarConfirmacao() {
     }
 }
 
-// Confere se o texto tem um caractere (ex.: "@"), olhando letra por letra
-function contemCaractere(texto, caractere) {
-    for (let i = 0; i < texto.length; i++) {
-        if (texto[i] == caractere) {
-            return true;
-        }
-    }
-    return false;
-}
-
-// O e-mail precisa ter @ e ponto
 function emailValido(email) {
-    return contemCaractere(email, "@") && contemCaractere(email, ".");
+    return email.includes("@") && email.includes(".");
 }
 
-// Roda a cada tecla digitada no e-mail
 function verificarEmail() {
     let email = document.getElementById("email").value;
     let dica = document.getElementById("dica-email");
@@ -138,7 +114,7 @@ function verificarEmail() {
 function mostrarMensagemCadastro(texto, tipo) {
     let aviso = document.getElementById("aviso-cadastro");
     aviso.innerHTML = texto;
-    aviso.className = "aviso aviso-" + tipo;   // aviso-erro, aviso-sucesso ou aviso-info
+    aviso.className = "aviso aviso-" + tipo;
 }
 
 function cadastrar() {
@@ -147,7 +123,6 @@ function cadastrar() {
     let senha = document.getElementById("senha").value;
     let confirmacao = document.getElementById("confirmacao-senha").value;
 
-    // Validações em JavaScript, antes de chamar a API
     if (nome == "" || email == "" || senha == "" || confirmacao == "") {
         mostrarMensagemCadastro("Preencha todos os campos.", "erro");
     } else if (nome.length < 2) {
@@ -162,7 +137,7 @@ function cadastrar() {
         enviarCadastro(nome, email, senha);
     }
 
-    return false;   // impede o formulário de recarregar a página
+    return false;
 }
 
 function enviarCadastro(nome, email, senha) {
@@ -187,7 +162,6 @@ function enviarCadastro(nome, email, senha) {
                 window.location = "login.html";
             }, 1500);
         } else {
-            // A API explica o motivo (ex.: e-mail já cadastrado)
             resposta.text().then(function (texto) {
                 mostrarMensagemCadastro(texto, "erro");
                 botao.disabled = false;

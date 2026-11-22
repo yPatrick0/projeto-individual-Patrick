@@ -28,7 +28,6 @@
             <p class="aviso" id="aviso-cadastro" role="status">
                 Crie sua conta para que suas partidas fiquem salvas no seu nome.
             </p>
-            <!-- O envio é feito por js/cadastro.js (fetch para /usuarios/cadastrar) -->
             <form aria-describedby="aviso-cadastro" onsubmit="return cadastrar();" novalidate>
                 <label for="nome">Nome</label>
                 <input id="nome" type="text" autocomplete="name" maxlength="80">
@@ -40,7 +39,6 @@
                 <label for="senha">Senha</label>
                 <input id="senha" type="password" autocomplete="new-password" maxlength="50" oninput="verificarSenha()" aria-describedby="texto-forca regras-senha">
 
-                <!-- Medidor de força e regras da senha (js/cadastro.js -> verificarSenha) -->
                 <div class="medidor-forca" aria-hidden="true">
                     <div class="barra-forca" id="barra-forca"></div>
                 </div>

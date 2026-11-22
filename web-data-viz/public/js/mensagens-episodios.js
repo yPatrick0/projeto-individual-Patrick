@@ -1,21 +1,3 @@
-// ============================================================
-// MENSAGENS DOS EPISÓDIOS - usadas pelos dois jogos
-// Ao terminar uma partida, o jogador recebe uma destas mensagens.
-//
-// <<< EDITE AQUI PARA INCLUIR OU TROCAR MENSAGENS >>>
-// Cada objeto do vetor tem:
-//   personagem: quem diz a frase ou protagoniza a cena
-//   episodio:   título original do episódio (para procurar no streaming)
-//   temporada e numero: temporada e número do episódio
-//   frase:      fala da série. Deixe "" quando ainda não tiver a fala conferida.
-//   origemFrase: de onde veio a frase (ex.: "tradução livre", "dublagem")
-//   licao:      a lição em uma frase. É a MINHA interpretação do episódio.
-//   fotos:      rosto(s) do personagem na carta (arquivos em assets/imgs)
-// Regra do projeto: não inventar falas. Só preencha "frase" com algo conferido.
-// IMPORTANTE: os ids são os mesmos da tabela mensagem do banco
-// (banco-de-dados/script.sql). Se incluir ou mudar uma mensagem aqui,
-// faça o mesmo INSERT/UPDATE na tabela mensagem.
-// ============================================================
 const mensagensDosEpisodios = [
     {
         id: 1,
@@ -98,7 +80,6 @@ const mensagensDosEpisodios = [
 
 const ONDE_ASSISTIR = "Hora de Aventura está na HBO Max e na Netflix (o catálogo pode mudar).";
 
-// Procura a mensagem pelo id (o mesmo id da tabela mensagem do banco)
 function buscarMensagem(id) {
     for (let i = 0; i < mensagensDosEpisodios.length; i++) {
         if (mensagensDosEpisodios[i].id == id) {
@@ -108,7 +89,6 @@ function buscarMensagem(id) {
     return mensagensDosEpisodios[0];
 }
 
-// Sorteia uma mensagem entre os ids da lista, ex.: sortearMensagem([1, 3, 4])
 function sortearMensagem(listaDeIds) {
     let posicao = Math.floor(Math.random() * listaDeIds.length);
     return buscarMensagem(listaDeIds[posicao]);

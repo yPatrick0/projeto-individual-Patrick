@@ -16,7 +16,6 @@ function autenticar(req, res) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
 
                     if (resultadoAutenticar.length == 1) {
-                        // Devolve só o que a tela precisa (a senha não volta para o navegador)
                         res.json({
                             id: resultadoAutenticar[0].id,
                             nome: resultadoAutenticar[0].nome,
@@ -38,19 +37,11 @@ function autenticar(req, res) {
     }
 }
 
-// Confere se o texto tem um caractere (ex.: "@"), olhando letra por letra
-function contemCaractere(texto, caractere) {
-    for (var i = 0; i < texto.length; i++) {
-        if (texto[i] == caractere) {
-            return true;
-        }
-    }
-    return false;
-}
-
-// Mesmas regras do medidor de senha do cadastro (public/js/cadastro.js):
-// 8+ caracteres, letra maiúscula, letra minúscula, número e caractere especial
 function senhaForte(senha) {
+    var letrasMaiusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var letrasMinusculas = "abcdefghijklmnopqrstuvwxyz";
+    var numeros = "0123456789";
+
     var temMaiuscula = false;
     var temMinuscula = false;
     var temNumero = false;
@@ -59,11 +50,11 @@ function senhaForte(senha) {
     for (var i = 0; i < senha.length; i++) {
         var letra = senha[i];
 
-        if (letra >= "A" && letra <= "Z") {
+        if (letrasMaiusculas.includes(letra)) {
             temMaiuscula = true;
-        } else if (letra >= "a" && letra <= "z") {
+        } else if (letrasMinusculas.includes(letra)) {
             temMinuscula = true;
-        } else if (letra >= "0" && letra <= "9") {
+        } else if (numeros.includes(letra)) {
             temNumero = true;
         } else {
             temEspecial = true;
@@ -74,15 +65,13 @@ function senhaForte(senha) {
 }
 
 function cadastrar(req, res) {
-    // Valores enviados pelo cadastro.html (js/cadastro.js)
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
 
-    // Validações (o navegador também valida, mas a API confere de novo)
     if (nome == undefined || nome.length < 2) {
         res.status(400).send("Informe um nome com pelo menos 2 letras.");
-    } else if (email == undefined || !contemCaractere(email, "@") || !contemCaractere(email, ".")) {
+    } else if (email == undefined || !email.includes("@") || !email.includes(".")) {
         res.status(400).send("Informe um e-mail válido.");
     } else if (senha == undefined || !senhaForte(senha)) {
         res.status(400).send("A senha precisa ter 8+ caracteres, letra maiúscula, letra minúscula, número e caractere especial.");
@@ -90,7 +79,6 @@ function cadastrar(req, res) {
         res.status(400).send("Algum campo passou do tamanho máximo.");
     } else {
 
-        // Primeiro confere se o e-mail já está cadastrado
         usuarioModel.buscarPorEmail(email)
             .then(function (resultado) {
                 if (resultado.length > 0) {

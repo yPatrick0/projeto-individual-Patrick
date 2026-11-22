@@ -1,5 +1,3 @@
-// Jogo da memória: ao encontrar os seis pares, mostra a carta de um episódio
-// (js/carta-episodio.js) e envia o resultado para a API (js/registrar-partida.js).
 let personagens = ['finn', 'jake', 'marceline', 'bmo', 'rei-gelado', 'princesa-jujuba'];
 let nomes = ['Finn', 'Jake', 'Marceline', 'BMO', 'Rei Gelado', 'Princesa Jujuba'];
 let fotos = ['finn.jpeg', 'jake.jpeg', 'marceline.jpeg', 'bmo.jpeg', 'rei-gelado.jpeg', 'princesa-jujuba.jpeg'];
@@ -10,7 +8,7 @@ let segundaCarta = -1;
 let tentativas = 0;
 let paresEncontrados = 0;
 let temporizador = null;
-let inicioDaPartida = 0;   // Date.now() do primeiro clique; 0 = partida ainda não começou
+let inicioDaPartida = 0;
 
 let tabuleiro = document.getElementById('board');
 let resultado = document.getElementById('stats');
@@ -25,7 +23,6 @@ function atualizarResultado() {
     resultado.innerHTML = mensagem + paresEncontrados + ' de ' + personagens.length
         + ' pares · ' + tentativas + ' tentativas';
 
-    // Depois de fechar a carta, este botão abre de novo
     if (paresEncontrados == personagens.length) {
         resultado.innerHTML = resultado.innerHTML
             + ' <button type="button" class="botao-ver-carta" onclick="reabrirCartaEpisodio()">Ver carta</button>';
@@ -33,7 +30,6 @@ function atualizarResultado() {
 }
 
 function iniciarJogo() {
-    // Evita que uma espera da partida anterior esconda cartas da nova partida.
     clearTimeout(temporizador);
     temporizador = null;
     primeiraCarta = -1;
@@ -44,7 +40,6 @@ function iniciarJogo() {
     cartas = [];
     cartasEncontradas = [];
 
-    // Cada número indica um personagem. As duas cópias usam o mesmo retrato.
     for (let i = 0; i < personagens.length; i++) {
         cartas.push(i);
         cartas.push(i);
@@ -98,19 +93,16 @@ function marcarPar(indice) {
 }
 
 function virarCarta(indice) {
-    // Não conta clique repetido, carta resolvida ou clique durante a espera.
     if (temporizador != null || primeiraCarta == indice || cartasEncontradas[indice]) {
         return;
     }
 
-    // O tempo da partida começa no primeiro clique, não quando a página abre.
     if (inicioDaPartida == 0) {
         inicioDaPartida = Date.now();
     }
 
     let botao = document.getElementById('carta' + indice);
     let personagemDaCarta = cartas[indice];
-    // O caminho depende do personagem, não da posição: os dois retratos são iguais.
     botao.innerHTML = '<img class="card-face portrait-' + personagens[personagemDaCarta]
         + '" src="assets/imgs/' + fotos[personagemDaCarta] + '" alt="">';
     botao.className = 'card open';
@@ -133,7 +125,6 @@ function virarCarta(indice) {
                 finalizarPartida();
             }
         } else {
-            // Mantém o intervalo de 750 ms usado no protótipo.
             temporizador = setTimeout(esconderCartas, 750);
         }
 
@@ -141,16 +132,12 @@ function virarCarta(indice) {
     }
 }
 
-// Chamada quando os seis pares são encontrados.
 function finalizarPartida() {
     let duracaoSegundos = Math.round((Date.now() - inicioDaPartida) / 1000);
 
-    // Escolhe a carta pelo desempenho (função em js/carta-episodio.js).
-    // O id da mensagem vai para o banco, na coluna fk_mensagem da tabela partida.
     let carta = escolherCartaMemoria(tentativas);
     let mensagem = carta.mensagem;
 
-    // Espera um pouco para a pessoa ver o último par virado, depois mostra a carta
     setTimeout(function () {
         mostrarCartaEpisodio({
             mensagem: mensagem,
@@ -160,8 +147,6 @@ function finalizarPartida() {
         });
     }, 700);
 
-    // Envia o resultado para o banco (função em js/registrar-partida.js)
-    // Erros = tentativas que não formaram par.
     registrarPartida({
         jogo: 'memoria',
         venceu: 1,

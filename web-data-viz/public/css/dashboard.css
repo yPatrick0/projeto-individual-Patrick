@@ -1,4 +1,3 @@
-/* Painel de indicadores - mesmas cores e fontes da página inicial */
 :root {
     --ink: #20352a;
     --paper: #f8f4e7;
@@ -31,7 +30,6 @@ a {
     color: inherit;
 }
 
-/* ---------- Topo ---------- */
 .painel-topo {
     display: flex;
     flex-wrap: wrap;
@@ -87,7 +85,6 @@ a {
     border-bottom: 3px solid var(--yellow);
 }
 
-/* ---------- Conteúdo ---------- */
 .painel {
     max-width: 1120px;
     margin: 0 auto;
@@ -145,7 +142,6 @@ a {
     display: none;
 }
 
-/* ---------- KPIs ---------- */
 .kpis {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -181,7 +177,6 @@ a {
     font-size: .8rem;
 }
 
-/* ---------- Gráficos ---------- */
 .graficos {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -214,7 +209,6 @@ a {
     max-width: 100%;
 }
 
-/* ---------- Ranking de episódios ---------- */
 .album-card {
     margin-top: 16px;
 }
@@ -323,7 +317,6 @@ button.album-carta:hover {
     color: var(--muted);
 }
 
-/* ---------- Tabela ---------- */
 .tabela-dados {
     margin-top: 20px;
 }
@@ -348,7 +341,6 @@ button.album-carta:hover {
     text-align: left;
 }
 
-/* ---------- Telas menores ---------- */
 @media (max-width: 900px) {
     .kpis {
         grid-template-columns: repeat(2, minmax(0, 1fr));
