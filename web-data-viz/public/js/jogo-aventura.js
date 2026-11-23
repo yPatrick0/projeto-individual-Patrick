@@ -17,8 +17,7 @@ let bloqueado = true;
 let temporizador = null;
 let temporizadorCronometro = null;
 
-let ultimoResultado = null;
-let historicoDePartidas = [];
+let partidasNestaVisita = 0;
 
 function mostrarTela(idDaTela) {
     document.getElementById("tela-instrucoes").hidden = true;
@@ -56,12 +55,16 @@ function escreverMensagem(texto) {
     document.getElementById("mensagem-jogo").innerHTML = texto;
 }
 
+function classeDoBotao(indice) {
+    return "av-personagem av-" + nomesDosPersonagens[indice].toLowerCase();
+}
+
 function acender(indice) {
-    document.getElementById("botao-" + indice).classList.add("av-aceso");
+    document.getElementById("botao-" + indice).className = classeDoBotao(indice) + " av-aceso";
 }
 
 function apagar(indice) {
-    document.getElementById("botao-" + indice).classList.remove("av-aceso");
+    document.getElementById("botao-" + indice).className = classeDoBotao(indice);
 }
 
 function apagarTodos() {
@@ -187,20 +190,16 @@ function finalizarPartida(venceu) {
     let mensagem = carta.mensagem;
 
     let resultado = {
-        jogo: "sequencia",
-        dataHora: new Date().toISOString(),
         venceu: venceu,
         rodadasConcluidas: rodadasConcluidas,
         totalRodadas: TOTAL_RODADAS,
         erros: erros,
         duracaoSegundos: duracaoSegundos,
         mensagem: mensagem,
-        motivo: carta.motivo,
-        fkUsuario: null
+        motivo: carta.motivo
     };
 
-    ultimoResultado = resultado;
-    historicoDePartidas.push(resultado);
+    partidasNestaVisita++;
 
     mostrarResultado(resultado);
     enviarResultadoParaApi(resultado);
@@ -219,7 +218,7 @@ function mostrarResultado(resultado) {
     document.getElementById("res-rodadas").innerHTML = resultado.rodadasConcluidas + " de " + resultado.totalRodadas;
     document.getElementById("res-erros").innerHTML = resultado.erros;
     document.getElementById("res-duracao").innerHTML = resultado.duracaoSegundos + " s";
-    document.getElementById("res-partidas").innerHTML = "Partidas concluídas nesta visita: " + historicoDePartidas.length;
+    document.getElementById("res-partidas").innerHTML = "Partidas concluídas nesta visita: " + partidasNestaVisita;
 
     mostrarTela("tela-resultado");
 
