@@ -614,6 +614,22 @@ button:disabled {
     font-size: .9rem;
 }
 
+.placar-memoria {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.placar-memoria .stats {
+    margin: 0;
+}
+
+.cronometro {
+    font-variant-numeric: tabular-nums;
+}
+
 .rodape {
     padding: 44px 0 28px;
     border-top: 1px solid var(--ink);
@@ -722,7 +738,7 @@ button:disabled {
     }
 
     .board,
-    .stats {
+    .placar-memoria {
         max-width: 560px;
         margin-inline: auto;
     }

@@ -15,6 +15,7 @@ let inicioDaPartida = 0;
 let partidaAtiva = false;
 let bloqueado = true;
 let temporizador = null;
+let temporizadorCronometro = null;
 
 let ultimoResultado = null;
 let historicoDePartidas = [];
@@ -29,6 +30,26 @@ function mostrarTela(idDaTela) {
 function atualizarPlacar() {
     document.getElementById("placar-rodada").innerHTML = "Rodada " + rodadaAtual + " de " + TOTAL_RODADAS;
     document.getElementById("placar-vidas").innerHTML = "Vidas: " + vidas;
+}
+
+function formatarTempo(totalSegundos) {
+    let minutos = Math.floor(totalSegundos / 60);
+    let segundos = totalSegundos % 60;
+
+    if (segundos < 10) {
+        return minutos + ":0" + segundos;
+    }
+    return minutos + ":" + segundos;
+}
+
+function atualizarCronometro() {
+    let segundos = Math.floor((Date.now() - inicioDaPartida) / 1000);
+    document.getElementById("placar-tempo").innerHTML = "Tempo: " + formatarTempo(segundos);
+}
+
+function rodarCronometro() {
+    atualizarCronometro();
+    temporizadorCronometro = setTimeout(rodarCronometro, 1000);
 }
 
 function escreverMensagem(texto) {
@@ -51,6 +72,7 @@ function apagarTodos() {
 
 function iniciarPartida() {
     clearTimeout(temporizador);
+    clearTimeout(temporizadorCronometro);
     apagarTodos();
 
     sequencia = [];
@@ -64,6 +86,7 @@ function iniciarPartida() {
 
     fecharCartaEpisodio();
     mostrarTela("tela-jogo");
+    rodarCronometro();
     iniciarRodada();
 }
 
@@ -156,6 +179,7 @@ function finalizarPartida(venceu) {
     }
     partidaAtiva = false;
     bloqueado = true;
+    clearTimeout(temporizadorCronometro);
 
     let duracaoSegundos = Math.round((Date.now() - inicioDaPartida) / 1000);
 

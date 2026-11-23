@@ -9,6 +9,7 @@ let tentativas = 0;
 let paresEncontrados = 0;
 let temporizador = null;
 let inicioDaPartida = 0;
+let temporizadorCronometro = null;
 
 let tabuleiro = document.getElementById('board');
 let resultado = document.getElementById('stats');
@@ -29,8 +30,33 @@ function atualizarResultado() {
     }
 }
 
+function formatarTempo(totalSegundos) {
+    let minutos = Math.floor(totalSegundos / 60);
+    let segundos = totalSegundos % 60;
+
+    if (segundos < 10) {
+        return minutos + ':0' + segundos;
+    }
+    return minutos + ':' + segundos;
+}
+
+function atualizarCronometro() {
+    let segundos = 0;
+
+    if (inicioDaPartida != 0) {
+        segundos = Math.floor((Date.now() - inicioDaPartida) / 1000);
+    }
+    document.getElementById('cronometro').innerHTML = 'Tempo: ' + formatarTempo(segundos);
+}
+
+function rodarCronometro() {
+    atualizarCronometro();
+    temporizadorCronometro = setTimeout(rodarCronometro, 1000);
+}
+
 function iniciarJogo() {
     clearTimeout(temporizador);
+    clearTimeout(temporizadorCronometro);
     temporizador = null;
     primeiraCarta = -1;
     segundaCarta = -1;
@@ -68,6 +94,7 @@ function iniciarJogo() {
     }
 
     atualizarResultado();
+    atualizarCronometro();
 }
 
 function esconderCarta(indice) {
@@ -99,6 +126,7 @@ function virarCarta(indice) {
 
     if (inicioDaPartida == 0) {
         inicioDaPartida = Date.now();
+        rodarCronometro();
     }
 
     let botao = document.getElementById('carta' + indice);
@@ -133,6 +161,9 @@ function virarCarta(indice) {
 }
 
 function finalizarPartida() {
+    clearTimeout(temporizadorCronometro);
+    atualizarCronometro();
+
     let duracaoSegundos = Math.round((Date.now() - inicioDaPartida) / 1000);
 
     let carta = escolherCartaMemoria(tentativas);
