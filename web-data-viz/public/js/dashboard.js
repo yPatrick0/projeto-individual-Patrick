@@ -74,12 +74,12 @@ function preencherTabela(partidas, tempos) {
 }
 
 function mostrarSuasPartidas(partidas) {
-    let primeiroNome = sessionStorage.NOME_USUARIO.split(" ")[0];
+    let nome = primeiroNome();
     let total = partidas[0] + partidas[1];
 
-    let texto = primeiroNome + ", você ainda não terminou nenhuma partida com login.";
+    let texto = nome + ", você ainda não terminou nenhuma partida com login.";
     if (total > 0) {
-        texto = primeiroNome + ", você jogou <strong>" + total + "</strong> partida(s): "
+        texto = nome + ", você jogou <strong>" + total + "</strong> partida(s): "
             + partidas[0] + " no jogo da memória e " + partidas[1] + " na Sequência.";
     }
     document.getElementById("suas-partidas").innerHTML = texto;

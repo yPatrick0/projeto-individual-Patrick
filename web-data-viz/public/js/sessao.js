@@ -13,13 +13,25 @@ function sair() {
     window.location = "index.html";
 }
 
+function primeiroNome() {
+    let nome = sessionStorage.NOME_USUARIO;
+    let primeiro = "";
+
+    for (let i = 0; i < nome.length; i++) {
+        if (nome[i] == " ") {
+            return primeiro;
+        }
+        primeiro += nome[i];
+    }
+    return primeiro;
+}
+
 function mostrarUsuarioNoMenu(idDoElemento) {
     let elemento = document.getElementById(idDoElemento);
     if (elemento == null || !usuarioLogado()) {
         return;
     }
 
-    let primeiroNome = sessionStorage.NOME_USUARIO.split(" ")[0];
-    elemento.innerHTML = '<span class="nav-ola">Olá, ' + primeiroNome + '</span>'
+    elemento.innerHTML = '<span class="nav-ola">Olá, ' + primeiroNome() + '</span>'
         + '<button class="button secondary" type="button" onclick="sair()">Sair</button>';
 }
