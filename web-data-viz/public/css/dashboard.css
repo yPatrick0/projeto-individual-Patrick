@@ -275,6 +275,7 @@ button.album-carta:hover {
 }
 
 .album-carta img {
+    object-position: center 20%;
     width: 56px;
     height: 56px;
     margin-bottom: 4px;

@@ -92,6 +92,7 @@
 }
 
 .carta-fotos img {
+    object-position: center 20%;
     width: 52px;
     height: 52px;
     border: 2px solid #fffdf4;
@@ -150,6 +151,12 @@
     margin-bottom: 16px !important;
     color: #56695c;
     font-size: .8rem;
+}
+
+.carta-aviso {
+    margin: -10px 0 16px !important;
+    color: #56695c;
+    font-size: .75rem;
 }
 
 .carta-acoes {

@@ -17,3 +17,5 @@ Registro do uso de IA no projeto **Memórias de Aventura**. Ferramentas: ChatGPT
 | 11 | "Usa só comandos da aula e tira os comentários." | Revisou o código com os guias do Moodle. | Os comandos dos guias de Algoritmos e Strings. |
 | 12 | "Cria o DER das 3 tabelas no meu MySQL." | Gerou o DER no Workbench. | Database → Reverse Engineer. |
 | 13 | "Troca a imagem, escurece os fundos e atualiza a documentação." | Fez os ajustes de imagem e CSS. | Máscara com `rgba(0,0,0,.25)`. |
+| 14 | "Coloca um timer nos dois minijogos mostrando o tempo que passou." | Criou o cronômetro nos dois jogos. | `setTimeout` repetido a cada 1 segundo, `Math.floor` e `%` para mostrar minutos e segundos. |
+| 15 | "Usa as fotos novas nas cartas e mostra em todas a frase, a lição, o episódio em português e onde assistir." | Trocou as fotos, colocou os títulos em português e "HBO Max e YouTube". | Os dados de cada carta ficam num vetor de objetos (`mensagensDosEpisodios`), e a carta só lê esses campos. |

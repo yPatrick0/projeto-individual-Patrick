@@ -108,7 +108,8 @@ function mostrarCartaEpisodio(dados) {
         + '      </div>'
         + '    </div>'
         +      destaque
-        + '    <p class="carta-onde">' + ONDE_ASSISTIR + ' A lição é uma interpretação do autor do site.</p>'
+        + '    <p class="carta-onde"><strong>Onde assistir:</strong> ' + ONDE_ASSISTIR + '</p>'
+        + '    <p class="carta-aviso">A lição é uma interpretação do autor do site.</p>'
         + '    <div class="carta-acoes">' + botoes + '</div>'
         + '  </div>'
         + '</div>';
