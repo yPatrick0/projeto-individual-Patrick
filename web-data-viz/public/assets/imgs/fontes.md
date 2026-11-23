@@ -149,7 +149,7 @@ ampliação em duas etapas com Lanczos e nitidez leve (unsharp mask).
 - `ceu-noturno.webp`: 1200 × 675px → 2400 × 1350px
 
 É uma ampliação artificial: os contornos ficam mais definidos, mas nenhum detalhe novo
-é criado. Os arquivos anteriores foram preservados em `cenarios/originais/`.
+é criado. Os arquivos menores anteriores foram removidos do repositório para não duplicar imagens.
 A solução definitiva continua sendo baixar versões maiores das mesmas cenas
 (candidatos listados acima) e substituir estes arquivos mantendo os mesmos nomes.
 
