@@ -65,23 +65,11 @@ function albumDoUsuario(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
-function partidasDoUsuario(idUsuario) {
-    var instrucaoSql = `
-        SELECT jogo, COUNT(*) AS total_partidas
-        FROM partida
-        WHERE fk_usuario = ${idUsuario}
-        GROUP BY jogo;
-    `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
-}
-
 module.exports = {
     registrar,
     contarPorJogo,
     aproveitamentoMemoria,
     mediaRodadas,
     tempoMedio,
-    albumDoUsuario,
-    partidasDoUsuario
+    albumDoUsuario
 };

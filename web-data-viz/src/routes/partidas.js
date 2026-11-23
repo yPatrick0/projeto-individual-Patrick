@@ -27,8 +27,4 @@ router.get("/album/:idUsuario", function (req, res) {
     partidaController.albumDoUsuario(req, res);
 });
 
-router.get("/usuario/:idUsuario", function (req, res) {
-    partidaController.partidasDoUsuario(req, res);
-});
-
 module.exports = router;

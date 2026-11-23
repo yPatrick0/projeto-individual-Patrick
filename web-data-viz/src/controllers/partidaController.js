@@ -75,96 +75,84 @@ function lerIdUsuario(req) {
 
 function contarPorJogo(req, res) {
     var idUsuario = lerIdUsuario(req);
+
     if (idUsuario == undefined) {
         res.status(400).send("Id de usuário inválido.");
-        return;
+    } else {
+        partidaModel.contarPorJogo(idUsuario)
+            .then(function (resultado) {
+                res.status(200).json(resultado);
+            })
+            .catch(function (erro) {
+                console.log("\nErro ao contar partidas por jogo: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
     }
-    partidaModel.contarPorJogo(idUsuario)
-        .then(function (resultado) {
-            res.status(200).json(resultado);
-        })
-        .catch(function (erro) {
-            console.log("\nErro ao contar partidas por jogo: ", erro.sqlMessage);
-            res.status(500).json(erro.sqlMessage);
-        });
 }
 
 function aproveitamentoMemoria(req, res) {
-    var idUsuario = lerIdUsuario(req);
-    if (idUsuario == undefined) {
-        res.status(400).send("Id de usuário inválido.");
-        return;
-    }
-    partidaModel.aproveitamentoMemoria(idUsuario)
-        .then(function (resultado) {
-            res.status(200).json(resultado[0]);
-        })
-        .catch(function (erro) {
-            console.log("\nErro ao calcular o aproveitamento: ", erro.sqlMessage);
-            res.status(500).json(erro.sqlMessage);
-        });
-}
-
-function mediaRodadas(req, res) {
-    var idUsuario = lerIdUsuario(req);
-    if (idUsuario == undefined) {
-        res.status(400).send("Id de usuário inválido.");
-        return;
-    }
-    partidaModel.mediaRodadas(idUsuario)
-        .then(function (resultado) {
-            res.status(200).json(resultado[0]);
-        })
-        .catch(function (erro) {
-            console.log("\nErro ao calcular a média de rodadas: ", erro.sqlMessage);
-            res.status(500).json(erro.sqlMessage);
-        });
-}
-
-function tempoMedio(req, res) {
-    var idUsuario = lerIdUsuario(req);
-    if (idUsuario == undefined) {
-        res.status(400).send("Id de usuário inválido.");
-        return;
-    }
-    partidaModel.tempoMedio(idUsuario)
-        .then(function (resultado) {
-            res.status(200).json(resultado);
-        })
-        .catch(function (erro) {
-            console.log("\nErro ao calcular o tempo médio: ", erro.sqlMessage);
-            res.status(500).json(erro.sqlMessage);
-        });
-}
-
-function albumDoUsuario(req, res) {
-    var idUsuario = lerIdUsuario(req);
-    if (idUsuario == undefined) {
-        res.status(400).send("Id de usuário inválido.");
-        return;
-    }
-    partidaModel.albumDoUsuario(idUsuario)
-        .then(function (resultado) {
-            res.status(200).json(resultado);
-        })
-        .catch(function (erro) {
-            console.log("\nErro ao buscar o álbum do usuário: ", erro.sqlMessage);
-            res.status(500).json(erro.sqlMessage);
-        });
-}
-
-function partidasDoUsuario(req, res) {
     var idUsuario = lerIdUsuario(req);
 
     if (idUsuario == undefined) {
         res.status(400).send("Id de usuário inválido.");
     } else {
-        partidaModel.partidasDoUsuario(idUsuario)
+        partidaModel.aproveitamentoMemoria(idUsuario)
+            .then(function (resultado) {
+                res.status(200).json(resultado[0]);
+            })
+            .catch(function (erro) {
+                console.log("\nErro ao calcular o aproveitamento: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
+
+function mediaRodadas(req, res) {
+    var idUsuario = lerIdUsuario(req);
+
+    if (idUsuario == undefined) {
+        res.status(400).send("Id de usuário inválido.");
+    } else {
+        partidaModel.mediaRodadas(idUsuario)
+            .then(function (resultado) {
+                res.status(200).json(resultado[0]);
+            })
+            .catch(function (erro) {
+                console.log("\nErro ao calcular a média de rodadas: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
+
+function tempoMedio(req, res) {
+    var idUsuario = lerIdUsuario(req);
+
+    if (idUsuario == undefined) {
+        res.status(400).send("Id de usuário inválido.");
+    } else {
+        partidaModel.tempoMedio(idUsuario)
             .then(function (resultado) {
                 res.status(200).json(resultado);
             })
             .catch(function (erro) {
-                console.log("\nErro ao buscar as partidas do usuário: ", erro.sqlMessage);
+                console.log("\nErro ao calcular o tempo médio: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
+
+function albumDoUsuario(req, res) {
+    var idUsuario = lerIdUsuario(req);
+
+    if (idUsuario == undefined) {
+        res.status(400).send("Id de usuário inválido.");
+    } else {
+        partidaModel.albumDoUsuario(idUsuario)
+            .then(function (resultado) {
+                res.status(200).json(resultado);
+            })
+            .catch(function (erro) {
+                console.log("\nErro ao buscar o álbum do usuário: ", erro.sqlMessage);
                 res.status(500).json(erro.sqlMessage);
             });
     }
@@ -176,6 +164,5 @@ module.exports = {
     aproveitamentoMemoria,
     mediaRodadas,
     tempoMedio,
-    albumDoUsuario,
-    partidasDoUsuario
+    albumDoUsuario
 };

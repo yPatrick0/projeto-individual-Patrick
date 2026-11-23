@@ -106,6 +106,7 @@ function carregarPainel() {
                 partidas[i] = valorDoJogo(linhas, codigosDosJogos[i], "total_partidas");
                 totalDePartidas = totalDePartidas + partidas[i];
             }
+            mostrarSuasPartidas(partidas);
 
             if (totalDePartidas == 0) {
                 limparKpis();
@@ -229,31 +230,17 @@ function abrirCartaDoAlbum(idMensagem, vezes) {
     });
 }
 
-function carregarPartidasDoUsuario() {
-    let idUsuario = idDoUsuarioLogado();
+function mostrarSuasPartidas(partidas) {
     let primeiroNome = sessionStorage.NOME_USUARIO.split(" ")[0];
+    let total = partidas[0] + partidas[1];
 
-    fetch(enderecoApi("/partidas/usuario/" + idUsuario))
-        .then(function (resposta) {
-            return resposta.json();
-        })
-        .then(function (linhas) {
-            let memoria = valorDoJogo(linhas, "memoria", "total_partidas");
-            let sequencia = valorDoJogo(linhas, "sequencia", "total_partidas");
-            let total = memoria + sequencia;
-
-            let texto = primeiroNome + ", você ainda não terminou nenhuma partida com login.";
-            if (total > 0) {
-                texto = primeiroNome + ", você jogou <strong>" + total + "</strong> partida(s): "
-                    + memoria + " no jogo da memória e " + sequencia + " na Sequência.";
-            }
-            document.getElementById("suas-partidas").innerHTML = texto;
-        })
-        .catch(function (erro) {
-            console.log("Erro ao buscar as partidas do usuário: " + erro);
-        });
+    let texto = primeiroNome + ", você ainda não terminou nenhuma partida com login.";
+    if (total > 0) {
+        texto = primeiroNome + ", você jogou <strong>" + total + "</strong> partida(s): "
+            + partidas[0] + " no jogo da memória e " + partidas[1] + " na Sequência.";
+    }
+    document.getElementById("suas-partidas").innerHTML = texto;
 }
 
 mostrarUsuarioNoMenu("nav-usuario");
 carregarPainel();
-carregarPartidasDoUsuario();
