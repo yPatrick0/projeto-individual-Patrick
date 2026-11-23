@@ -216,6 +216,8 @@ function mostrarResultado(resultado) {
     }
 
     document.getElementById("res-rodadas").innerHTML = resultado.rodadasConcluidas + " de " + resultado.totalRodadas;
+    let aproveitamento = resultado.rodadasConcluidas / resultado.totalRodadas * 100;
+    document.getElementById("res-aproveitamento").innerHTML = aproveitamento.toFixed(0) + "%";
     document.getElementById("res-erros").innerHTML = resultado.erros;
     document.getElementById("res-duracao").innerHTML = resultado.duracaoSegundos + " s";
     document.getElementById("res-partidas").innerHTML = "Partidas concluídas nesta visita: " + partidasNestaVisita;
