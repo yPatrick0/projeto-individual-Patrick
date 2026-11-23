@@ -14,6 +14,11 @@ let temporizadorCronometro = null;
 let tabuleiro = document.getElementById('board');
 let resultado = document.getElementById('stats');
 
+function calcularAproveitamento() {
+    let aproveitamento = paresEncontrados / tentativas * 100;
+    return aproveitamento.toFixed(0);
+}
+
 function atualizarResultado() {
     let mensagem = '';
 
@@ -26,6 +31,7 @@ function atualizarResultado() {
 
     if (paresEncontrados == personagens.length) {
         resultado.innerHTML = resultado.innerHTML
+            + ' · ' + calcularAproveitamento() + '% de acerto'
             + ' <button type="button" class="botao-ver-carta" onclick="reabrirCartaEpisodio()">Ver carta</button>';
     }
 }
@@ -164,7 +170,7 @@ function finalizarPartida() {
     setTimeout(function () {
         mostrarCartaEpisodio({
             mensagem: mensagem,
-            resumo: 'Jogo da memória concluído · 6 pares em ' + tentativas + ' tentativas',
+            resumo: 'Jogo da memória concluído · ' + calcularAproveitamento() + '% de acerto em ' + tentativas + ' tentativas',
             motivo: carta.motivo,
             jogo: 'memoria'
         });
