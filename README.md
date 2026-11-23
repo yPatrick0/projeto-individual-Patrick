@@ -13,7 +13,7 @@ O **Memórias de Aventura** é um site que leva Hora de Aventura para outro luga
 
 No site, o usuário joga dois minijogos personalizados com personagens da série. Ao terminar cada partida, ele recebe uma frase curta ligada a um personagem e o nome do episódio de onde ela vem. Assim, pode levar a lição em poucos segundos ou procurar o episódio para assistir inteiro.
 
-Os resultados das partidas serão gravados no banco de dados e exibidos em um dashboard com indicadores.
+Os resultados das partidas são gravados no banco de dados e exibidos em um dashboard com indicadores.
 
 ---
 
@@ -27,7 +27,7 @@ Tenho TDAH e sou autista (TEA). Durante toda a vida, fiz jogos de memória e de 
 
 O Finn é corajoso, leal, quer sempre ajudar e sente tudo com intensidade, como eu. Ao longo da série, ele passa pela decepção de não ser correspondido pela Princesa Jujuba e aprende a lidar com isso sem deixar de ser quem é. Esses episódios me ajudaram várias vezes.
 
-> “Ser ruim em alguma coisa é o primeiro passo para ficar meio bom nela.” — Jake, em *His Hero* (tradução livre)
+> “Ser ruim em alguma coisa é o primeiro passo para ficar meio bom nela.” — Jake, em *O Herói Dele* (tradução livre)
 
 ---
 
@@ -36,9 +36,9 @@ O Finn é corajoso, leal, quer sempre ajudar e sente tudo com intensidade, como 
 | Jogo da memória | Sequência de Hora de Aventura |
 | --- | --- |
 | ![Jogo da memória](docs/imagens/jogo-da-memoria.jpg) | ![Sequência de Hora de Aventura](docs/imagens/sequencia-hora-de-aventura.jpg) |
-| Vire duas cartas por vez e encontre os seis pares de personagens. O site conta as tentativas. | Finn, Jake, Marceline e BMO se acendem em uma ordem que você precisa repetir. São 6 rodadas, e você tem 3 vidas. |
+| Vire duas cartas por vez e encontre os seis pares de personagens. O site conta as tentativas, o tempo e mostra a % de acerto no fim. | Finn, Jake, Marceline e BMO se acendem em uma ordem que você precisa repetir. São 6 rodadas, 3 vidas e um cronômetro. No fim aparece o aproveitamento (rodadas ÷ 6 × 100). |
 
-Ao final de cada partida, ganhando ou perdendo, aparece a **carta de um episódio**: a foto do personagem, a frase dele (quando já conferida), a lição e o episódio para assistir. A carta não é só sorteada: ela depende de como foi a partida. Quem errou bastante e terminou recebe *His Hero* ("errar faz parte de aprender"); quem chegou longe na Sequência e perdeu recebe *The Hall of Egress* ("persistir também pode significar mudar de estratégia"). Exemplo de frase: em *Puhoy* (T5, ep. 16), Jake diz a Finn: “Você tá se enrolando nos seus problemas imaginários.” As mensagens ficam em [`web-data-viz/public/js/mensagens-episodios.js`](web-data-viz/public/js/mensagens-episodios.js) e as regras da escolha em [`web-data-viz/public/js/carta-episodio.js`](web-data-viz/public/js/carta-episodio.js).
+Ao final de cada partida, ganhando ou perdendo, aparece a **carta de um episódio**: a foto do personagem, a frase dele (quando já conferida), a lição e o episódio para assistir. A carta não é só sorteada: ela depende de como foi a partida. Quem errou bastante e terminou recebe *O Herói Dele* ("errar faz parte de aprender"); quem chegou longe na Sequência e perdeu recebe *O Salão de Saída* ("persistir também pode significar mudar de estratégia"). Exemplo de frase: em *Puhoy* (T5, ep. 16), Jake diz a Finn: “Você tá se enrolando nos seus problemas imaginários.” As mensagens ficam em [`web-data-viz/public/js/mensagens-episodios.js`](web-data-viz/public/js/mensagens-episodios.js) e as regras da escolha em [`web-data-viz/public/js/carta-episodio.js`](web-data-viz/public/js/carta-episodio.js).
 
 **Conta de usuário:** crie uma conta em `cadastro.html` e entre em `login.html`. Com login, suas partidas ficam salvas no seu nome e o painel mostra quantas você jogou. Sem login, dá para jogar normalmente, e a partida é salva como anônima.
 
@@ -99,7 +99,7 @@ Os relacionamentos são 1:N: um usuário joga várias partidas, e uma mensagem a
 ## 🛠️ Tecnologias
 
 - **Front-end:** HTML, CSS e JavaScript
-- **Back-end:** Node.js, com a base Web Data Viz/AquaTech da turma
+- **Back-end:** Node.js, com a base Web Data Viz da turma (só com as rotas do projeto: usuários e partidas)
 - **Banco de dados:** MySQL, em uma VM Linux Ubuntu
 - **Gráficos:** Chart.js
 - **Ferramentas:** Git, GitHub, VS Code e Trello
@@ -111,7 +111,7 @@ Os relacionamentos são 1:N: um usuário joga várias partidas, e uma mensagem a
 ```
 projeto-individual-Patrick/
 ├── banco-de-dados/        → DER (imagem e modelo .mwb do Workbench) e script SQL
-├── docs/                  → planejamento, diário de prompts, imagens e histórico
+├── docs/                  → planejamento, guia da VM, diário de prompts, imagens e histórico
 ├── ti/                    → documentação acadêmica
 ├── web-data-viz/          → aplicação (site + API)
 │   ├── public/            → páginas, CSS, JavaScript e imagens
@@ -124,7 +124,7 @@ projeto-individual-Patrick/
 
 ## ▶️ Como executar
 
-1. No MySQL (na VM Linux), rode o arquivo `banco-de-dados/script.sql` inteiro.
+1. No MySQL da VM Linux, rode o arquivo `banco-de-dados/script.sql` inteiro. O passo a passo da VM está em [`docs/vm-ubuntu.md`](docs/vm-ubuntu.md).
 2. No terminal:
 
 ```bash
