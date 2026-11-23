@@ -82,15 +82,9 @@ function iniciarJogo() {
 
     for (let i = 0; i < cartas.length; i++) {
         cartasEncontradas.push(false);
-
-        let botao = document.createElement('button');
-        botao.id = 'carta' + i;
-        botao.className = 'card';
-        botao.innerHTML = '<img class="card-back" src="assets/imgs/verso-ooo.svg" alt="">';
-        botao.setAttribute('type', 'button');
-        botao.setAttribute('aria-label', 'Virar carta ' + (i + 1));
-        botao.setAttribute('onclick', 'virarCarta(' + i + ')');
-        tabuleiro.appendChild(botao);
+        tabuleiro.innerHTML += '<button type="button" class="card" id="carta' + i + '" onclick="virarCarta(' + i + ')">'
+            + '<img class="card-back" src="assets/imgs/verso-ooo.svg" alt="Carta ' + (i + 1) + '">'
+            + '</button>';
     }
 
     atualizarResultado();
@@ -99,9 +93,8 @@ function iniciarJogo() {
 
 function esconderCarta(indice) {
     let botao = document.getElementById('carta' + indice);
-    botao.innerHTML = '<img class="card-back" src="assets/imgs/verso-ooo.svg" alt="">';
+    botao.innerHTML = '<img class="card-back" src="assets/imgs/verso-ooo.svg" alt="Carta ' + (indice + 1) + '">';
     botao.className = 'card';
-    botao.setAttribute('aria-label', 'Virar carta ' + (indice + 1));
 }
 
 function esconderCartas() {
@@ -116,7 +109,7 @@ function marcarPar(indice) {
     let botao = document.getElementById('carta' + indice);
     cartasEncontradas[indice] = true;
     botao.className = 'card open done';
-    botao.setAttribute('disabled', '');
+    botao.disabled = true;
 }
 
 function virarCarta(indice) {
@@ -132,9 +125,8 @@ function virarCarta(indice) {
     let botao = document.getElementById('carta' + indice);
     let personagemDaCarta = cartas[indice];
     botao.innerHTML = '<img class="card-face portrait-' + personagens[personagemDaCarta]
-        + '" src="assets/imgs/' + fotos[personagemDaCarta] + '" alt="">';
+        + '" src="assets/imgs/' + fotos[personagemDaCarta] + '" alt="' + nomes[personagemDaCarta] + '">';
     botao.className = 'card open';
-    botao.setAttribute('aria-label', nomes[personagemDaCarta]);
 
     if (primeiraCarta == -1) {
         primeiraCarta = indice;
@@ -190,5 +182,4 @@ function finalizarPartida() {
     });
 }
 
-document.getElementById('reset').setAttribute('onclick', 'iniciarJogo()');
 iniciarJogo();
