@@ -149,7 +149,7 @@ Se o PowerShell bloquear o `npm`, use `npm.cmd start`.
 
 ## 🤖 Uso de IA
 
-A IA é usada como apoio ao aprendizado. Cada uso fica registrado em [`docs/diario-de-prompts.md`](docs/diario-de-prompts.md). O histórico detalhado das etapas anteriores está em [`docs/historico/`](docs/historico/).
+A IA é usada como apoio ao aprendizado. Cada uso fica registrado em [`docs/diario-de-prompts.md`](docs/diario-de-prompts.md). 
 
 ---
 
