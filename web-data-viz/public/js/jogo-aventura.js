@@ -11,7 +11,7 @@ let rodadaAtual = 0;
 let rodadasConcluidas = 0;
 let erros = 0;
 let vidas = VIDAS_INICIAIS;
-let inicioDaPartida = 0;
+let segundosDaPartida = 0;
 let partidaAtiva = false;
 let bloqueado = true;
 let temporizador = null;
@@ -42,13 +42,13 @@ function formatarTempo(totalSegundos) {
 }
 
 function atualizarCronometro() {
-    let segundos = Math.floor((Date.now() - inicioDaPartida) / 1000);
-    document.getElementById("placar-tempo").innerHTML = "Tempo: " + formatarTempo(segundos);
+    document.getElementById("placar-tempo").innerHTML = "Tempo: " + formatarTempo(segundosDaPartida);
 }
 
-function rodarCronometro() {
+function contarSegundo() {
+    segundosDaPartida++;
     atualizarCronometro();
-    temporizadorCronometro = setTimeout(rodarCronometro, 1000);
+    temporizadorCronometro = setTimeout(contarSegundo, 1000);
 }
 
 function escreverMensagem(texto) {
@@ -83,13 +83,14 @@ function iniciarPartida() {
     rodadasConcluidas = 0;
     erros = 0;
     vidas = VIDAS_INICIAIS;
-    inicioDaPartida = Date.now();
+    segundosDaPartida = 0;
     partidaAtiva = true;
     bloqueado = true;
 
     fecharCartaEpisodio();
     mostrarTela("tela-jogo");
-    rodarCronometro();
+    atualizarCronometro();
+    temporizadorCronometro = setTimeout(contarSegundo, 1000);
     iniciarRodada();
 }
 
@@ -184,7 +185,7 @@ function finalizarPartida(venceu) {
     bloqueado = true;
     clearTimeout(temporizadorCronometro);
 
-    let duracaoSegundos = Math.round((Date.now() - inicioDaPartida) / 1000);
+    let duracaoSegundos = segundosDaPartida;
 
     let carta = escolherCartaSequencia(venceu, rodadasConcluidas, erros);
     let mensagem = carta.mensagem;
