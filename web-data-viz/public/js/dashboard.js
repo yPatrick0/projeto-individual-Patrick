@@ -92,6 +92,9 @@ function mostrarPainelVazio() {
 }
 
 function carregarPainel() {
+    document.getElementById("aviso-dados").hidden = true;
+    carregarAlbum();
+
     fetch(enderecoApi("/partidas/por-jogo/" + idDoUsuarioLogado())).then(function (resposta) {
         if (resposta.ok) {
             resposta.json().then(function (linhas) {
@@ -223,4 +226,3 @@ function abrirCartaDoAlbum(idMensagem, vezes) {
 
 mostrarUsuarioNoMenu("nav-usuario");
 carregarPainel();
-carregarAlbum();

@@ -35,26 +35,9 @@ O CSS utiliza `object-fit: cover` e `object-position: 50% 20%`, sem distorcer a 
 mantendo o rosto, o chapéu e parte do baixo visíveis. A imagem antiga foi preservada.
 Origem anterior ao ZIP e permissão de publicação não foram informadas.
 
-## Retratos WebP anteriores preservados
+## Retratos recortados removidos
 
-Todos os arquivos `*-rosto.webp` têm 480 × 480 pixels. Cada imagem foi examinada e
-recortada individualmente; as duas cartas de cada par referenciam exatamente o mesmo
-arquivo. As coordenadas abaixo são `(x, y, largura, altura)` na imagem de origem.
-Recortes ampliados não acrescentam detalhes à resolução da fonte.
-
-| Arquivo local | Origem | Preparação |
-| --- | --- | --- |
-| `finn-rosto.webp` | `finn.webp`, recebido no ZIP `Prototipo_Hora_de_Aventura_Editavel.zip` | Recorte `(125, 65, 310, 310)`, preservando chapéu e rosto |
-| `jake-rosto.webp` | `jake.webp`, recebido no mesmo ZIP | Recorte `(15, 80, 300, 298)`, destacando rosto e focinho |
-| `marceline-rosto.webp` | `marceline.webp`, recebido no mesmo ZIP | Recorte `(290, 100, 310, 310)`, mostrando rosto, cabelo e parte do baixo |
-| `bmo-rosto.webp` | [Página do PNG Mart](https://www.pngmart.com/image/207563) · [PNG baixado](https://www.pngmart.com/files/13/Adventure-Time-BMO-Background-PNG.png) | Recorte `(260, 50, 560, 560)`; fundo verde-claro para a transparência |
-| `rei-gelado-rosto.webp` | [Página do arquivo na Wikipédia](https://en.wikipedia.org/wiki/File:Ice_King.png) · [PNG baixado](https://upload.wikimedia.org/wikipedia/en/7/78/Ice_King.png) | Recorte `(25, 0, 245, 245)`; fundo azul-claro, preservando a coroa |
-| `princesa-jujuba-rosto.webp` | [Página do PNG Mart](https://www.pngmart.com/image/208937) · [PNG baixado](https://www.pngmart.com/files/13/Adventure-Time-Princess-Transparent-Background.png) | Recorte `(380, 80, 460, 460)`; fundo rosa-claro, cabelo e coroa destacados |
-
-As páginas do PNG Mart descrevem as imagens como destinadas a uso pessoal;
-isso não estabelece autorização para redistribuição pública ou uso comercial.
-A imagem do Rei Gelado aparece na Wikipédia em inglês como material de personagem
-protegido por direitos autorais, não como uma fotografia de licença livre.
+Os recortes `*-rosto.webp` (480 × 480px) não eram usados pelo site nem pelo protótipo e foram removidos do repositório. As origens e os recortes continuam registrados no histórico do Git.
 
 ## Imagens anteriores preservadas
 

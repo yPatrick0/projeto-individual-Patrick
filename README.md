@@ -58,6 +58,8 @@ Ao final de cada partida, ganhando ou perdendo, aparece a **carta de um episódi
 
 O painel fica em `/dashboard.html`, exige login e usa Chart.js. Cada pessoa vê só os próprios resultados (as consultas filtram pelo `fk_usuario` de quem está logado): os indicadores, quantas partidas jogou e o álbum com as cartas de episódios que já recebeu (as outras aparecem bloqueadas; clicar numa carta aberta mostra a carta inteira). Partidas jogadas sem login são gravadas, mas não aparecem em nenhum painel. Cada partida terminada é enviada pela API e gravada no MySQL.
 
+![Dashboard com os indicadores, os gráficos e o álbum](docs/imagens/dashboard.jpg)
+
 ![Fluxo de dados](docs/imagens/fluxo-dados.png)
 
 ---
@@ -91,7 +93,7 @@ Os relacionamentos são 1:N: um usuário joga várias partidas, e uma mensagem a
 - ✅ Aplicação de cálculos matemáticos nos indicadores
 - ✅ VM Linux contendo somente o banco de dados
 - ✅ Dashboard com gráficos (Chart.js)
-- ✅ Apresentação para a banca
+- ✅ Apresentação para a banca ([`ti/apresentacao.pptx`](ti/apresentacao.pptx))
 - ✅ Diário de Prompts ([`docs/diario-de-prompts.md`](docs/diario-de-prompts.md))
 
 ---
@@ -111,12 +113,11 @@ Os relacionamentos são 1:N: um usuário joga várias partidas, e uma mensagem a
 ```
 projeto-individual-Patrick/
 ├── banco-de-dados/        → DER (imagem e modelo .mwb do Workbench) e script SQL
-├── docs/                  → planejamento, guia da VM, diário de prompts, imagens e histórico
-├── ti/                    → documentação acadêmica
+├── docs/                  → guia da VM, diário de prompts e imagens
+├── ti/                    → documentação acadêmica e slides da banca
 ├── web-data-viz/          → aplicação (site + API)
 │   ├── public/            → páginas, CSS, JavaScript e imagens
 │   └── src/               → rotas, controllers, models e conexão com o banco
-├── AGENTS.md              → regras para assistentes de IA neste projeto
 └── Prototipo_Hora_de_Aventura.html → protótipo histórico (referência)
 ```
 
