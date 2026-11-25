@@ -10,14 +10,10 @@ let paresEncontrados = 0;
 let temporizador = null;
 let segundosDaPartida = 0;
 let temporizadorCronometro = null;
+let aproveitamento = 0;
 
 let tabuleiro = document.getElementById('board');
 let resultado = document.getElementById('stats');
-
-function calcularAproveitamento() {
-    let aproveitamento = paresEncontrados / tentativas * 100;
-    return aproveitamento.toFixed(0);
-}
 
 function atualizarResultado() {
     let mensagem = '';
@@ -31,23 +27,20 @@ function atualizarResultado() {
 
     if (paresEncontrados == personagens.length) {
         resultado.innerHTML = resultado.innerHTML
-            + ' · ' + calcularAproveitamento() + '% de acerto'
+            + ' · ' + aproveitamento + '% de acerto'
             + ' <button type="button" class="botao-ver-carta" onclick="reabrirCartaEpisodio()">Ver carta</button>';
     }
 }
 
-function formatarTempo(totalSegundos) {
-    let minutos = Math.floor(totalSegundos / 60);
-    let segundos = totalSegundos % 60;
+function atualizarCronometro() {
+    let minutos = Math.floor(segundosDaPartida / 60);
+    let segundos = segundosDaPartida % 60;
+    let zero = '';
 
     if (segundos < 10) {
-        return minutos + ':0' + segundos;
+        zero = '0';
     }
-    return minutos + ':' + segundos;
-}
-
-function atualizarCronometro() {
-    document.getElementById('cronometro').innerHTML = 'Tempo: ' + formatarTempo(segundosDaPartida);
+    document.getElementById('cronometro').innerHTML = 'Tempo: ' + minutos + ':' + zero + segundos;
 }
 
 function contarSegundo() {
@@ -116,58 +109,53 @@ function marcarPar(indice) {
 }
 
 function virarCarta(indice) {
-    if (temporizador != null || primeiraCarta == indice || cartasEncontradas[indice]) {
-        return;
-    }
-
-    if (temporizadorCronometro == null) {
-        temporizadorCronometro = setTimeout(contarSegundo, 1000);
-    }
-
-    let botao = document.getElementById('carta' + indice);
-    let personagemDaCarta = cartas[indice];
-    botao.innerHTML = '<img class="card-face portrait-' + personagens[personagemDaCarta]
-        + '" src="assets/imgs/' + fotos[personagemDaCarta] + '" alt="' + nomes[personagemDaCarta] + '">';
-    botao.className = 'card open';
-
-    if (primeiraCarta == -1) {
-        primeiraCarta = indice;
-    } else {
-        segundaCarta = indice;
-        tentativas++;
-
-        if (cartas[primeiraCarta] == cartas[segundaCarta]) {
-            paresEncontrados++;
-            marcarPar(primeiraCarta);
-            marcarPar(segundaCarta);
-            primeiraCarta = -1;
-            segundaCarta = -1;
-
-            if (paresEncontrados == personagens.length) {
-                finalizarPartida();
-            }
-        } else {
-            temporizador = setTimeout(esconderCartas, 750);
+    if (temporizador == null && primeiraCarta != indice && !cartasEncontradas[indice]) {
+        if (temporizadorCronometro == null) {
+            temporizadorCronometro = setTimeout(contarSegundo, 1000);
         }
 
-        atualizarResultado();
+        let botao = document.getElementById('carta' + indice);
+        let personagemDaCarta = cartas[indice];
+        botao.innerHTML = '<img class="card-face portrait-' + personagens[personagemDaCarta]
+            + '" src="assets/imgs/' + fotos[personagemDaCarta] + '" alt="' + nomes[personagemDaCarta] + '">';
+        botao.className = 'card open';
+
+        if (primeiraCarta == -1) {
+            primeiraCarta = indice;
+        } else {
+            segundaCarta = indice;
+            tentativas++;
+
+            if (cartas[primeiraCarta] == cartas[segundaCarta]) {
+                paresEncontrados++;
+                marcarPar(primeiraCarta);
+                marcarPar(segundaCarta);
+                primeiraCarta = -1;
+                segundaCarta = -1;
+
+                if (paresEncontrados == personagens.length) {
+                    finalizarPartida();
+                }
+            } else {
+                temporizador = setTimeout(esconderCartas, 750);
+            }
+
+            atualizarResultado();
+        }
     }
 }
 
 function finalizarPartida() {
     clearTimeout(temporizadorCronometro);
-    let duracaoSegundos = segundosDaPartida;
+    aproveitamento = (paresEncontrados / tentativas * 100).toFixed(0);
+    escolherCartaMemoria(tentativas);
 
-    let carta = escolherCartaMemoria(tentativas);
-    let mensagem = carta.mensagem;
+    let idCarta = idDaCarta;
+    let resumo = 'Jogo da memória concluído · ' + aproveitamento + '% de acerto em ' + tentativas + ' tentativas';
+    let motivo = motivoDaCarta;
 
     setTimeout(function () {
-        mostrarCartaEpisodio({
-            mensagem: mensagem,
-            resumo: 'Jogo da memória concluído · ' + calcularAproveitamento() + '% de acerto em ' + tentativas + ' tentativas',
-            motivo: carta.motivo,
-            jogo: 'memoria'
-        });
+        mostrarCartaEpisodio(idCarta, resumo, motivo, 'memoria');
     }, 700);
 
     registrarPartida({
@@ -177,8 +165,8 @@ function finalizarPartida() {
         paresEncontrados: paresEncontrados,
         rodadasConcluidas: '',
         erros: tentativas - paresEncontrados,
-        duracaoSegundos: duracaoSegundos,
-        idMensagem: mensagem.id
+        duracaoSegundos: segundosDaPartida,
+        idMensagem: idCarta
     });
 }
 

@@ -1,9 +1,7 @@
-function usuarioLogado() {
-    return sessionStorage.ID_USUARIO != undefined;
-}
+let primeiroNome = "";
 
 function validarSessao() {
-    if (!usuarioLogado()) {
+    if (sessionStorage.ID_USUARIO == undefined) {
         window.location = "login.html";
     }
 }
@@ -13,25 +11,23 @@ function sair() {
     window.location = "index.html";
 }
 
-function primeiroNome() {
+function pegarPrimeiroNome() {
     let nome = sessionStorage.NOME_USUARIO;
-    let primeiro = "";
+    let i = 0;
+    primeiroNome = "";
 
-    for (let i = 0; i < nome.length; i++) {
-        if (nome[i] == " ") {
-            return primeiro;
-        }
-        primeiro += nome[i];
+    while (i < nome.length && nome[i] != " ") {
+        primeiroNome += nome[i];
+        i++;
     }
-    return primeiro;
 }
 
 function mostrarUsuarioNoMenu(idDoElemento) {
     let elemento = document.getElementById(idDoElemento);
-    if (elemento == null || !usuarioLogado()) {
-        return;
-    }
 
-    elemento.innerHTML = '<span class="nav-ola">Olá, ' + primeiroNome() + '</span>'
-        + '<button class="button secondary" type="button" onclick="sair()">Sair</button>';
+    if (elemento != null && sessionStorage.ID_USUARIO != undefined) {
+        pegarPrimeiroNome();
+        elemento.innerHTML = '<span class="nav-ola">Olá, ' + primeiroNome + '</span>'
+            + '<button class="button secondary" type="button" onclick="sair()">Sair</button>';
+    }
 }

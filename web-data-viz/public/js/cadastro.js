@@ -4,7 +4,10 @@ let letrasMaiusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 let letrasMinusculas = "abcdefghijklmnopqrstuvwxyz";
 let numeros = "0123456789";
 
-function conferirRegrasDaSenha(senha) {
+let regras = [];
+let cumpridas = 0;
+
+function conferirSenha(senha) {
     let temMaiuscula = false;
     let temMinuscula = false;
     let temNumero = false;
@@ -24,23 +27,18 @@ function conferirRegrasDaSenha(senha) {
         }
     }
 
-    return [senha.length >= 8, temMaiuscula, temMinuscula, temNumero, temEspecial];
-}
-
-function contarRegrasCumpridas(senha) {
-    let regras = conferirRegrasDaSenha(senha);
-    let cumpridas = 0;
+    regras = [senha.length >= 8, temMaiuscula, temMinuscula, temNumero, temEspecial];
+    cumpridas = 0;
     for (let i = 0; i < regras.length; i++) {
         if (regras[i]) {
             cumpridas++;
         }
     }
-    return cumpridas;
 }
 
 function verificarSenha() {
     let senha = document.getElementById("senha").value;
-    let regras = conferirRegrasDaSenha(senha);
+    conferirSenha(senha);
 
     for (let i = 0; i < idsDasRegras.length; i++) {
         let item = document.getElementById(idsDasRegras[i]);
@@ -51,7 +49,6 @@ function verificarSenha() {
         }
     }
 
-    let cumpridas = contarRegrasCumpridas(senha);
     let barra = document.getElementById("barra-forca");
     let texto = document.getElementById("texto-forca");
 
@@ -91,10 +88,6 @@ function verificarConfirmacao() {
     }
 }
 
-function emailValido(email) {
-    return email.includes("@") && email.includes(".");
-}
-
 function verificarEmail() {
     let email = document.getElementById("email").value;
     let dica = document.getElementById("dica-email");
@@ -102,7 +95,7 @@ function verificarEmail() {
     if (email == "") {
         dica.innerHTML = "";
         dica.className = "dica-campo";
-    } else if (!emailValido(email)) {
+    } else if (!email.includes("@") || !email.includes(".")) {
         dica.innerHTML = "✗ O e-mail precisa ter @ e ponto (ex.: finn@email.com)";
         dica.className = "dica-campo dica-falta";
     } else {
@@ -122,22 +115,21 @@ function cadastrar() {
     let email = document.getElementById("email").value;
     let senha = document.getElementById("senha").value;
     let confirmacao = document.getElementById("confirmacao-senha").value;
+    conferirSenha(senha);
 
     if (nome == "" || email == "" || senha == "" || confirmacao == "") {
         mostrarMensagemCadastro("Preencha todos os campos.", "erro");
     } else if (nome.length < 2) {
         mostrarMensagemCadastro("O nome precisa ter pelo menos 2 letras.", "erro");
-    } else if (!emailValido(email)) {
+    } else if (!email.includes("@") || !email.includes(".")) {
         mostrarMensagemCadastro("Digite um e-mail válido, com @ e ponto.", "erro");
-    } else if (contarRegrasCumpridas(senha) < idsDasRegras.length) {
+    } else if (cumpridas < idsDasRegras.length) {
         mostrarMensagemCadastro("A senha ainda não está forte. Veja os itens com ✗ abaixo da senha.", "erro");
     } else if (senha != confirmacao) {
         mostrarMensagemCadastro("As senhas não são iguais.", "erro");
     } else {
         enviarCadastro(nome, email, senha);
     }
-
-    return false;
 }
 
 function enviarCadastro(nome, email, senha) {
@@ -145,7 +137,7 @@ function enviarCadastro(nome, email, senha) {
     botao.disabled = true;
     mostrarMensagemCadastro("Cadastrando...", "info");
 
-    fetch(enderecoApi("/usuarios/cadastrar"), {
+    fetch("/usuarios/cadastrar", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

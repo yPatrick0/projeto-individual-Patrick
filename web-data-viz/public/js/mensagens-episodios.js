@@ -79,17 +79,3 @@ const mensagensDosEpisodios = [
 ];
 
 const ONDE_ASSISTIR = "HBO Max e YouTube";
-
-function buscarMensagem(id) {
-    for (let i = 0; i < mensagensDosEpisodios.length; i++) {
-        if (mensagensDosEpisodios[i].id == id) {
-            return mensagensDosEpisodios[i];
-        }
-    }
-    return mensagensDosEpisodios[0];
-}
-
-function sortearMensagem(listaDeIds) {
-    let posicao = Math.floor(Math.random() * listaDeIds.length);
-    return buscarMensagem(listaDeIds[posicao]);
-}

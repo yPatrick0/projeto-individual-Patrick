@@ -1,8 +1,5 @@
 const TOTAL_RODADAS = 6;
 const VIDAS_INICIAIS = 3;
-const TEMPO_ACESO = 600;
-const TEMPO_ENTRE = 250;
-const TEMPO_ENTRE_RODADAS = 1200;
 const nomesDosPersonagens = ["Finn", "Jake", "Marceline", "BMO"];
 
 let sequencia = [];
@@ -16,7 +13,6 @@ let partidaAtiva = false;
 let bloqueado = true;
 let temporizador = null;
 let temporizadorCronometro = null;
-
 let partidasNestaVisita = 0;
 
 function mostrarTela(idDaTela) {
@@ -31,18 +27,15 @@ function atualizarPlacar() {
     document.getElementById("placar-vidas").innerHTML = "Vidas: " + vidas;
 }
 
-function formatarTempo(totalSegundos) {
-    let minutos = Math.floor(totalSegundos / 60);
-    let segundos = totalSegundos % 60;
+function atualizarCronometro() {
+    let minutos = Math.floor(segundosDaPartida / 60);
+    let segundos = segundosDaPartida % 60;
+    let zero = "";
 
     if (segundos < 10) {
-        return minutos + ":0" + segundos;
+        zero = "0";
     }
-    return minutos + ":" + segundos;
-}
-
-function atualizarCronometro() {
-    document.getElementById("placar-tempo").innerHTML = "Tempo: " + formatarTempo(segundosDaPartida);
+    document.getElementById("placar-tempo").innerHTML = "Tempo: " + minutos + ":" + zero + segundos;
 }
 
 function contarSegundo() {
@@ -55,16 +48,12 @@ function escreverMensagem(texto) {
     document.getElementById("mensagem-jogo").innerHTML = texto;
 }
 
-function classeDoBotao(indice) {
-    return "av-personagem av-" + nomesDosPersonagens[indice].toLowerCase();
-}
-
 function acender(indice) {
-    document.getElementById("botao-" + indice).className = classeDoBotao(indice) + " av-aceso";
+    document.getElementById("botao-" + indice).className = "av-personagem av-" + nomesDosPersonagens[indice].toLowerCase() + " av-aceso";
 }
 
 function apagar(indice) {
-    document.getElementById("botao-" + indice).className = classeDoBotao(indice);
+    document.getElementById("botao-" + indice).className = "av-personagem av-" + nomesDosPersonagens[indice].toLowerCase();
 }
 
 function apagarTodos() {
@@ -114,34 +103,32 @@ function mostrarPasso(i) {
     if (i >= sequencia.length) {
         bloqueado = false;
         escreverMensagem("Sua vez! Repita a sequência.");
-        return;
-    }
-    acender(sequencia[i]);
-    temporizador = setTimeout(function () {
-        apagar(sequencia[i]);
+    } else {
+        acender(sequencia[i]);
         temporizador = setTimeout(function () {
-            mostrarPasso(i + 1);
-        }, TEMPO_ENTRE);
-    }, TEMPO_ACESO);
+            apagar(sequencia[i]);
+            temporizador = setTimeout(function () {
+                mostrarPasso(i + 1);
+            }, 250);
+        }, 600);
+    }
 }
 
 function clicarPersonagem(indice) {
-    if (!partidaAtiva || bloqueado) {
-        return;
-    }
+    if (partidaAtiva && !bloqueado) {
+        acender(indice);
+        setTimeout(function () {
+            apagar(indice);
+        }, 250);
 
-    acender(indice);
-    setTimeout(function () {
-        apagar(indice);
-    }, 250);
-
-    if (indice == sequencia[posicaoDoJogador]) {
-        posicaoDoJogador++;
-        if (posicaoDoJogador == sequencia.length) {
-            concluirRodada();
+        if (indice == sequencia[posicaoDoJogador]) {
+            posicaoDoJogador++;
+            if (posicaoDoJogador == sequencia.length) {
+                concluirRodada();
+            }
+        } else {
+            errar();
         }
-    } else {
-        errar();
     }
 }
 
@@ -156,7 +143,7 @@ function concluirRodada() {
         }, 900);
     } else {
         escreverMensagem("Rodada concluída!");
-        temporizador = setTimeout(iniciarRodada, TEMPO_ENTRE_RODADAS);
+        temporizador = setTimeout(iniciarRodada, 1200);
     }
 }
 
@@ -178,75 +165,42 @@ function errar() {
 }
 
 function finalizarPartida(venceu) {
-    if (!partidaAtiva) {
-        return;
-    }
-    partidaAtiva = false;
-    bloqueado = true;
-    clearTimeout(temporizadorCronometro);
+    if (partidaAtiva) {
+        partidaAtiva = false;
+        bloqueado = true;
+        clearTimeout(temporizadorCronometro);
+        partidasNestaVisita++;
+        escolherCartaSequencia(venceu, rodadasConcluidas, erros);
 
-    let duracaoSegundos = segundosDaPartida;
-
-    let carta = escolherCartaSequencia(venceu, rodadasConcluidas, erros);
-    let mensagem = carta.mensagem;
-
-    let resultado = {
-        venceu: venceu,
-        rodadasConcluidas: rodadasConcluidas,
-        totalRodadas: TOTAL_RODADAS,
-        erros: erros,
-        duracaoSegundos: duracaoSegundos,
-        mensagem: mensagem,
-        motivo: carta.motivo
-    };
-
-    partidasNestaVisita++;
-
-    mostrarResultado(resultado);
-    enviarResultadoParaApi(resultado);
-}
-
-function mostrarResultado(resultado) {
-    let resumo = "";
-    if (resultado.venceu) {
-        document.getElementById("titulo-resultado").innerHTML = "Você venceu!";
-        resumo = "Você venceu! · " + resultado.erros + " erro(s)";
-    } else {
+        let aproveitamento = rodadasConcluidas / TOTAL_RODADAS * 100;
+        let resumo = "Fim de jogo · " + rodadasConcluidas + " de " + TOTAL_RODADAS + " rodadas";
+        let venceuNumero = 0;
         document.getElementById("titulo-resultado").innerHTML = "Boa tentativa!";
-        resumo = "Fim de jogo · " + resultado.rodadasConcluidas + " de " + resultado.totalRodadas + " rodadas";
+
+        if (venceu) {
+            resumo = "Você venceu! · " + erros + " erro(s)";
+            venceuNumero = 1;
+            document.getElementById("titulo-resultado").innerHTML = "Você venceu!";
+        }
+
+        document.getElementById("res-rodadas").innerHTML = rodadasConcluidas + " de " + TOTAL_RODADAS;
+        document.getElementById("res-aproveitamento").innerHTML = aproveitamento.toFixed(0) + "%";
+        document.getElementById("res-erros").innerHTML = erros;
+        document.getElementById("res-duracao").innerHTML = segundosDaPartida + " s";
+        document.getElementById("res-partidas").innerHTML = "Partidas concluídas nesta visita: " + partidasNestaVisita;
+
+        mostrarTela("tela-resultado");
+        mostrarCartaEpisodio(idDaCarta, resumo, motivoDaCarta, "sequencia");
+
+        registrarPartida({
+            jogo: "sequencia",
+            venceu: venceuNumero,
+            tentativas: "",
+            paresEncontrados: "",
+            rodadasConcluidas: rodadasConcluidas,
+            erros: erros,
+            duracaoSegundos: segundosDaPartida,
+            idMensagem: idDaCarta
+        });
     }
-
-    document.getElementById("res-rodadas").innerHTML = resultado.rodadasConcluidas + " de " + resultado.totalRodadas;
-    let aproveitamento = resultado.rodadasConcluidas / resultado.totalRodadas * 100;
-    document.getElementById("res-aproveitamento").innerHTML = aproveitamento.toFixed(0) + "%";
-    document.getElementById("res-erros").innerHTML = resultado.erros;
-    document.getElementById("res-duracao").innerHTML = resultado.duracaoSegundos + " s";
-    document.getElementById("res-partidas").innerHTML = "Partidas concluídas nesta visita: " + partidasNestaVisita;
-
-    mostrarTela("tela-resultado");
-
-    mostrarCartaEpisodio({
-        mensagem: resultado.mensagem,
-        resumo: resumo,
-        motivo: resultado.motivo,
-        jogo: "sequencia"
-    });
-}
-
-function enviarResultadoParaApi(resultado) {
-    let venceu = 0;
-    if (resultado.venceu) {
-        venceu = 1;
-    }
-
-    registrarPartida({
-        jogo: "sequencia",
-        venceu: venceu,
-        tentativas: "",
-        paresEncontrados: "",
-        rodadasConcluidas: resultado.rodadasConcluidas,
-        erros: resultado.erros,
-        duracaoSegundos: resultado.duracaoSegundos,
-        idMensagem: resultado.mensagem.id
-    });
 }

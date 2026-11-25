@@ -267,7 +267,7 @@ nav [aria-current="page"] {
     color: #8c1d18;
 }
 
-form {
+.formulario {
     width: 100%;
 }
 
@@ -296,7 +296,7 @@ input:focus-visible {
     outline-offset: 2px;
 }
 
-form .button {
+.formulario .button {
     width: 100%;
     margin-top: 24px;
 }

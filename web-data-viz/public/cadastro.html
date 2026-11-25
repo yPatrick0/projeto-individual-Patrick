@@ -28,7 +28,7 @@
             <p class="aviso" id="aviso-cadastro" role="status">
                 Crie sua conta para que suas partidas fiquem salvas no seu nome.
             </p>
-            <form aria-describedby="aviso-cadastro" onsubmit="return cadastrar();" novalidate>
+            <div class="formulario">
                 <label for="nome">Nome</label>
                 <input id="nome" type="text" autocomplete="name" maxlength="80">
 
@@ -55,15 +55,14 @@
                 <input id="confirmacao-senha" type="password" autocomplete="new-password" maxlength="50" oninput="verificarConfirmacao()" aria-describedby="dica-confirmacao">
                 <p class="dica-campo" id="dica-confirmacao" aria-live="polite"></p>
 
-                <button class="button" id="botao-cadastrar" type="submit">Cadastrar</button>
-            </form>
+                <button class="button" id="botao-cadastrar" type="button" onclick="cadastrar()">Cadastrar</button>
+            </div>
             <p class="auth-switch">Já tem uma conta? <a href="login.html">Ir para o login</a>.</p>
         </section>
     </main>
     <footer class="wrap">
         <p>Memórias de Aventura · Projeto individual de Patrick Scaglia — SPTech.</p>
     </footer>
-    <script src="js/api.js"></script>
     <script src="js/cadastro.js"></script>
 </body>
 </html>

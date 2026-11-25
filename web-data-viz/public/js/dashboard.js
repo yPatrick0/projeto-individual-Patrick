@@ -1,22 +1,11 @@
-const codigosDosJogos = ["memoria", "sequencia"];
 const nomesDosJogos = ["Jogo da memória", "Sequência"];
 const coresDosJogos = ["#2a78c4", "#d96f1f"];
 
+let idUsuario = sessionStorage.ID_USUARIO;
+let partidas = [0, 0];
+let tempos = [0, 0];
 let graficoPartidas = null;
 let graficoTempo = null;
-
-function idDoUsuarioLogado() {
-    return sessionStorage.ID_USUARIO;
-}
-
-function valorDoJogo(linhas, jogo, campo) {
-    for (let i = 0; i < linhas.length; i++) {
-        if (linhas[i].jogo == jogo) {
-            return Number(linhas[i][campo]);
-        }
-    }
-    return 0;
-}
 
 function mostrarAviso(texto) {
     let aviso = document.getElementById("aviso-dados");
@@ -25,92 +14,68 @@ function mostrarAviso(texto) {
 }
 
 function mostrarErro() {
-    document.getElementById("kpi-total").innerHTML = "—";
-    document.getElementById("kpi-tempo").innerHTML = "—";
-    document.getElementById("kpi-aproveitamento").innerHTML = "—";
-    document.getElementById("kpi-rodadas").innerHTML = "—";
+    let kpis = ["kpi-total", "kpi-tempo", "kpi-aproveitamento", "kpi-rodadas"];
+    for (let i = 0; i < kpis.length; i++) {
+        document.getElementById(kpis[i]).innerHTML = "—";
+    }
     mostrarAviso("Não foi possível carregar os dados. Confira se o servidor (npm start) e o MySQL estão rodando e se a internet está ligada (o Chart.js vem da internet).");
 }
 
-function desenharGrafico(idDoCanvas, grafico, nomeDaSerie, valores) {
-    if (grafico != null) {
-        grafico.data.datasets[0].data = valores;
-        grafico.update();
-        return grafico;
-    }
-
-    let dados = {
-        labels: nomesDosJogos,
-        datasets: [{
-            label: nomeDaSerie,
-            data: valores,
-            backgroundColor: coresDosJogos
-        }]
-    };
-
-    const config = {
-        type: "bar",
-        data: dados,
-        options: {
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false }
+function desenharGraficos() {
+    if (graficoPartidas == null) {
+        graficoPartidas = new Chart(document.getElementById("grafico-partidas"), {
+            type: "bar",
+            data: {
+                labels: nomesDosJogos,
+                datasets: [{ label: "Partidas", data: partidas, backgroundColor: coresDosJogos }]
             },
-            scales: {
-                y: { beginAtZero: true }
-            }
-        }
-    };
+            options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        });
 
-    return new Chart(document.getElementById(idDoCanvas), config);
-}
-
-function preencherTabela(partidas, tempos) {
-    let linhasHtml = "";
-    for (let i = 0; i < codigosDosJogos.length; i++) {
-        linhasHtml += "<tr><td>" + nomesDosJogos[i] + "</td><td>" + partidas[i] + "</td><td>" + tempos[i] + "</td></tr>";
+        graficoTempo = new Chart(document.getElementById("grafico-tempo"), {
+            type: "bar",
+            data: {
+                labels: nomesDosJogos,
+                datasets: [{ label: "Tempo médio (s)", data: tempos, backgroundColor: coresDosJogos }]
+            },
+            options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        });
+    } else {
+        graficoPartidas.data.datasets[0].data = partidas;
+        graficoPartidas.update();
+        graficoTempo.data.datasets[0].data = tempos;
+        graficoTempo.update();
     }
-    document.getElementById("tabela-corpo").innerHTML = linhasHtml;
-}
-
-function mostrarSuasPartidas(partidas) {
-    let nome = primeiroNome();
-    let total = partidas[0] + partidas[1];
-
-    let texto = nome + ", você ainda não terminou nenhuma partida com login.";
-    if (total > 0) {
-        texto = nome + ", você jogou <strong>" + total + "</strong> partida(s): "
-            + partidas[0] + " no jogo da memória e " + partidas[1] + " na Sequência.";
-    }
-    document.getElementById("suas-partidas").innerHTML = texto;
-}
-
-function mostrarPainelVazio() {
-    document.getElementById("kpi-total").innerHTML = "0";
-    document.getElementById("tabela-corpo").innerHTML = '<tr><td colspan="3">Você ainda não tem partidas.</td></tr>';
-    mostrarAviso('Você ainda não tem partidas. Jogue o <a href="index.html#jogo">jogo da memória</a> ou a <a href="jogo-aventura.html">Sequência</a> com login e volte aqui para ver seus resultados.');
 }
 
 function carregarPainel() {
     document.getElementById("aviso-dados").hidden = true;
     carregarAlbum();
 
-    fetch(enderecoApi("/partidas/por-jogo/" + idDoUsuarioLogado())).then(function (resposta) {
+    fetch("/partidas/por-jogo/" + idUsuario).then(function (resposta) {
         if (resposta.ok) {
             resposta.json().then(function (linhas) {
-                let partidas = [0, 0];
-                for (let i = 0; i < codigosDosJogos.length; i++) {
-                    partidas[i] = valorDoJogo(linhas, codigosDosJogos[i], "total_partidas");
+                partidas = [0, 0];
+                for (let i = 0; i < linhas.length; i++) {
+                    if (linhas[i].jogo == "memoria") {
+                        partidas[0] = Number(linhas[i].total_partidas);
+                    } else {
+                        partidas[1] = Number(linhas[i].total_partidas);
+                    }
                 }
                 let total = partidas[0] + partidas[1];
 
-                mostrarSuasPartidas(partidas);
-
+                pegarPrimeiroNome();
                 if (total == 0) {
-                    mostrarPainelVazio();
+                    document.getElementById("suas-partidas").innerHTML = primeiroNome + ", você ainda não terminou nenhuma partida com login.";
+                    document.getElementById("kpi-total").innerHTML = "0";
+                    document.getElementById("tabela-corpo").innerHTML = '<tr><td colspan="3">Você ainda não tem partidas.</td></tr>';
+                    mostrarAviso('Você ainda não tem partidas. Jogue o <a href="index.html#jogo">jogo da memória</a> ou a <a href="jogo-aventura.html">Sequência</a> com login e volte aqui para ver seus resultados.');
                 } else {
+                    document.getElementById("suas-partidas").innerHTML = primeiroNome + ", você jogou <strong>" + total + "</strong> partida(s): "
+                        + partidas[0] + " no jogo da memória e " + partidas[1] + " na Sequência.";
                     document.getElementById("kpi-total").innerHTML = total;
-                    carregarTempos(partidas, total);
+                    carregarTempos(total);
                     carregarAproveitamento();
                     carregarMediaRodadas();
                 }
@@ -124,28 +89,36 @@ function carregarPainel() {
     });
 }
 
-function carregarTempos(partidas, total) {
-    fetch(enderecoApi("/partidas/tempo-medio/" + idDoUsuarioLogado())).then(function (resposta) {
+function carregarTempos(total) {
+    fetch("/partidas/tempo-medio/" + idUsuario).then(function (resposta) {
         if (resposta.ok) {
             resposta.json().then(function (linhas) {
-                let tempos = [0, 0];
-                let somaPonderada = 0;
-                for (let i = 0; i < codigosDosJogos.length; i++) {
-                    tempos[i] = valorDoJogo(linhas, codigosDosJogos[i], "tempo_medio_segundos");
-                    somaPonderada += tempos[i] * partidas[i];
+                tempos = [0, 0];
+                for (let i = 0; i < linhas.length; i++) {
+                    if (linhas[i].jogo == "memoria") {
+                        tempos[0] = Number(linhas[i].tempo_medio_segundos);
+                    } else {
+                        tempos[1] = Number(linhas[i].tempo_medio_segundos);
+                    }
                 }
-                document.getElementById("kpi-tempo").innerHTML = Math.round(somaPonderada / total) + " s";
 
-                preencherTabela(partidas, tempos);
-                graficoPartidas = desenharGrafico("grafico-partidas", graficoPartidas, "Partidas", partidas);
-                graficoTempo = desenharGrafico("grafico-tempo", graficoTempo, "Tempo médio (s)", tempos);
+                let somaDosTempos = tempos[0] * partidas[0] + tempos[1] * partidas[1];
+                document.getElementById("kpi-tempo").innerHTML = Math.round(somaDosTempos / total) + " s";
+
+                let tabela = "";
+                for (let i = 0; i < nomesDosJogos.length; i++) {
+                    tabela += "<tr><td>" + nomesDosJogos[i] + "</td><td>" + partidas[i] + "</td><td>" + tempos[i] + "</td></tr>";
+                }
+                document.getElementById("tabela-corpo").innerHTML = tabela;
+
+                desenharGraficos();
             });
         }
     });
 }
 
 function carregarAproveitamento() {
-    fetch(enderecoApi("/partidas/aproveitamento-memoria/" + idDoUsuarioLogado())).then(function (resposta) {
+    fetch("/partidas/aproveitamento-memoria/" + idUsuario).then(function (resposta) {
         if (resposta.ok) {
             resposta.json().then(function (dados) {
                 if (dados.aproveitamento_medio == null) {
@@ -159,7 +132,7 @@ function carregarAproveitamento() {
 }
 
 function carregarMediaRodadas() {
-    fetch(enderecoApi("/partidas/media-rodadas/" + idDoUsuarioLogado())).then(function (resposta) {
+    fetch("/partidas/media-rodadas/" + idUsuario).then(function (resposta) {
         if (resposta.ok) {
             resposta.json().then(function (dados) {
                 if (dados.media_rodadas == null) {
@@ -173,7 +146,7 @@ function carregarMediaRodadas() {
 }
 
 function carregarAlbum() {
-    fetch(enderecoApi("/partidas/album/" + idDoUsuarioLogado())).then(function (resposta) {
+    fetch("/partidas/album/" + idUsuario).then(function (resposta) {
         if (resposta.ok) {
             resposta.json().then(function (linhas) {
                 let html = "";
@@ -181,7 +154,7 @@ function carregarAlbum() {
 
                 for (let i = 0; i < linhas.length; i++) {
                     let vezes = Number(linhas[i].vezes_recebida);
-                    let mensagem = buscarMensagem(linhas[i].id);
+                    let mensagem = mensagensDosEpisodios[linhas[i].id - 1];
 
                     if (vezes > 0) {
                         abertas++;
@@ -212,16 +185,7 @@ function carregarAlbum() {
 }
 
 function abrirCartaDoAlbum(idMensagem, vezes) {
-    let palavra = "vezes";
-    if (vezes == 1) {
-        palavra = "vez";
-    }
-    mostrarCartaEpisodio({
-        mensagem: buscarMensagem(idMensagem),
-        resumo: "Do seu álbum · recebida " + vezes + " " + palavra,
-        motivo: "",
-        jogo: ""
-    });
+    mostrarCartaEpisodio(idMensagem, "Do seu álbum · recebida " + vezes + "x", "", "");
 }
 
 mostrarUsuarioNoMenu("nav-usuario");

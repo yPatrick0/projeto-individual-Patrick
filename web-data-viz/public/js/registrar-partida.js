@@ -1,7 +1,5 @@
 function registrarPartida(partida) {
-    let idUsuario = sessionStorage.ID_USUARIO;
-
-    fetch(enderecoApi("/partidas/registrar"), {
+    fetch("/partidas/registrar", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -14,7 +12,7 @@ function registrarPartida(partida) {
             rodadasServer: partida.rodadasConcluidas,
             errosServer: partida.erros,
             duracaoServer: partida.duracaoSegundos,
-            idUsuarioServer: idUsuario,
+            idUsuarioServer: sessionStorage.ID_USUARIO,
             idMensagemServer: partida.idMensagem
         })
     }).then(function (resposta) {
