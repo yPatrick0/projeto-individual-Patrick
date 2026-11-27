@@ -38,12 +38,12 @@ CREATE TABLE partida (
 );
 
 INSERT INTO mensagem (id, personagem, episodio, temporada, numero_episodio, frase, licao) VALUES
-    (1, 'Jake', 'Puhoy', 5, 16,
-        'Você tá se enrolando nos seus problemas imaginários.',
-        'Nem todo silêncio quer dizer que algo deu errado. Antes de sofrer por um problema, vale conferir se ele existe mesmo.'),
-    (2, 'Jake', 'O Herói Dele', 1, 25,
+    (1, 'Jake', 'O Herói Dele', 1, 25,
         'Ser ruim em alguma coisa é o primeiro passo para ficar meio bom nela.',
         'Errar faz parte de aprender. Cada tentativa deixa você um pouco melhor.'),
+    (2, 'Jake', 'Puhoy', 5, 16,
+        'Você tá se enrolando nos seus problemas imaginários.',
+        'Nem todo silêncio quer dizer que algo deu errado. Antes de sofrer por um problema, vale conferir se ele existe mesmo.'),
     (3, 'Finn, Jake, Marceline e Princesa Jujuba', 'O Que Faltava', 3, 10, NULL,
         'Dizer o que sentimos aproxima as pessoas, mesmo quando dá medo.'),
     (4, 'Finn e Jake', 'Incêndio', 3, 26, NULL,
@@ -54,18 +54,6 @@ INSERT INTO mensagem (id, personagem, episodio, temporada, numero_episodio, fras
         'Depois de um término, cada pessoa tem o seu tempo para seguir em frente.'),
     (7, 'Finn', 'O Salão de Saída', 7, 24, NULL,
         'Persistir também pode significar mudar de estratégia.');
-
-INSERT INTO usuario (nome, email, senha) VALUES
-    ('Usuário Teste 1', 'teste1@memorias.com', 'teste123'),
-    ('Usuário Teste 2', 'teste2@memorias.com', 'teste123');
-
-INSERT INTO partida (jogo, venceu, tentativas, pares_encontrados, rodadas_concluidas, erros, duracao_segundos, fk_usuario, fk_mensagem) VALUES
-    ('memoria',   1, 9,    6,    NULL, 3, 48, 1,    1),
-    ('memoria',   1, 12,   6,    NULL, 6, 65, 2,    2),
-    ('memoria',   1, 7,    6,    NULL, 1, 39, NULL, 1),
-    ('sequencia', 1, NULL, NULL, 6,    1, 92, 1,    6),
-    ('sequencia', 0, NULL, NULL, 3,    3, 51, 2,    2),
-    ('sequencia', 0, NULL, NULL, 4,    3, 70, NULL, 1);
 
 SELECT jogo, COUNT(*) AS total_partidas
 FROM partida

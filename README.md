@@ -52,7 +52,7 @@ Ao final de cada partida, ganhando ou perdendo, aparece a **carta de um episódi
 | --- | --- |
 | Partidas por jogo | contagem de partidas de cada jogo |
 | Aproveitamento na memória | pares encontrados (6) ÷ tentativas × 100 |
-| Média de rodadas na Sequência | soma das rodadas concluídas ÷ número de partidas |
+| Média de erros na Sequência | soma dos erros ÷ número de partidas (cada partida tem de 0 a 3 erros) |
 | Tempo médio por partida | soma das durações ÷ número de partidas |
 | Álbum de episódios | cartas diferentes recebidas ÷ 7 cartas |
 
@@ -93,7 +93,7 @@ Os relacionamentos são 1:N: um usuário joga várias partidas, e uma mensagem a
 - ✅ Aplicação de cálculos matemáticos nos indicadores
 - ✅ VM Linux contendo somente o banco de dados
 - ✅ Dashboard com gráficos (Chart.js)
-- ✅ Apresentação para a banca ([`ti/apresentacao.pptx`](ti/apresentacao.pptx))
+- ✅ Apresentação para a banca no Canva ([`ti/apresentacao.md`](ti/apresentacao.md))
 - ✅ Diário de Prompts ([`docs/diario-de-prompts.md`](docs/diario-de-prompts.md))
 
 ---
@@ -151,6 +151,14 @@ Se o PowerShell bloquear o `npm`, use `npm.cmd start`.
 ## 🤖 Uso de IA
 
 A IA é usada como apoio ao aprendizado. Cada uso fica registrado em [`docs/diario-de-prompts.md`](docs/diario-de-prompts.md). 
+
+---
+
+## 🔗 Referências
+
+- **Memory Game - Adventure Time** (HTML, CSS e JS), de Thiago de Paula Souza: referência para a ideia do jogo da memória.
+  - Vídeo: https://youtu.be/nVqKD17iHEM
+  - Repositório: https://github.com/ThiagodePaulaSouza/memory-game
 
 ---
 
