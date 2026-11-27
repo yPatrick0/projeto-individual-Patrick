@@ -19,7 +19,7 @@ const mensagensDosEpisodios = [
         frase: "Você tá se enrolando nos seus problemas imaginários.",
         origemFrase: "fala informada pelo autor (dublagem brasileira)",
         licao: "Nem todo silêncio quer dizer que algo deu errado. Antes de sofrer por um problema, vale conferir se ele existe mesmo.",
-        fotos: ["finn.webp"]
+        fotos: ["jake-puhoy.jpeg"]
     },
     {
         id: 3,
@@ -63,7 +63,7 @@ const mensagensDosEpisodios = [
         frase: "",
         origemFrase: "",
         licao: "Depois de um término, cada pessoa tem o seu tempo para seguir em frente.",
-        fotos: ["bmo.jpeg"]
+        fotos: ["finn.jpeg"]
     },
     {
         id: 7,

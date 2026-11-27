@@ -388,7 +388,7 @@ button:disabled {
 }
 
 .person img {
-    aspect-ratio: 1;
+    aspect-ratio: 3 / 2;
     height: auto;
     object-fit: contain;
     border-bottom: 1px solid var(--ink);

@@ -31,9 +31,9 @@ function aproveitamentoMemoria(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
-function mediaRodadas(idUsuario) {
+function mediaErros(idUsuario) {
     var instrucaoSql = `
-        SELECT ROUND(AVG(rodadas_concluidas), 1) AS media_rodadas,
+        SELECT ROUND(AVG(erros), 1) AS media_erros,
                COUNT(*) AS total_partidas
         FROM partida
         WHERE fk_usuario = ${idUsuario} AND jogo = 'sequencia';
@@ -69,7 +69,7 @@ module.exports = {
     registrar,
     contarPorJogo,
     aproveitamentoMemoria,
-    mediaRodadas,
+    mediaErros,
     tempoMedio,
     albumDoUsuario
 };

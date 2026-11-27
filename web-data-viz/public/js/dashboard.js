@@ -14,7 +14,7 @@ function mostrarAviso(texto) {
 }
 
 function mostrarErro() {
-    let kpis = ["kpi-total", "kpi-tempo", "kpi-aproveitamento", "kpi-rodadas"];
+    let kpis = ["kpi-total", "kpi-tempo", "kpi-aproveitamento", "kpi-erros"];
     for (let i = 0; i < kpis.length; i++) {
         document.getElementById(kpis[i]).innerHTML = "—";
     }
@@ -77,7 +77,7 @@ function carregarPainel() {
                     document.getElementById("kpi-total").innerHTML = total;
                     carregarTempos(total);
                     carregarAproveitamento();
-                    carregarMediaRodadas();
+                    carregarMediaErros();
                 }
             });
         } else {
@@ -131,14 +131,14 @@ function carregarAproveitamento() {
     });
 }
 
-function carregarMediaRodadas() {
-    fetch("/partidas/media-rodadas/" + idUsuario).then(function (resposta) {
+function carregarMediaErros() {
+    fetch("/partidas/media-erros/" + idUsuario).then(function (resposta) {
         if (resposta.ok) {
             resposta.json().then(function (dados) {
-                if (dados.media_rodadas == null) {
-                    document.getElementById("kpi-rodadas").innerHTML = "sem partidas";
+                if (dados.media_erros == null) {
+                    document.getElementById("kpi-erros").innerHTML = "sem partidas";
                 } else {
-                    document.getElementById("kpi-rodadas").innerHTML = dados.media_rodadas + " de 6";
+                    document.getElementById("kpi-erros").innerHTML = dados.media_erros + " erro(s)";
                 }
             });
         }

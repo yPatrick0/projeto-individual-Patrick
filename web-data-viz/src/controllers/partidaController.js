@@ -107,18 +107,18 @@ function aproveitamentoMemoria(req, res) {
     }
 }
 
-function mediaRodadas(req, res) {
+function mediaErros(req, res) {
     var idUsuario = lerIdUsuario(req);
 
     if (idUsuario == undefined) {
         res.status(400).send("Id de usuário inválido.");
     } else {
-        partidaModel.mediaRodadas(idUsuario)
+        partidaModel.mediaErros(idUsuario)
             .then(function (resultado) {
                 res.status(200).json(resultado[0]);
             })
             .catch(function (erro) {
-                console.log("\nErro ao calcular a média de rodadas: ", erro.sqlMessage);
+                console.log("\nErro ao calcular a média de erros: ", erro.sqlMessage);
                 res.status(500).json(erro.sqlMessage);
             });
     }
@@ -162,7 +162,7 @@ module.exports = {
     registrar,
     contarPorJogo,
     aproveitamentoMemoria,
-    mediaRodadas,
+    mediaErros,
     tempoMedio,
     albumDoUsuario
 };

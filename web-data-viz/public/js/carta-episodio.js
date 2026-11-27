@@ -2,47 +2,63 @@ let idDaCarta = 0;
 let motivoDaCarta = "";
 let ultimaCarta = null;
 
-function proximaCarta() {
-    if (sessionStorage.PROXIMA_CARTA == undefined) {
-        sessionStorage.PROXIMA_CARTA = 1;
+function sortearCarta(listaDeIds) {
+    let posicao = Math.floor(Math.random() * listaDeIds.length);
+    idDaCarta = listaDeIds[posicao];
+}
+
+function primeirasCartas() {
+    if (sessionStorage.PARTIDAS_JOGADAS == undefined) {
+        sessionStorage.PARTIDAS_JOGADAS = 0;
     }
 
-    idDaCarta = Number(sessionStorage.PROXIMA_CARTA);
+    sessionStorage.PARTIDAS_JOGADAS = Number(sessionStorage.PARTIDAS_JOGADAS) + 1;
 
-    if (idDaCarta < 7) {
-        sessionStorage.PROXIMA_CARTA = idDaCarta + 1;
-    } else {
-        sessionStorage.PROXIMA_CARTA = 1;
+    if (sessionStorage.PARTIDAS_JOGADAS == 1) {
+        idDaCarta = 1;
+        motivoDaCarta = "Sua primeira partida: esta é a carta que abre o seu álbum.";
+    } else if (sessionStorage.PARTIDAS_JOGADAS == 2) {
+        idDaCarta = 2;
+        motivoDaCarta = "Sua segunda partida: mais uma frase do Jake para o seu álbum.";
     }
 }
 
 function escolherCartaMemoria(tentativas) {
-    proximaCarta();
     let erros = tentativas - 6;
 
     if (tentativas <= 10) {
+        idDaCarta = 5;
         motivoDaCarta = "Sua memória estava afiada: só " + tentativas + " tentativas.";
     } else if (erros >= 8) {
+        idDaCarta = 1;
         motivoDaCarta = "Você errou " + erros + " vezes e não desistiu até achar todos os pares.";
     } else {
-        motivoDaCarta = "Partida equilibrada: esta é a próxima carta do seu álbum.";
+        sortearCarta([2, 3, 4, 6, 7]);
+        motivoDaCarta = "Partida equilibrada: esta carta foi sorteada para você.";
     }
+
+    primeirasCartas();
 }
 
 function escolherCartaSequencia(venceu, rodadasConcluidas, erros) {
-    proximaCarta();
-
     if (venceu && erros == 0) {
+        idDaCarta = 5;
         motivoDaCarta = "Você venceu sem errar nenhuma vez.";
     } else if (venceu && erros == 2) {
+        idDaCarta = 2;
         motivoDaCarta = "Você venceu com uma vida só. Deu certo, mesmo parecendo que não ia.";
     } else if (venceu) {
-        motivoDaCarta = "Você venceu as 6 rodadas: esta é a próxima carta do seu álbum.";
+        sortearCarta([3, 4, 6]);
+        motivoDaCarta = "Você venceu as 6 rodadas: esta carta foi sorteada para você.";
     } else if (rodadasConcluidas <= 2) {
+        idDaCarta = 1;
         motivoDaCarta = "As vidas acabaram cedo, e tudo bem: cada partida é um treino.";
     } else {
+        idDaCarta = 7;
         motivoDaCarta = "Você chegou à rodada " + (rodadasConcluidas + 1) + ". Que tal tentar outro jeito de memorizar?";
     }
+
+    primeirasCartas();
 }
 
 function mostrarCartaEpisodio(idMensagem, resumo, motivo, jogo) {

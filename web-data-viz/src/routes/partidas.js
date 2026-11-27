@@ -15,8 +15,8 @@ router.get("/aproveitamento-memoria/:idUsuario", function (req, res) {
     partidaController.aproveitamentoMemoria(req, res);
 });
 
-router.get("/media-rodadas/:idUsuario", function (req, res) {
-    partidaController.mediaRodadas(req, res);
+router.get("/media-erros/:idUsuario", function (req, res) {
+    partidaController.mediaErros(req, res);
 });
 
 router.get("/tempo-medio/:idUsuario", function (req, res) {
